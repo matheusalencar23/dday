@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: center;
+  gap: 16px;
+
+  span span {
+    font-size: 22px;
+  }
+}
