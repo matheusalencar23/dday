@@ -1,8 +1,12 @@
 <aside>
   <dd-logo></dd-logo>
   <ul>
-    <li *ngFor="let item of sidebarItems">
-      <ng-icon [name]="item.icon"></ng-icon>
+    <li
+      *ngFor="let item of sidebarItems"
+      [routerLink]="item.routerLink"
+      routerLinkActive="active"
+    >
+      <ng-icon [name]="item.icon" size="32"></ng-icon>
       <span>{{ item.label }}</span>
     </li>
   </ul>

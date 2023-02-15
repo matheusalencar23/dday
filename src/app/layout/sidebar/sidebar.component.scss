@@ -7,5 +7,30 @@
 
   aside {
     padding: 30px 20px;
+
+    ul {
+      list-style: none;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        column-gap: 8px;
+        border-radius: 8px;
+        opacity: 0.7;
+        cursor: pointer;
+        background-color: transparent;
+
+        &:hover,
+        &.active {
+          opacity: 1;
+          background-color: #09234f24;
+        }
+      }
+    }
   }
 }
