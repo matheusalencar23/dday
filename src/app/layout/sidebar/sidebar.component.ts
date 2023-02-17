@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
 
 @Component({
@@ -11,27 +12,27 @@ export class SidebarComponent {
     {
       icon: 'heroHomeSolid',
       label: 'Dashboard',
-      routerLink: 'dashboard',
+      routerLink: DefaultRoutes.DASHBOARD,
     },
     {
       icon: 'heroShoppingBagSolid',
       label: 'Payment',
-      routerLink: 'payment',
+      routerLink: DefaultRoutes.PAYMENT,
     },
     {
       icon: 'heroUserSolid',
       label: 'Employees',
-      routerLink: 'employees',
+      routerLink: DefaultRoutes.EMPLOYEES,
     },
     {
       icon: 'heroUserGroupSolid',
       label: 'Departments',
-      routerLink: 'departments',
+      routerLink: DefaultRoutes.DEPARTMENTS,
     },
     {
       icon: 'tablerPigMoney',
       label: 'Liquidity',
-      routerLink: 'liquidity',
+      routerLink: DefaultRoutes.LIQUIDITY,
     },
   ];
 }
