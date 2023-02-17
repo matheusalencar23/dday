@@ -27,6 +27,16 @@ const routes: Routes = [
           import('./payment/payment.module').then((m) => m.PaymentModule),
       },
       {
+        path: 'employees',
+        loadChildren: () =>
+          import('./employees/employees.module').then((m) => m.EmployeesModule),
+      },
+      {
+        path: 'liquidity',
+        loadChildren: () =>
+          import('./liquidity/liquidity.module').then((m) => m.LiquidityModule),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
