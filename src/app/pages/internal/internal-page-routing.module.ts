@@ -15,6 +15,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'departments',
+        loadChildren: () =>
+          import('./departments/departments-page.module').then(
+            (m) => m.DepartmentsPageModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
