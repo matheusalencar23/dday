@@ -1,5 +1,8 @@
 <div class="layout">
-  <dd-sidebar></dd-sidebar>
+  <dd-sidebar
+    [isOpen]="sidebarIsOpen"
+    (close)="sidebarIsOpen = false"
+  ></dd-sidebar>
   <div>
     <dd-header></dd-header>
     <main>

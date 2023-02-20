@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
 
@@ -37,4 +37,10 @@ export class SidebarComponent {
   ];
 
   @Input() isOpen: boolean = false;
+
+  @Output() close = new EventEmitter<void>();
+
+  closeSidebar(): void {
+    this.close.emit();
+  }
 }

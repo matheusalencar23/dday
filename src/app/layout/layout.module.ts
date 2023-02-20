@@ -7,6 +7,7 @@ import {
   heroShoppingBagSolid,
   heroUserGroupSolid,
   heroUserSolid,
+  heroXMarkSolid,
 } from '@ng-icons/heroicons/solid';
 import { tablerPigMoney } from '@ng-icons/tabler-icons';
 import { LogoModule } from '../components/logo/logo.module';
@@ -25,6 +26,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
       heroShoppingBagSolid,
       heroUserSolid,
       heroUserGroupSolid,
+      heroXMarkSolid,
       tablerPigMoney,
     }),
   ],

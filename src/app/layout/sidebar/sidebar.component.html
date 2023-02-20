@@ -1,6 +1,12 @@
 <div class="backdrop" [ngClass]="isOpen ? 'open' : ''"></div>
 <aside [ngClass]="isOpen ? 'open' : ''">
   <dd-logo></dd-logo>
+  <ng-icon
+    name="heroXMarkSolid"
+    size="22"
+    class="close-icon"
+    (click)="closeSidebar()"
+  ></ng-icon>
   <ul>
     <li
       *ngFor="let item of sidebarItems"
