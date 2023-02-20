@@ -1,35 +1,60 @@
 :host {
+  position: relative;
+}
+
+.backdrop {
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  @media screen and (max-width: 768px) {
+    &.open {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}
+
+aside {
+  padding: 30px 20px;
   width: 100vw;
   max-width: 247px;
   box-shadow: 0px 3.12501px 35.1564px rgba(0, 0, 0, 0.08);
   background-color: var(--bg-1);
   min-height: 100vh;
+  position: relative;
 
-  aside {
-    padding: 30px 20px;
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    left: -247px;
 
-    ul {
-      list-style: none;
-      margin-top: 40px;
+    &.open {
+      left: 0px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+
+    li {
       display: flex;
-      flex-direction: column;
-      row-gap: 16px;
+      align-items: center;
+      padding: 8px;
+      column-gap: 8px;
+      border-radius: 8px;
+      opacity: 0.7;
+      cursor: pointer;
+      background-color: transparent;
 
-      li {
-        display: flex;
-        align-items: center;
-        padding: 8px;
-        column-gap: 8px;
-        border-radius: 8px;
-        opacity: 0.7;
-        cursor: pointer;
-        background-color: transparent;
-
-        &:hover,
-        &.active {
-          opacity: 1;
-          background-color: #09234f24;
-        }
+      &:hover,
+      &.active {
+        opacity: 1;
+        background-color: #09234f24;
       }
     }
   }

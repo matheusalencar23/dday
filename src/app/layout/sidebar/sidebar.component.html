@@ -1,4 +1,5 @@
-<aside>
+<div class="backdrop" [ngClass]="isOpen ? 'open' : ''"></div>
+<aside [ngClass]="isOpen ? 'open' : ''">
   <dd-logo></dd-logo>
   <ul>
     <li

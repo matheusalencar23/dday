@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
 
@@ -35,4 +35,6 @@ export class SidebarComponent {
       routerLink: DefaultRoutes.LIQUIDITY,
     },
   ];
+
+  @Input() isOpen: boolean = false;
 }
