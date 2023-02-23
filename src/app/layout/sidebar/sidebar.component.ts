@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
@@ -6,6 +7,15 @@ import { SidebarItem } from '../models/sidebar-item';
   selector: 'dd-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
+  animations: [
+    trigger('overlay', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('250ms', style({ opacity: 0.5 })),
+      ]),
+      transition(':leave', [animate('500ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class SidebarComponent {
   sidebarItems: SidebarItem[] = [

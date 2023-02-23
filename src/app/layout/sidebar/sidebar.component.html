@@ -1,4 +1,4 @@
-<div class="backdrop" [ngClass]="isOpen ? 'open' : ''"></div>
+<div class="backdrop" @overlay *ngIf="isOpen"></div>
 <aside [ngClass]="isOpen ? 'open' : ''">
   <dd-logo></dd-logo>
   <ng-icon
