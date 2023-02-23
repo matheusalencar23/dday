@@ -1,0 +1,20 @@
+header {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.menu-bar-icon {
+  display: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+}

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgIconsModule } from '@ng-icons/core';
 import {
+  heroBars3Solid,
   heroHomeSolid,
   heroShoppingBagSolid,
   heroUserGroupSolid,
@@ -28,6 +29,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
       heroUserGroupSolid,
       heroXMarkSolid,
       tablerPigMoney,
+      heroBars3Solid,
     }),
   ],
   exports: [LayoutComponent],

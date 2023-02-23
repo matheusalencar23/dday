@@ -38,9 +38,5 @@ export class SidebarComponent {
 
   @Input() isOpen: boolean = false;
 
-  @Output() close = new EventEmitter<void>();
-
-  closeSidebar(): void {
-    this.close.emit();
-  }
+  @Output() closeSidebar = new EventEmitter<void>();
 }
