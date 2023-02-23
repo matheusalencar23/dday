@@ -44,6 +44,12 @@ aside {
     right: 8px;
     display: none;
     cursor: pointer;
+    border-radius: 3px;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
 
     @media screen and (max-width: 768px) {
       display: block;
@@ -66,11 +72,12 @@ aside {
       opacity: 0.7;
       cursor: pointer;
       background-color: transparent;
+      transition: 0.2s;
 
       &:hover,
       &.active {
         opacity: 1;
-        background-color: #09234f24;
+        background-color: rgba(0, 0, 0, 0.15);
       }
     }
   }
