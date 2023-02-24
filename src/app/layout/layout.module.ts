@@ -11,6 +11,7 @@ import {
   heroXMarkSolid,
   heroMagnifyingGlassSolid,
 } from '@ng-icons/heroicons/solid';
+import { heroInformationCircle, heroBell } from '@ng-icons/heroicons/outline';
 import { tablerPigMoney } from '@ng-icons/tabler-icons';
 import { LogoModule } from '../components/logo/logo.module';
 import { HeaderComponent } from './header/header.component';
@@ -38,6 +39,8 @@ import { InputSearchComponent } from './input-search/input-search.component';
       tablerPigMoney,
       heroBars3Solid,
       heroMagnifyingGlassSolid,
+      heroInformationCircle,
+      heroBell,
     }),
   ],
   exports: [LayoutComponent],
