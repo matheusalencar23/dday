@@ -1,3 +1,13 @@
+@mixin icon-button {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
 header {
   padding: 16px;
   display: flex;
@@ -7,14 +17,8 @@ header {
 
 .menu-bar-icon {
   display: none;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: 0.2s;
   margin-right: 24px;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.15);
-  }
+  @include icon-button();
 
   @media screen and (max-width: 768px) {
     display: block;
@@ -25,4 +29,13 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.icon-action {
+  @include icon-button();
+}
+
+.icon-action,
+.avatar-action {
+  cursor: pointer;
 }
