@@ -1,12 +1,10 @@
-<div class="layout">
-  <dd-sidebar
-    [isOpen]="sidebarIsOpen"
-    (closeSidebar)="sidebarIsOpen = false"
-  ></dd-sidebar>
-  <div>
-    <dd-header (openSidebar)="sidebarIsOpen = true"></dd-header>
-    <main>
-      <ng-content></ng-content>
-    </main>
-  </div>
+<dd-sidebar
+  [isOpen]="sidebarIsOpen"
+  (closeSidebar)="sidebarIsOpen = false"
+></dd-sidebar>
+<div class="body">
+  <dd-header (openSidebar)="sidebarIsOpen = true"></dd-header>
+  <main>
+    <ng-content></ng-content>
+  </main>
 </div>

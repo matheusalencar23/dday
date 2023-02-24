@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  input {
+    padding: 4px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 14px;
+
+    &::placeholder {
+      opacity: 0.4;
+    }
+  }
+}

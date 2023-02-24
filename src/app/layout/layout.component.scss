@@ -1,3 +1,7 @@
-.layout {
+:host {
   display: flex;
+
+  .body {
+    flex: 1;
+  }
 }
