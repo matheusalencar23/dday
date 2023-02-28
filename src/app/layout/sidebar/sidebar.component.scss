@@ -21,9 +21,11 @@ aside {
   min-height: 100vh;
   position: relative;
   transition: 0.3s all ease-in-out;
+  position: fixed;
+  z-index: 10;
 
   @media screen and (max-width: 768px) {
-    position: absolute;
+    position: fixed;
     left: -247px;
 
     &.open {

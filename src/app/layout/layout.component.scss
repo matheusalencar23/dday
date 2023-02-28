@@ -3,6 +3,11 @@
 
   .body {
     flex: 1;
+    margin-left: 247px;
+
+    @media screen and (max-width: 768px) {
+      margin-left: 0;
+    }
 
     main {
       padding: 24px;
