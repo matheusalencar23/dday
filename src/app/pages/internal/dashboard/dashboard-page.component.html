@@ -1,2 +1,8 @@
-<dd-page-title> Dashboard </dd-page-title>
-<p>Dashboard</p>
+<dd-page-title> Overview </dd-page-title>
+<section>
+  <div class="cards">
+    <div *ngFor="let cardData of cardsData">
+      <dd-card [data]="cardData"></dd-card>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 32px;
+  margin-bottom: 24px;
+
+  div {
+    min-width: 200px;
+    flex: 1;
+  }
+}

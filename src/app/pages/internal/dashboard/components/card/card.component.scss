@@ -1,0 +1,43 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  row-gap: 4px;
+  height: 100%;
+
+  h4 {
+    color: var(--text-2);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  .value {
+    color: var(--text-3);
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 30px;
+  }
+
+  .percent {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    color: var(--text-4);
+
+    span {
+      color: var(--text-4);
+      font-size: 16px;
+    }
+
+    &.positive {
+      color: #34b53a;
+    }
+
+    &.negative {
+      color: #ff3a29;
+    }
+  }
+}
