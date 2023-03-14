@@ -23,6 +23,14 @@ export class RequestPerDayChartComponent {
   ];
   options: EChartsOption = {
     color: ['#16A34A', '#F6C77D'],
+    title: {
+      text: 'Request per day',
+      textStyle: {
+        fontWeight: 400,
+        fontFamily: "'Poppins', 'sans-serif'",
+        fontSize: 16,
+      },
+    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -34,6 +42,8 @@ export class RequestPerDayChartComponent {
     },
     legend: {
       data: ['Previous month', 'Current month'],
+      orient: 'horizontal',
+      left: 'right',
     },
     grid: {
       left: '3%',
