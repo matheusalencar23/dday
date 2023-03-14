@@ -1,16 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { EChartsOption } from 'echarts';
+import { Component } from '@angular/core';
+import { EChartsOption, graphic } from 'echarts';
 
 @Component({
   selector: 'dd-request-per-day-chart',
   templateUrl: './request-per-day-chart.component.html',
   styleUrls: ['./request-per-day-chart.component.scss'],
 })
-export class RequestPerDayChartComponent implements OnInit {
-  ngOnInit(): void {
-    console.log(this.getNumberOfDaysToDate());
-  }
+export class RequestPerDayChartComponent {
+  months: string[] = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   options: EChartsOption = {
+    color: ['#16A34A', '#F6C77D'],
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -21,7 +33,7 @@ export class RequestPerDayChartComponent implements OnInit {
       },
     },
     legend: {
-      data: ['X-1', 'X-2', 'X-3', 'X-4', 'X-5'],
+      data: ['1', '2'],
     },
     grid: {
       left: '3%',
@@ -33,7 +45,7 @@ export class RequestPerDayChartComponent implements OnInit {
       {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: this.months,
       },
     ],
     yAxis: [
@@ -45,28 +57,50 @@ export class RequestPerDayChartComponent implements OnInit {
       {
         name: 'Current month',
         type: 'line',
-        stack: 'counts',
-        areaStyle: {},
-        data: [120, 132, 101, 134, 90, 230, 210],
+        smooth: true,
+        areaStyle: {
+          opacity: 0.8,
+          color: new graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgba(22, 163, 74, 1)',
+            },
+            {
+              offset: 1,
+              color: 'rgba(22, 163, 74, 0.1)',
+            },
+          ]),
+        },
+        data: this.generateRandomData(),
       },
       {
         name: 'Previous month',
         type: 'line',
-        stack: 'counts',
-        label: {
-          show: true,
-          position: 'top',
+        smooth: true,
+        areaStyle: {
+          opacity: 0.8,
+          color: new graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgba(246, 199, 125, 1)',
+            },
+            {
+              offset: 1,
+              color: 'rgba(246, 199, 125, 0.1)',
+            },
+          ]),
         },
-        areaStyle: {},
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: this.generateRandomData(),
       },
     ],
   };
 
-  getNumberOfDaysToDate(): number {
-    const today = Date.now();
-    const initialDay = new Date().setDate(1);
-    const dayInMillisconds = 24 * 60 * 60 * 1000;
-    return (today - initialDay) / dayInMillisconds + 1;
+  generateRandomData(): number[] {
+    const data: number[] = [];
+    this.months.forEach(() => {
+      const value = Number((Math.random() * 500).toFixed(2));
+      data.push(value);
+    });
+    return data;
   }
 }
