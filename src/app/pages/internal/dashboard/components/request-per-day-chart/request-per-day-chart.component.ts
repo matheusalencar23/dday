@@ -33,7 +33,7 @@ export class RequestPerDayChartComponent {
       },
     },
     legend: {
-      data: ['1', '2'],
+      data: ['Previous month', 'Current month'],
     },
     grid: {
       left: '3%',
@@ -45,7 +45,7 @@ export class RequestPerDayChartComponent {
       {
         type: 'category',
         boundaryGap: false,
-        data: this.months,
+        data: this.handleMonths(),
       },
     ],
     yAxis: [
@@ -102,5 +102,30 @@ export class RequestPerDayChartComponent {
       data.push(value);
     });
     return data;
+  }
+
+  handleMonths(): string[] {
+    const currentMonth = new Date().getMonth();
+    const monthsInTheCurrentYear = this.months.slice(0, currentMonth + 1);
+    const monthsInTheLastYear = this.months.slice(currentMonth + 1);
+    return monthsInTheLastYear
+      .concat(monthsInTheCurrentYear)
+      .map((month, i) => {
+        const [currentYear, lastYear] = this.getCurrentAndLastYear();
+        return i >= 11 - currentMonth
+          ? `${month}/${currentYear}`
+          : `${month}/${lastYear}`;
+      });
+  }
+
+  ngOnInit() {
+    console.log(this.handleMonths());
+  }
+
+  getCurrentAndLastYear(): string[] {
+    return [
+      new Date().getFullYear().toString().slice(2),
+      (new Date().getFullYear() - 1).toString().slice(2),
+    ];
   }
 }
