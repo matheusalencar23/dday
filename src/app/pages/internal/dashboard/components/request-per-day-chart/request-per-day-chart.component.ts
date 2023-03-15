@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
-import { months } from 'src/app/utils/date';
+import { generateRandomData } from 'src/app/utils/data';
+import { months, reorderMonths } from 'src/app/utils/date';
 
 @Component({
   selector: 'dd-request-per-day-chart',
@@ -42,7 +43,7 @@ export class RequestPerDayChartComponent {
       {
         type: 'category',
         boundaryGap: false,
-        data: this.handleMonths(),
+        data: reorderMonths(),
       },
     ],
     yAxis: [
@@ -68,7 +69,7 @@ export class RequestPerDayChartComponent {
             },
           ]),
         },
-        data: this.generateRandomData(),
+        data: generateRandomData(months.length),
       },
       {
         name: 'Previous month',
@@ -87,38 +88,8 @@ export class RequestPerDayChartComponent {
             },
           ]),
         },
-        data: this.generateRandomData(),
+        data: generateRandomData(months.length),
       },
     ],
   };
-
-  generateRandomData(): number[] {
-    const data: number[] = [];
-    months.forEach(() => {
-      const value = Number((Math.random() * 500).toFixed(2));
-      data.push(value);
-    });
-    return data;
-  }
-
-  handleMonths(): string[] {
-    const currentMonth = new Date().getMonth();
-    const monthsInTheCurrentYear = months.slice(0, currentMonth + 1);
-    const monthsInTheLastYear = months.slice(currentMonth + 1);
-    return monthsInTheLastYear
-      .concat(monthsInTheCurrentYear)
-      .map((month, i) => {
-        const [currentYear, lastYear] = this.getCurrentAndLastYear();
-        return i >= 11 - currentMonth
-          ? `${month}/${currentYear}`
-          : `${month}/${lastYear}`;
-      });
-  }
-
-  getCurrentAndLastYear(): string[] {
-    return [
-      new Date().getFullYear().toString().slice(2),
-      (new Date().getFullYear() - 1).toString().slice(2),
-    ];
-  }
 }

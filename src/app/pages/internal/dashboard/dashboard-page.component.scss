@@ -18,4 +18,8 @@
 
 .bottom-charts {
   display: flex;
+
+  & > div {
+    flex: 1;
+  }
 }

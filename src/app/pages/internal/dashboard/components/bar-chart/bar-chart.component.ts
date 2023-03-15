@@ -1,49 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { months } from 'src/app/utils/date';
+import { generateRandomData } from 'src/app/utils/data';
+import { months, reorderMonths } from 'src/app/utils/date';
 
 @Component({
   selector: 'dd-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
 })
-export class BarChartComponent {
-  initOpts = {
-    width: 300,
-    height: 300,
-  };
+export class BarChartComponent implements OnChanges {
+  options: EChartsOption = {};
 
-  options: EChartsOption = {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-      },
-    },
-    grid: {
-      show: false,
-    },
-    xAxis: [
-      {
-        type: 'category',
-        data: months,
-        axisTick: {
-          alignWithLabel: true,
+  @Input() color: string = '#16A34A';
+  @Input() title: string = '';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['color'] || changes['title']) {
+      this.handleOptions();
+    }
+  }
+
+  handleOptions(): void {
+    this.options = {
+      title: {
+        text: this.title,
+        textStyle: {
+          fontSize: 16,
+          fontFamily: "'Poppins', 'sans-serif'",
         },
       },
-    ],
-    yAxis: [
-      {
-        type: 'value',
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
       },
-    ],
-    series: [
-      {
-        name: 'Direct',
-        type: 'bar',
-        barWidth: '60%',
-        data: [10, 52, 200, 334, 390, 330, 220],
+      grid: {
+        show: false,
       },
-    ],
-  };
+      xAxis: [
+        {
+          type: 'category',
+          data: reorderMonths(),
+          axisTick: {
+            alignWithLabel: true,
+          },
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+        },
+      ],
+      series: [
+        {
+          type: 'bar',
+          barWidth: 24,
+          itemStyle: {
+            borderRadius: [12, 12, 0, 0],
+            color: this.color,
+          },
+          data: generateRandomData(months.length),
+        },
+      ],
+    };
+  }
 }
