@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
+import { months } from 'src/app/utils/date';
 
 @Component({
   selector: 'dd-request-per-day-chart',
@@ -7,20 +8,6 @@ import { EChartsOption, graphic } from 'echarts';
   styleUrls: ['./request-per-day-chart.component.scss'],
 })
 export class RequestPerDayChartComponent {
-  months: string[] = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
   options: EChartsOption = {
     color: ['#16A34A', '#F6C77D'],
     title: {
@@ -107,7 +94,7 @@ export class RequestPerDayChartComponent {
 
   generateRandomData(): number[] {
     const data: number[] = [];
-    this.months.forEach(() => {
+    months.forEach(() => {
       const value = Number((Math.random() * 500).toFixed(2));
       data.push(value);
     });
@@ -116,8 +103,8 @@ export class RequestPerDayChartComponent {
 
   handleMonths(): string[] {
     const currentMonth = new Date().getMonth();
-    const monthsInTheCurrentYear = this.months.slice(0, currentMonth + 1);
-    const monthsInTheLastYear = this.months.slice(currentMonth + 1);
+    const monthsInTheCurrentYear = months.slice(0, currentMonth + 1);
+    const monthsInTheLastYear = months.slice(currentMonth + 1);
     return monthsInTheLastYear
       .concat(monthsInTheCurrentYear)
       .map((month, i) => {
@@ -126,10 +113,6 @@ export class RequestPerDayChartComponent {
           ? `${month}/${currentYear}`
           : `${month}/${lastYear}`;
       });
-  }
-
-  ngOnInit() {
-    console.log(this.handleMonths());
   }
 
   getCurrentAndLastYear(): string[] {
