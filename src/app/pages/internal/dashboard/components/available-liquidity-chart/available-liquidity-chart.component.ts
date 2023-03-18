@@ -7,6 +7,8 @@ import { EChartsOption } from 'echarts';
   styleUrls: ['./available-liquidity-chart.component.scss'],
 })
 export class AvailableLiquidityChartComponent {
+  color: string = '#F87171';
+
   options: EChartsOption = {
     title: {
       text: 'Available liquidity',
@@ -26,14 +28,14 @@ export class AvailableLiquidityChartComponent {
           width: 40,
           roundCap: true,
           itemStyle: {
-            color: '#F87171',
+            color: this.color,
           },
         },
         axisLine: {
           roundCap: true,
           lineStyle: {
             width: 40,
-            color: [[1, 'rgba(248, 113, 113, 0.2)']],
+            color: [[1, `${this.color}33`]],
           },
         },
         axisTick: {
@@ -50,7 +52,7 @@ export class AvailableLiquidityChartComponent {
           showAbove: true,
           size: 130,
           itemStyle: {
-            color: '#F87171',
+            color: this.color,
             opacity: 0.5,
           },
         },
@@ -65,7 +67,7 @@ export class AvailableLiquidityChartComponent {
           fontSize: 40,
           offsetCenter: [0, 0],
           fontFamily: "'Poppins', 'sans-serif'",
-          backgroundColor: '#F87171',
+          backgroundColor: this.color,
           width: 140,
           height: 140,
           borderRadius: 130,
