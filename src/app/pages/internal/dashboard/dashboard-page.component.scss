@@ -13,7 +13,8 @@
 }
 
 .center-chart {
-  margin: 25px 0;
+  margin: 25px auto;
+  max-width: calc(100% - 20px);
 }
 
 .bottom-charts {
