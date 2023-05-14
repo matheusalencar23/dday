@@ -5,21 +5,11 @@
       <dd-card [data]="cardData"></dd-card>
     </div>
   </div>
-  <div class="center-chart">
+
+  <div class="charts">
     <dd-request-per-day-chart></dd-request-per-day-chart>
-  </div>
-  <div class="bottom-charts">
-    <div>
-      <dd-bar-chart
-        title="Total amount requested"
-        color="#F6C77D"
-      ></dd-bar-chart>
-    </div>
-    <div>
-      <dd-bar-chart title="Total number of requested"></dd-bar-chart>
-    </div>
-    <div>
-      <dd-available-liquidity-chart></dd-available-liquidity-chart>
-    </div>
+    <dd-bar-chart title="Total amount requested" color="#F6C77D"></dd-bar-chart>
+    <dd-bar-chart title="Total number of requested"></dd-bar-chart>
+    <dd-available-liquidity-chart></dd-available-liquidity-chart>
   </div>
 </section>

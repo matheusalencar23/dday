@@ -25,7 +25,7 @@ export class AvailableLiquidityChartComponent {
         endAngle: 300,
         progress: {
           show: true,
-          width: 40,
+          width: 20,
           roundCap: true,
           itemStyle: {
             color: this.color,
@@ -34,7 +34,7 @@ export class AvailableLiquidityChartComponent {
         axisLine: {
           roundCap: true,
           lineStyle: {
-            width: 40,
+            width: 20,
             color: [[1, `${this.color}33`]],
           },
         },
@@ -68,8 +68,8 @@ export class AvailableLiquidityChartComponent {
           offsetCenter: [0, 0],
           fontFamily: "'Poppins', 'sans-serif'",
           backgroundColor: this.color,
-          width: 140,
-          height: 140,
+          width: 80,
+          height: 80,
           borderRadius: 130,
           color: '#fff',
           fontWeight: 400,

@@ -12,15 +12,42 @@
   }
 }
 
-.center-chart {
-  margin: 25px auto;
-  max-width: calc(100% - 20px);
-}
+.charts {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "chart1 chart1 chart1 chart1 chart1 chart1"
+    "chart2 chart2 chart3 chart3 chart4 chart4";
 
-.bottom-charts {
-  display: flex;
+  @media (max-width: 1500px) {
+    grid-template-areas:
+      "chart1 chart1 chart1 chart1 chart1 chart1"
+      "chart2 chart2 chart2 chart3 chart3 chart3"
+      "chart4 chart4 chart4 . . .";
+  }
 
-  & > div {
-    flex: 1;
+  @media (max-width: 1100px) {
+    grid-template-areas:
+      "chart1 chart1 chart1 chart1 chart1 chart1"
+      "chart2 chart2 chart2 chart2 chart2 chart2"
+      "chart3 chart3 chart3 chart3 chart3 chart3"
+      "chart4 chart4 chart4 chart4 chart4 chart4";
+  }
+
+  :first-child {
+    grid-area: chart1;
+  }
+
+  :nth-child(2) {
+    grid-area: chart2;
+  }
+
+  :nth-child(3) {
+    grid-area: chart3;
+  }
+
+  :nth-child(4) {
+    grid-area: chart4;
   }
 }
