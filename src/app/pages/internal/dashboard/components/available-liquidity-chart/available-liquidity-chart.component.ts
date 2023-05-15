@@ -1,10 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
   selector: 'dd-available-liquidity-chart',
   templateUrl: './available-liquidity-chart.component.html',
   styleUrls: ['./available-liquidity-chart.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NgxEchartsModule],
 })
 export class AvailableLiquidityChartComponent {
   color: string = '#F87171';

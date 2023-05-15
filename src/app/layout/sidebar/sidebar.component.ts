@@ -2,11 +2,35 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
+import { CommonModule } from '@angular/common';
+import { LogoComponent } from 'src/app/components/logo/logo.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { RouterModule } from '@angular/router';
+import {
+  heroHomeSolid,
+  heroShoppingBagSolid,
+  heroUserGroupSolid,
+  heroUserSolid,
+  heroXMarkSolid,
+} from '@ng-icons/heroicons/solid';
+import { tablerPigMoney } from '@ng-icons/tabler-icons';
 
 @Component({
   selector: 'dd-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, LogoComponent, NgIconComponent, RouterModule],
+  providers: [
+    provideIcons({
+      heroXMarkSolid,
+      heroHomeSolid,
+      heroShoppingBagSolid,
+      heroUserSolid,
+      heroUserGroupSolid,
+      tablerPigMoney,
+    }),
+  ],
   animations: [
     trigger('overlay', [
       transition(':enter', [

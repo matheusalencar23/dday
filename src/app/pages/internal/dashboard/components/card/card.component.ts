@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CardInfo } from '../../models/card-info';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'dd-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class CardComponent {
   @Input() data?: CardInfo;

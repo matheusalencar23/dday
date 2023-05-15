@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { generateRandomData } from 'src/app/utils/data';
 import { months, reorderMonths } from 'src/app/utils/date';
 
@@ -7,6 +9,8 @@ import { months, reorderMonths } from 'src/app/utils/date';
   selector: 'dd-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NgxEchartsModule],
 })
 export class BarChartComponent implements OnChanges {
   options: EChartsOption = {};

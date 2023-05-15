@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { generateRandomData } from 'src/app/utils/data';
 import { months, reorderMonths } from 'src/app/utils/date';
 
@@ -7,6 +9,8 @@ import { months, reorderMonths } from 'src/app/utils/date';
   selector: 'dd-request-per-day-chart',
   templateUrl: './request-per-day-chart.component.html',
   styleUrls: ['./request-per-day-chart.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NgxEchartsModule],
 })
 export class RequestPerDayChartComponent {
   options: EChartsOption = {

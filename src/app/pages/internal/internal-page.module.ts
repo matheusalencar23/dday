@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LayoutModule } from 'src/app/layout/layout.module';
 import { InternalPageComponent } from './internal-page.component';
 import { InternalPageRoutingModule } from './internal-page-routing.module';
+import { LayoutComponent } from 'src/app/layout/layout.component';
 
 @NgModule({
   declarations: [InternalPageComponent],
-  imports: [CommonModule, InternalPageRoutingModule, LayoutModule],
+  imports: [CommonModule, InternalPageRoutingModule, LayoutComponent],
 })
 export class InternalPageModule {}
