@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Renderer2 } from '@angular/core';
+import { Component, HostListener, Renderer2 } from '@angular/core';
 import { LogoComponent } from '../components/logo/logo.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
@@ -23,10 +23,14 @@ export class LayoutComponent {
 
   constructor(private renderer: Renderer2) {}
 
-  toggleSidebar(): void {
-    this.sidebarIsOpen = !this.sidebarIsOpen;
-    if (this.sidebarIsOpen) this.blockPageScroll();
-    else this.unblockPageScroll();
+  openSidebar(): void {
+    this.sidebarIsOpen = true;
+    this.blockPageScroll();
+  }
+
+  closeSidebar(): void {
+    this.sidebarIsOpen = false;
+    this.unblockPageScroll();
   }
 
   blockPageScroll(): void {
@@ -35,5 +39,10 @@ export class LayoutComponent {
 
   unblockPageScroll(): void {
     this.renderer.setStyle(document.body, 'overflow', 'auto');
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    if (window.innerWidth > 768) this.closeSidebar();
   }
 }

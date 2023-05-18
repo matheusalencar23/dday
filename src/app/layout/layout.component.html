@@ -1,9 +1,9 @@
 <dd-sidebar
   [isOpen]="sidebarIsOpen"
-  (closeSidebar)="toggleSidebar()"
+  (closeSidebar)="closeSidebar()"
 ></dd-sidebar>
 <div class="body">
-  <dd-header (openSidebar)="toggleSidebar()"></dd-header>
+  <dd-header (openSidebar)="openSidebar()"></dd-header>
   <main>
     <ng-content></ng-content>
   </main>
