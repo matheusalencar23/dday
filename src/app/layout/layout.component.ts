@@ -3,7 +3,7 @@ import { Component, HostListener, Renderer2 } from '@angular/core';
 import { LogoComponent } from '../components/logo/logo.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
-import { InputSearchComponent } from './input-search/input-search.component';
+import { InputSearchComponent } from '../components/input-search/input-search.component';
 
 @Component({
   selector: 'dd-layout',

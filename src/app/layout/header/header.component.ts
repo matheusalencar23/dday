@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { InputSearchComponent } from '../input-search/input-search.component';
+import { InputSearchComponent } from '../../components/input-search/input-search.component';
 import { heroInformationCircle, heroBell } from '@ng-icons/heroicons/outline';
 import { heroBars3Solid } from '@ng-icons/heroicons/solid';
 
