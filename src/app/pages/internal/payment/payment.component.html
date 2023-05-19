@@ -1,4 +1,8 @@
 <dd-page-title> Advance Payments </dd-page-title>
 <div class="filter">
-  <dd-input-search placeholder="Search by" [hasBorder]="true"></dd-input-search>
+  <dd-input-search
+    placeholder="Search by"
+    [hasBorder]="true"
+    [(ngModel)]="searchTerm"
+  ></dd-input-search>
 </div>
