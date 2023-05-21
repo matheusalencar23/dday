@@ -1,8 +1,12 @@
 <dd-page-title> Advance Payments </dd-page-title>
-<div class="filter">
-  <dd-input-search
-    placeholder="Search by"
-    [hasBorder]="true"
-    [(ngModel)]="searchTerm"
-  ></dd-input-search>
+<div class="filter-wrapper">
+  <div class="filter">
+    <dd-input-search
+      placeholder="Search by"
+      [hasBorder]="true"
+      [(ngModel)]="searchTerm"
+    ></dd-input-search>
+    <dd-select [items]="orderByOptions"></dd-select>
+  </div>
+  <dd-select [items]="showOptions"></dd-select>
 </div>

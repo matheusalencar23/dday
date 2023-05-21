@@ -1,10 +1,11 @@
 :host {
   display: flex;
   align-items: center;
-  flex: 1;
 
-  @media screen and (max-width: 576px) {
-    display: none;
+  &:not(.bordered) {
+    @media screen and (max-width: 576px) {
+      display: none;
+    }
   }
 
   input {
