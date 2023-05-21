@@ -21,6 +21,8 @@ import { SelectComponent } from 'src/app/components/select/select.component';
 })
 export class PaymentComponent {
   searchTerm: string = '';
+
+  orderBy: string = 'name';
   orderByOptions: DefaultOption[] = [
     {
       label: 'Name',
@@ -44,6 +46,7 @@ export class PaymentComponent {
     },
   ];
 
+  show: number = 5;
   showOptions: DefaultOption[] = [
     {
       label: 'Show 5',

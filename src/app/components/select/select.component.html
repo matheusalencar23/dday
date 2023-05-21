@@ -1,4 +1,11 @@
-<select name="select" id="select">
+<select
+  name="select"
+  id="select"
+  [(ngModel)]="value"
+  (ngModelChange)="onChange($event)"
+  (blur)="onTouch()"
+  [disabled]="disabled"
+>
   <option *ngFor="let item of items" [value]="item[itemValueLabel]">
     {{ item[itemLabel] }}
   </option>

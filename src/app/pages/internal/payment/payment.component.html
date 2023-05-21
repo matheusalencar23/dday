@@ -6,7 +6,7 @@
       [hasBorder]="true"
       [(ngModel)]="searchTerm"
     ></dd-input-search>
-    <dd-select [items]="orderByOptions"></dd-select>
+    <dd-select [items]="orderByOptions" [(ngModel)]="orderBy"></dd-select>
   </div>
-  <dd-select [items]="showOptions"></dd-select>
+  <dd-select [items]="showOptions" [(ngModel)]="show"></dd-select>
 </div>
