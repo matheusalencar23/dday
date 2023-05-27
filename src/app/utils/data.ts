@@ -1,4 +1,4 @@
-function generateRandomData(size: number): number[] {
+function generateRandomNumericData(size: number): number[] {
   const data: number[] = [];
   for (let i = 0; i <= size; i++) {
     const value = Number((Math.random() * 500).toFixed(2));
@@ -7,4 +7,4 @@ function generateRandomData(size: number): number[] {
   return data;
 }
 
-export { generateRandomData };
+export { generateRandomNumericData };

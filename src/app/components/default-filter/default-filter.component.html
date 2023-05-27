@@ -1,0 +1,21 @@
+<div class="filter">
+  <dd-input-search
+    placeholder="Search by"
+    [hasBorder]="true"
+    [(ngModel)]="searchTerm"
+    (blur)="onTouch()"
+    (ngModelChange)="changeValue()"
+  ></dd-input-search>
+  <dd-select
+    [items]="orderByOptions"
+    [(ngModel)]="orderBy"
+    (blur)="onTouch()"
+    (ngModelChange)="changeValue()"
+  ></dd-select>
+</div>
+<dd-select
+  [items]="showOptions"
+  [(ngModel)]="show"
+  (blur)="onTouch()"
+  (ngModelChange)="changeValue()"
+></dd-select>

@@ -1,12 +1,26 @@
 <dd-page-title> Advance Payments </dd-page-title>
-<div class="filter-wrapper">
-  <div class="filter">
-    <dd-input-search
-      placeholder="Search by"
-      [hasBorder]="true"
-      [(ngModel)]="searchTerm"
-    ></dd-input-search>
-    <dd-select [items]="orderByOptions" [(ngModel)]="orderBy"></dd-select>
-  </div>
-  <dd-select [items]="showOptions" [(ngModel)]="show"></dd-select>
+<dd-default-filter [(ngModel)]="filter" #field="ngModel"></dd-default-filter>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Payroll date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of payments">
+        <td>{{ payment.id }}</td>
+        <td>{{ payment.name }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.date }}</td>
+        <td>{{ payment.status }}</td>
+        <td>{{ payment.payrollDate }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

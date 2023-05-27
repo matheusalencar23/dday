@@ -1,4 +1,10 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  forwardRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
@@ -30,6 +36,8 @@ export class SelectComponent implements ControlValueAccessor {
   onChange: any = () => {};
   onTouch: any = () => {};
 
+  @Output() blur = new EventEmitter<void>();
+
   writeValue(value: any): void {
     this.value = value;
   }
@@ -44,5 +52,10 @@ export class SelectComponent implements ControlValueAccessor {
 
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  onBlur(): void {
+    this.blur.emit();
+    this.onTouch();
   }
 }

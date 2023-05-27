@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   Renderer2,
   forwardRef,
 } from '@angular/core';
@@ -38,6 +40,8 @@ export class InputSearchComponent implements ControlValueAccessor {
     if (value) this.renderer.addClass(this.elRef.nativeElement, 'bordered');
   }
 
+  @Output() blur = new EventEmitter<void>();
+
   value: string = '';
   disabled: boolean = false;
   onChange: any = () => {};
@@ -59,5 +63,10 @@ export class InputSearchComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  onBlur(): void {
+    this.blur.emit();
+    this.onTouch();
   }
 }

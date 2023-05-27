@@ -3,7 +3,7 @@
   id="select"
   [(ngModel)]="value"
   (ngModelChange)="onChange($event)"
-  (blur)="onTouch()"
+  (blur)="onBlur()"
   [disabled]="disabled"
 >
   <option *ngFor="let item of items" [value]="item[itemValueLabel]">

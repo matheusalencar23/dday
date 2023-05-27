@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { generateRandomData } from 'src/app/utils/data';
+import { generateRandomNumericData } from 'src/app/utils/data';
 import { months, reorderMonths } from 'src/app/utils/date';
 
 @Component({
@@ -64,7 +64,7 @@ export class BarChartComponent implements OnChanges {
             borderRadius: [12, 12, 0, 0],
             color: this.color,
           },
-          data: generateRandomData(months.length),
+          data: generateRandomNumericData(months.length),
         },
       ],
     };

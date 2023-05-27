@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { generateRandomData } from 'src/app/utils/data';
+import { generateRandomNumericData } from 'src/app/utils/data';
 import { months, reorderMonths } from 'src/app/utils/date';
 
 @Component({
@@ -73,7 +73,7 @@ export class RequestPerDayChartComponent {
             },
           ]),
         },
-        data: generateRandomData(months.length),
+        data: generateRandomNumericData(months.length),
       },
       {
         name: 'Previous month',
@@ -92,7 +92,7 @@ export class RequestPerDayChartComponent {
             },
           ]),
         },
-        data: generateRandomData(months.length),
+        data: generateRandomNumericData(months.length),
       },
     ],
   };
