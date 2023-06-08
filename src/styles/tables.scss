@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+  overflow: auto;
+  margin: 0.5rem 0;
+
+  .table-header {
+    tr {
+      th {
+        font-weight: 300;
+      }
+    }
+  }
+}
