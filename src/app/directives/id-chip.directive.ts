@@ -4,6 +4,7 @@ import {
   ElementRef,
   OnInit,
   Renderer2,
+  TemplateRef,
 } from '@angular/core';
 
 interface Colors {
@@ -66,7 +67,7 @@ export class IdChipDirective implements AfterContentInit {
     this.renderer.setStyle(span, 'background-color', color.bgColor);
     this.renderer.setStyle(span, 'display', 'block');
     this.renderer.setStyle(span, 'text-align', 'center');
-    this.renderer.setStyle(span, 'padding', '14px 2px');
+    this.renderer.setStyle(span, 'padding', '14px');
     this.renderer.setStyle(span, 'border-radius', '10px');
 
     this.renderer.setProperty(el, 'innerText', '');
