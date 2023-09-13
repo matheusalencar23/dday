@@ -1,5 +1,8 @@
 <dd-page-title> Advance Payments </dd-page-title>
-<dd-default-filter [(ngModel)]="filter" #field="ngModel"></dd-default-filter>
+<dd-default-filter
+  [(ngModel)]="filter"
+  (ngModelChange)="changeFilter()"
+></dd-default-filter>
 <dd-table>
   <thead #header>
     <tr>

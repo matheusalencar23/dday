@@ -1,4 +1,5 @@
 .table {
+  width: 100%;
   margin: 0.5rem 0;
 
   .table-header {
@@ -17,8 +18,8 @@
   .table-body {
     tr {
       td {
-        font-weight: 500;
-        font-size: 1rem;
+        font-weight: 400;
+        font-size: 1.1rem;
         line-height: 1.1875rem;
         padding: 0.5rem;
       }
@@ -30,6 +31,7 @@
     &:first-child {
       padding-left: 0;
       text-align: center;
+      max-width: 50px;
     }
 
     &:last-child {

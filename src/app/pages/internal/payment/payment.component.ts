@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DefaultFilterComponent } from 'src/app/components/default-filter/default-filter.component';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
@@ -23,11 +23,20 @@ import { Payment } from 'src/app/models/payment';
     IdChipDirective,
   ],
 })
-export class PaymentComponent {
-  payments: Payment[] = PAYMENTS;
+export class PaymentComponent implements OnInit {
+  payments: Payment[] = [];
+
   filter: Filter = {
     searchTerm: '',
     orderBy: 'name',
     show: 10,
   };
+
+  ngOnInit(): void {
+    this.payments = PAYMENTS.slice(0, this.filter.show);
+  }
+
+  changeFilter(): void {
+    this.payments = PAYMENTS.slice(0, this.filter.show);
+  }
 }
