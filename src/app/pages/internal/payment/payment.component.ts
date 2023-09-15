@@ -21,7 +21,7 @@ export class PaymentComponent implements OnInit {
   tableConfig: DataTableType = {
     columns: [
       { title: 'ID', dataProperty: 'id' },
-      { title: 'Name', dataProperty: 'name' },
+      { title: 'Name', dataProperty: 'name', sortable: true },
       { title: 'Amount', dataProperty: 'amount' },
       { title: 'Date', dataProperty: 'date' },
       { title: 'Status', dataProperty: 'status' },

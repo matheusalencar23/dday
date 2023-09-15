@@ -1,4 +1,39 @@
 :host {
   display: block;
   margin: 16px 0;
+  min-width: 998px;
+  width: 100%;
+
+  table {
+    width: 100%;
+    thead {
+      th {
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 500;
+        color: var(--text-2);
+        padding: 8px;
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          span.sortable-icons {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+
+            ng-icon:first-child {
+              margin-bottom: -5px;
+            }
+
+            ng-icon:last-child {
+              margin-top: -5px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

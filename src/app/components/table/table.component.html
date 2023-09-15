@@ -2,14 +2,22 @@
   <thead>
     <tr>
       <th *ngFor="let columnHead of tableConfig.columns">
-        {{ columnHead.title }}
+        <div>
+          <span>{{ columnHead.title }}</span>
+          <span *ngIf="columnHead.sortable" class="sortable-icons">
+            <ng-icon name="tablerCaretUp" size="18"></ng-icon>
+            <ng-icon name="tablerCaretDown" size="18"></ng-icon>
+          </span>
+        </div>
       </th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let columnData of tableContent">
       <td *ngFor="let columnHead of tableConfig.columns">
-        <div>{{ columnData[columnHead.dataProperty] }}</div>
+        <div>
+          <span>{{ columnData[columnHead.dataProperty] }}</span>
+        </div>
       </td>
     </tr>
   </tbody>
