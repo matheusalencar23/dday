@@ -1,16 +1,30 @@
 :host {
-  display: flex;
-
   .body {
-    flex: 1;
     margin-left: 247px;
 
     @media screen and (max-width: 768px) {
       margin-left: 0;
     }
 
+    dd-header {
+      position: fixed;
+      left: 247px;
+      right: 0;
+      top: 0;
+
+      @media screen and (max-width: 768px) {
+        left: 0;
+      }
+    }
+
     main {
-      padding: 24px;
+      padding: 76px 24px 0;
+      min-width: 720px;
+      overflow: auto;
+
+      @media screen and (max-width: 768px) {
+        padding: 76px 6px 0;
+      }
     }
   }
 }

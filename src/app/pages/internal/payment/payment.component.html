@@ -1,1 +1,6 @@
-<dd-page-title> Advance Payments </dd-page-title>
+<dd-page-title>Advance Payments</dd-page-title>
+<dd-table
+  *ngIf="payments$ | async as payments"
+  [tableConfig]="tableConfig"
+  [tableContent]="payments"
+/>

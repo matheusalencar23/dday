@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let columnHead of tableConfig.columns">
+        {{ columnHead.title }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let columnData of tableContent">
+      <td *ngFor="let columnHead of tableConfig.columns">
+        <div>{{ columnData[columnHead.dataProperty] }}</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
