@@ -14,7 +14,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let columnData of tableContent">
-      <td *ngFor="let columnHead of tableConfig.columns">
+      <td
+        *ngFor="let columnHead of tableConfig.columns"
+        [class.id]="columnHead.dataProperty === 'id'"
+      >
         <div>
           <span>{{ columnData[columnHead.dataProperty] }}</span>
         </div>

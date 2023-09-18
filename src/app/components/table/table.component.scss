@@ -1,3 +1,14 @@
+$colors: (
+  (#bdd9fe #217efd),
+  (#ffb5364a #ffb536),
+  (#f4cefa #db5aee),
+  (#fbd1c9 #f3654a),
+  (#c5d1df #384455),
+  (#dccefb #895bf1),
+  (#27ae604a #27ae60),
+  (#56ccf24a #56ccf2)
+);
+
 :host {
   display: block;
   margin: 16px 0;
@@ -30,6 +41,29 @@
 
             ng-icon:last-child {
               margin-top: -5px;
+            }
+          }
+        }
+      }
+    }
+    tbody {
+      td {
+        padding: 8px;
+        text-align: left;
+      }
+
+      @for $i from 0 through 1000 {
+        tr:nth-child(#{$i}) {
+          td.id {
+            div {
+              padding: 11px 10px;
+              display: flex;
+              border-radius: 10px;
+              justify-content: center;
+              align-items: center;
+              $key: random(length($colors));
+              background-color: nth(nth($colors, $key), 1);
+              color: nth(nth($colors, $key), 2);
             }
           }
         }
