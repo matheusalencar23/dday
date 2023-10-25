@@ -20,8 +20,6 @@ $colors: (
 :host {
   display: block;
   margin: 16px 0;
-  min-width: 998px;
-  width: 100%;
 
   table {
     width: 100%;
@@ -32,6 +30,11 @@ $colors: (
         font-weight: 500;
         color: var(--text-2);
         padding: 8px 20px;
+
+        &:first-child div {
+          justify-content: center;
+        }
+
         div {
           width: 100%;
           display: flex;
