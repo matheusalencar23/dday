@@ -18,8 +18,25 @@
         *ngFor="let columnHead of tableConfig.columns"
         [class.id]="columnHead.dataProperty === 'id'"
       >
-        <div>
-          <span>{{ columnData[columnHead.dataProperty] }}</span>
+        <div
+          [ngClass]="columnHead?.statusColorFn?.(columnData[columnHead.dataProperty]) || ''"
+        >
+          <span>
+            <ng-container [ngSwitch]="columnHead.pipe">
+              <ng-container *ngSwitchCase="'currency'">
+                {{ columnData[columnHead.dataProperty] | currency }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'date'">
+                {{
+                  columnData[columnHead.dataProperty]
+                    | date : columnHead.pipeParameters
+                }}
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                {{ columnData[columnHead.dataProperty] }}
+              </ng-container>
+            </ng-container>
+          </span>
         </div>
       </td>
     </tr>

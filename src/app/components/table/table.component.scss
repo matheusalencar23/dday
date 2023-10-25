@@ -9,6 +9,14 @@ $colors: (
   (#56ccf24a #56ccf2)
 );
 
+@mixin defautlTag {
+  border-radius: 10px;
+  padding: 11px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 :host {
   display: block;
   margin: 16px 0;
@@ -23,7 +31,7 @@ $colors: (
         line-height: 19px;
         font-weight: 500;
         color: var(--text-2);
-        padding: 8px;
+        padding: 8px 20px;
         div {
           width: 100%;
           display: flex;
@@ -48,19 +56,38 @@ $colors: (
     }
     tbody {
       td {
-        padding: 8px;
+        padding: 8px 20px;
         text-align: left;
+
+        & > div {
+          &.success,
+          &.warning,
+          &.error {
+            @include defautlTag();
+          }
+
+          &.success {
+            color: #12a474;
+            background-color: #bbf3e0;
+          }
+
+          &.warning {
+            color: #f2994a;
+            background-color: #fff3db;
+          }
+
+          &.error {
+            color: #eb5757;
+            background-color: #ffdbdb;
+          }
+        }
       }
 
       @for $i from 0 through 1000 {
         tr:nth-child(#{$i}) {
           td.id {
             div {
-              padding: 11px 10px;
-              display: flex;
-              border-radius: 10px;
-              justify-content: center;
-              align-items: center;
+              @include defautlTag();
               $key: random(length($colors));
               background-color: nth(nth($colors, $key), 1);
               color: nth(nth($colors, $key), 2);

@@ -6,6 +6,7 @@ import { PageTitleComponent } from 'src/app/components/page-title/page-title.com
 import { DataTableType } from 'src/app/components/table/models/data-table-type';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { Payment } from 'src/app/models/payment';
+import { PaymentStatus } from 'src/app/models/payment-status.enum';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
@@ -20,12 +21,34 @@ export class PaymentComponent implements OnInit {
 
   tableConfig: DataTableType = {
     columns: [
-      { title: 'ID', dataProperty: 'id' },
+      { title: '#', dataProperty: 'id' },
       { title: 'Name', dataProperty: 'name', sortable: true },
-      { title: 'Amount', dataProperty: 'amount' },
-      { title: 'Date', dataProperty: 'date' },
-      { title: 'Status', dataProperty: 'status' },
-      { title: 'Payroll date', dataProperty: 'payrollDate' },
+      {
+        title: 'Amount',
+        dataProperty: 'amount',
+        pipe: 'currency',
+        sortable: true,
+      },
+      {
+        title: 'Date',
+        dataProperty: 'date',
+        pipe: 'date',
+        pipeParameters: 'dd.MM.yyyy',
+        sortable: true,
+      },
+      {
+        title: 'Status',
+        dataProperty: 'status',
+        sortable: true,
+        statusColorFn: this.handleStatusColor,
+      },
+      {
+        title: 'Payroll date',
+        dataProperty: 'payrollDate',
+        pipe: 'date',
+        pipeParameters: 'MMM yyyy',
+        sortable: true,
+      },
     ],
   };
 
@@ -33,5 +56,24 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.payments$ = this.paymentService.getPayments();
+  }
+
+  handleStatusColor(status: PaymentStatus): string {
+    let statusColor = '';
+    switch (status) {
+      case PaymentStatus.COMPLETED:
+        statusColor = 'success';
+        break;
+      case PaymentStatus.PENDING:
+        statusColor = 'warning';
+        break;
+      case PaymentStatus.ERROR:
+        statusColor = 'error';
+        break;
+      default:
+        statusColor = '';
+        break;
+    }
+    return statusColor;
   }
 }
