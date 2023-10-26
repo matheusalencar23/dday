@@ -20,7 +20,7 @@
       >
         <div
           [ngClass]="columnHead?.statusColorFn?.(columnData[columnHead.dataProperty]) || ''"
-          [ngStyle]="columnHead.dataProperty === 'id' ? getColors() : {}"
+          [ngStyle]="columnHead.dataProperty === 'id' ? columnData.colors : {}"
         >
           <span>
             <ng-container [ngSwitch]="columnHead.pipe">
