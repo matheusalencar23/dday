@@ -1,14 +1,3 @@
-$colors: (
-  (#bdd9fe #217efd),
-  (#ffb5364a #ffb536),
-  (#f4cefa #db5aee),
-  (#fbd1c9 #f3654a),
-  (#c5d1df #384455),
-  (#dccefb #895bf1),
-  (#27ae604a #27ae60),
-  (#56ccf24a #56ccf2)
-);
-
 @mixin defautlTag {
   border-radius: 10px;
   padding: 11px 10px;
@@ -86,17 +75,8 @@ $colors: (
         }
       }
 
-      @for $i from 0 through 100 {
-        tr:nth-child(#{$i}) {
-          td.id {
-            div {
-              @include defautlTag();
-              $key: random(length($colors));
-              background-color: nth(nth($colors, $key), 1);
-              color: nth(nth($colors, $key), 2);
-            }
-          }
-        }
+      tr td.id div {
+        @include defautlTag();
       }
     }
   }
