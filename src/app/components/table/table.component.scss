@@ -86,7 +86,7 @@ $colors: (
         }
       }
 
-      @for $i from 0 through 1000 {
+      @for $i from 0 through 100 {
         tr:nth-child(#{$i}) {
           td.id {
             div {
