@@ -18,6 +18,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 })
 export class PaymentComponent implements OnInit {
   payments$: Observable<Payment[]> = new Observable();
+  desc: boolean = false;
 
   tableConfig: DataTableType = {
     columns: [
@@ -75,5 +76,13 @@ export class PaymentComponent implements OnInit {
         break;
     }
     return statusColor;
+  }
+
+  order(sortBy: string): void {
+    this.desc = !this.desc;
+    this.payments$ = this.paymentService.getPayments({
+      sortBy: sortBy as keyof Payment,
+      desc: this.desc,
+    });
   }
 }

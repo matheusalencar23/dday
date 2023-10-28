@@ -4,7 +4,11 @@
       <th *ngFor="let columnHead of tableConfig.columns">
         <div>
           <span>{{ columnHead.title }}</span>
-          <span *ngIf="columnHead.sortable" class="sortable-icons">
+          <span
+            *ngIf="columnHead.sortable"
+            class="sortable-icons"
+            (click)="orderByEmit.emit(columnHead.dataProperty)"
+          >
             <ng-icon name="tablerCaretUp" size="18"></ng-icon>
             <ng-icon name="tablerCaretDown" size="18"></ng-icon>
           </span>

@@ -3,4 +3,5 @@
   *ngIf="payments$ | async as payments"
   [tableConfig]="tableConfig"
   [tableContent]="payments"
+  (orderByEmit)="order($event)"
 />

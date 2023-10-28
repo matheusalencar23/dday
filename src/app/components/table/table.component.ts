@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableType } from './models/data-table-type';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -27,6 +34,8 @@ export class TableComponent implements OnChanges {
   @Input() tableConfig: DataTableType = { columns: [] };
 
   @Input() tableContent: any[] = [];
+
+  @Output() orderByEmit = new EventEmitter<string>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tableContent']) {
