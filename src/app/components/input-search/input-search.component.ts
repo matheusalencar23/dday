@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostBinding,
   Input,
   Output,
   Renderer2,
@@ -35,10 +36,7 @@ export class InputSearchComponent implements ControlValueAccessor {
   protected _hasBorder: boolean = false;
 
   @Input() placeholder: string = '';
-  @Input() set hasBorder(value: boolean) {
-    this._hasBorder = value;
-    if (value) this.renderer.addClass(this.elRef.nativeElement, 'bordered');
-  }
+  @HostBinding('class.bordered') @Input() hasBorder = false;
 
   @Output() blur = new EventEmitter<void>();
 
