@@ -6,6 +6,11 @@
     [(ngModel)]="searchTerm"
     (ngModelChange)="filterByTerm($event)"
   />
+  <dd-select
+    [items]="itensPerPageOptions"
+    [(ngModel)]="filter.itensPerPage"
+    (ngModelChange)="getPayments()"
+  />
 </div>
 <dd-table
   *ngIf="payments$ | async as payments"
