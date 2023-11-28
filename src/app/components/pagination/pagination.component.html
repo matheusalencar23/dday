@@ -1,0 +1,7 @@
+<button (click)="previous()" [disabled]="page === 1">
+  <ng-icon name="heroChevronLeft" size="24" />
+</button>
+<button>{{ page }}</button>
+<button (click)="next()" [disabled]="page >= total / itensPerPage">
+  <ng-icon name="heroChevronRight" size="24" />
+</button>

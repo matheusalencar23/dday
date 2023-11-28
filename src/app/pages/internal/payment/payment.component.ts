@@ -10,7 +10,9 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { TABLE_PAYMENTS_CONFIG } from './data-table-payments-config';
 import { InputSearchComponent } from 'src/app/components/input-search/input-search.component';
 import { SelectComponent } from 'src/app/components/select/select.component';
-import { DefaultOption } from 'src/app/components/select/model/options';
+import { DefaultOption } from 'src/app/components/select/models/options';
+import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
+import { Reponse } from 'src/app/models/response';
 
 @Component({
   selector: 'app-payment',
@@ -24,23 +26,24 @@ import { DefaultOption } from 'src/app/components/select/model/options';
     TableComponent,
     InputSearchComponent,
     SelectComponent,
+    PaginationComponent,
   ],
 })
 export class PaymentComponent implements OnInit {
-  payments$: Observable<Payment[]> = new Observable();
+  payments$: Observable<Reponse<Payment[]>> = new Observable();
 
   tableConfig = TABLE_PAYMENTS_CONFIG;
 
   filter: PaymentFilter = {
     page: 1,
-    itensPerPage: 8,
+    itensPerPage: 5,
     sortBy: '',
     desc: true,
   };
 
   itensPerPageOptions: DefaultOption[] = [
     { value: 5, label: 'Show 5' },
-    { value: 8, label: 'Show 8' },
+    { value: 10, label: 'Show 10' },
     { value: 15, label: 'Show 15' },
     { value: 25, label: 'Show 25' },
   ];
@@ -67,5 +70,10 @@ export class PaymentComponent implements OnInit {
 
   getPayments(): void {
     this.payments$ = this.paymentService.getPayments(this.filter);
+  }
+
+  pagination(event: { page: number }): void {
+    this.filter.page = event.page;
+    this.getPayments();
   }
 }

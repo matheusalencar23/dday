@@ -12,9 +12,17 @@
     (ngModelChange)="getPayments()"
   />
 </div>
-<dd-table
-  *ngIf="payments$ | async as payments"
-  [tableConfig]="tableConfig"
-  [tableContent]="payments"
-  (orderByEmit)="order($event)"
-/>
+<ng-container *ngIf="payments$ | async as payments">
+  <dd-table
+    *ngIf="payments"
+    [tableConfig]="tableConfig"
+    [tableContent]="payments.data"
+    (orderByEmit)="order($event)"
+  />
+  <dd-pagination
+    [page]="filter.page"
+    [itensPerPage]="filter.itensPerPage"
+    [total]="payments.total"
+    (pageEvent)="pagination($event)"
+  />
+</ng-container>
