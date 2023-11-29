@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroChevronLeft, heroChevronRight } from '@ng-icons/heroicons/outline';
+import {
+  heroChevronDoubleLeft,
+  heroChevronDoubleRight,
+  heroChevronLeft,
+  heroChevronRight,
+} from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'dd-pagination',
@@ -9,7 +14,14 @@ import { heroChevronLeft, heroChevronRight } from '@ng-icons/heroicons/outline';
   imports: [CommonModule, NgIconComponent],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
-  providers: [provideIcons({ heroChevronRight, heroChevronLeft })],
+  providers: [
+    provideIcons({
+      heroChevronRight,
+      heroChevronLeft,
+      heroChevronDoubleLeft,
+      heroChevronDoubleRight,
+    }),
+  ],
 })
 export class PaginationComponent {
   @Input() page: number = 1;
@@ -24,6 +36,16 @@ export class PaginationComponent {
 
   previous(): void {
     this.page--;
+    this.pageEvent.emit({ page: this.page });
+  }
+
+  last(): void {
+    this.page = Math.ceil(this.total / this.itensPerPage);
+    this.pageEvent.emit({ page: this.page });
+  }
+
+  first(): void {
+    this.page = 1;
     this.pageEvent.emit({ page: this.page });
   }
 }
