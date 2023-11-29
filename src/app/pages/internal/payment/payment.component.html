@@ -9,7 +9,7 @@
   <dd-select
     [items]="itensPerPageOptions"
     [(ngModel)]="filter.itensPerPage"
-    (ngModelChange)="getPayments()"
+    (ngModelChange)="showPayments()"
   />
 </div>
 <ng-container *ngIf="payments$ | async as payments">

@@ -68,6 +68,11 @@ export class PaymentComponent implements OnInit {
     this.getPayments();
   }
 
+  showPayments(): void {
+    this.filter.page = 1;
+    this.getPayments();
+  }
+
   getPayments(): void {
     this.payments$ = this.paymentService.getPayments(this.filter);
   }
