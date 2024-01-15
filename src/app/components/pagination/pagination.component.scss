@@ -4,22 +4,35 @@
   width: 100%;
   align-items: center;
   margin-bottom: 1rem;
-  gap: 0.5rem;
+  padding-right: 2rem;
+  flex-direction: row;
+  row-gap: 0.5rem;
 
-  button {
-    width: 2.625rem;
-    height: 2.625rem;
-    background: transparent;
-    border: 1px solid #000;
-    border-radius: 0.75rem;
+  .buttons {
     display: flex;
+    gap: 0.5rem;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    flex: 1;
 
-    &:disabled {
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      cursor: default;
+    button {
+      width: 2.625rem;
+      height: 2.625rem;
+      background: transparent;
+      border: 1px solid #000;
+      border-radius: 0.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:disabled {
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        cursor: default;
+      }
     }
+  }
+
+  @media screen and (max-width: 576px) {
+    flex-direction: column;
   }
 }
