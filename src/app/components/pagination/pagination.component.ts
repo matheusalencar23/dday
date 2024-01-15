@@ -48,4 +48,13 @@ export class PaginationComponent {
     this.page = 1;
     this.pageEvent.emit({ page: this.page });
   }
+
+  helperText(): string {
+    let text = `${this.page * this.itensPerPage - this.itensPerPage + 1} - `;
+    if (this.itensPerPage * this.page < this.total)
+      text += `${this.itensPerPage * this.page}`;
+    else text += `${this.total}`;
+    text += ` of ${this.total}`;
+    return text;
+  }
 }

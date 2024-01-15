@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject, debounceTime, startWith } from 'rxjs';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { Payment } from 'src/app/models/payment';
@@ -31,7 +31,8 @@ import { Reponse } from 'src/app/models/response';
 })
 export class PaymentComponent implements OnInit {
   payments$: Observable<Reponse<Payment[]>> = new Observable();
-
+  saerchTerm$ = new Subject<string>();
+  searchTerm = '';
   tableConfig = TABLE_PAYMENTS_CONFIG;
 
   filter: PaymentFilter = {
@@ -48,24 +49,26 @@ export class PaymentComponent implements OnInit {
     { value: 25, label: 'Show 25' },
   ];
 
-  searchTerm = '';
-
   constructor(private paymentService: PaymentService) {}
 
   ngOnInit(): void {
-    this.getPayments();
+    this.saerchTerm$.pipe(debounceTime(400), startWith('')).subscribe({
+      next: (term: string) => {
+        this.filter.searchTerm = term;
+        this.getPayments();
+      },
+    });
   }
 
   order(sortBy: string): void {
     this.filter.sortBy = sortBy;
     this.filter.desc = !this.filter.desc;
-
+    this.filter.page = 1;
     this.getPayments();
   }
 
   filterByTerm(term: string): void {
-    this.filter.searchTerm = term;
-    this.getPayments();
+    this.saerchTerm$.next(term);
   }
 
   showPayments(): void {

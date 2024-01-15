@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, delay, map } from 'rxjs';
 import { Payment } from '../models/payment';
 import { PAYMENTS } from '../mocks/payment';
 import { PaymentFilter } from '../models/payment-filter';
@@ -14,15 +14,17 @@ export class PaymentService {
       observer.next({ data: PAYMENTS, total: PAYMENTS.length });
       observer.complete();
     }).pipe(
+      delay(500),
       map((response) => {
         if (filter?.searchTerm) {
+          const data = response.data.filter((item) =>
+            item.name
+              .toLowerCase()
+              .includes(filter?.searchTerm?.toLowerCase() as string)
+          );
           return {
-            total: response.total,
-            data: response.data.filter((item) =>
-              item.name
-                .toLowerCase()
-                .includes(filter?.searchTerm?.toLowerCase() as string)
-            ),
+            total: data.length,
+            data,
           };
         }
         return response;
