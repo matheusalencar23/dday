@@ -1,9 +1,11 @@
 name: Tag version
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - master
+    types:
+      - closed
 
 jobs:
   if_merged_create_tag:
