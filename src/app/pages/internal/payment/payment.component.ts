@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable, Subject, debounceTime, startWith } from 'rxjs';
+import { Observable, Subject, debounceTime, finalize, startWith } from 'rxjs';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { Payment } from 'src/app/models/payment';
@@ -13,6 +13,7 @@ import { SelectComponent } from 'src/app/components/select/select.component';
 import { DefaultOption } from 'src/app/components/select/models/options';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { Reponse } from 'src/app/models/response';
+import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-payment',
@@ -27,6 +28,7 @@ import { Reponse } from 'src/app/models/response';
     InputSearchComponent,
     SelectComponent,
     PaginationComponent,
+    LoadingSpinnerComponent,
   ],
 })
 export class PaymentComponent implements OnInit {
@@ -34,6 +36,7 @@ export class PaymentComponent implements OnInit {
   saerchTerm$ = new Subject<string>();
   searchTerm = '';
   tableConfig = TABLE_PAYMENTS_CONFIG;
+  loading = false;
 
   filter: PaymentFilter = {
     page: 1,
@@ -77,7 +80,10 @@ export class PaymentComponent implements OnInit {
   }
 
   getPayments(): void {
-    this.payments$ = this.paymentService.getPayments(this.filter);
+    this.loading = true;
+    this.payments$ = this.paymentService
+      .getPayments(this.filter)
+      .pipe(finalize(() => (this.loading = false)));
   }
 
   pagination(event: { page: number }): void {

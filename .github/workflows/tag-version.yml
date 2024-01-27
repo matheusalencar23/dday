@@ -2,12 +2,30 @@ name: Tag version
 
 on:
   pull_request:
-    types:
-      - closed
+    branches:
+      - master
 
 jobs:
-  if_merged:
+  if_merged_create_tag:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "The PR was merged"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+            git config --global user.email "you@example.com"
+            git config --global user.name "Your Name"
+
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "::set-output name=tag::$latest_tag"
+
+      - name: Create New Tag
+        id: create_tag
+        run: |
+          echo "Last tag is ${{ steps.get_latest_tag.outputs.tag }}"

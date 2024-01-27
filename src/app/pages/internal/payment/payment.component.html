@@ -12,6 +12,7 @@
     (ngModelChange)="showPayments()"
   />
 </div>
+<dd-loading-spinner *ngIf="loading" />
 <ng-container *ngIf="payments$ | async as payments">
   <dd-table
     *ngIf="payments"
