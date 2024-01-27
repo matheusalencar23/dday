@@ -27,7 +27,7 @@ jobs:
         id: get_latest_tag
         run: |
           latest_tag=$(git describe --tags --abbrev=0)
-          echo "::set-output name=tag::$latest_tag"
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
 
       - name: Create New Tag
         id: create_tag
