@@ -21,6 +21,7 @@ jobs:
 
       - name: Set up Git
         run: |
+          echo "Github actor ${{ github.actor }}"
           git config --global user.email "matheusalencar6942@gmail.com"
           git config --global user.name "Matheus Alencar"
 
@@ -39,6 +40,8 @@ jobs:
           minor=$(echo $current_tag | cut -d'.' -f2)
           patch=$(echo $current_tag | cut -d'.' -f3)
           next_version="v$major.$((minor + 1)).$patch"
+          echo "Origin branch is ${{ github.head_ref }}"
+          echo "Destiny branch is ${{ github.base_ref }}"
           echo "new_tag=$next_version" >> $GITHUB_OUTPUT
 
       - name: Create New Tag
@@ -47,7 +50,7 @@ jobs:
           git tag $tag
           echo "Next tag is $tag"
 
-      - name: Push New Tag
-        run: |
-          git push origin ${{ steps.generate_tag.outputs.new_tag }}
-          echo "Tag ${{ steps.generate_tag.outputs.new_tag }} was pushed"
+      # - name: Push New Tag
+      #   run: |
+      #     git push origin ${{ steps.generate_tag.outputs.new_tag }}
+      #     echo "Tag ${{ steps.generate_tag.outputs.new_tag }} was pushed"
