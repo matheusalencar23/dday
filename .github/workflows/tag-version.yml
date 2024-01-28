@@ -10,9 +10,16 @@ on:
 
 jobs:
   if_merged_create_tag:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true &&
+      (
+        startsWith(github.event.pull_request.head.ref, 'dev') ||
+        startsWith(github.event.pull_request.head.ref, 'release') ||
+        startsWith(github.event.pull_request.head.ref, 'bugfix') ||
+        startsWith(github.event.pull_request.head.ref, 'hotfix')
+      )
 
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -53,7 +60,7 @@ jobs:
           git tag $tag
           echo "Next tag is $tag"
 
-      # - name: Push New Tag
-      #   run: |
-      #     git push origin ${{ steps.generate_tag.outputs.new_tag }}
-      #     echo "Tag ${{ steps.generate_tag.outputs.new_tag }} was pushed"
+      - name: Push New Tag
+        run: |
+          git push origin ${{ steps.generate_tag.outputs.new_tag }}
+          echo "Tag ${{ steps.generate_tag.outputs.new_tag }} was pushed"
