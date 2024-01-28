@@ -20,8 +20,8 @@ jobs:
 
       - name: Set up Git
         run: |
-            git config --global user.email "you@example.com"
-            git config --global user.name "Your Name"
+            git config --global user.email "matheusalencar6942@gmail.com"
+            git config --global user.name "Matheus Alencar
 
       - name: Get Latest Tag
         id: get_latest_tag
@@ -42,5 +42,11 @@ jobs:
 
       - name: Create New Tag
         run: |
+          git tag $new_tag
           echo "Next tag is ${{ steps.generate_tag.outputs.new_tag }}"
+
+      - name: Push New Tag
+        run: |
+          git push origin ${{ steps.generate_tag.outputs.new_tag }}
+          echo "Tag ${{ steps.generate_tag.outputs.new_tag }} was pushed"
 
