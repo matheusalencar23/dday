@@ -32,11 +32,11 @@ jobs:
       - name: Generate New Tag
         id: generate_tag
         run: |
-          latest_tag=$( steps.get_latest_tag.outputs.tag )
-          echo "Last tag is ${{ latest_tag }}"
-          major=$(echo $latest_tag | cut -d'.' -f1 | cut -c2-)
-          minor=$(echo $latest_tag | cut -d'.' -f2)
-          patch=$(echo $latest_tag | cut -d'.' -f3)
+          tag=$(steps.get_latest_tag.outputs.tag)
+          echo "Last tag is ${{ tag }}"
+          major=$(echo $tag | cut -d'.' -f1 | cut -c2-)
+          minor=$(echo $tag | cut -d'.' -f2)
+          patch=$(echo $tag | cut -d'.' -f3)
           next_version="v$(( major )).$(( minor + 1 )).$(( patch ))"
           echo "next_tag=$next_version" >> $GITHUB_OUTPUT
 
