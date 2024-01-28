@@ -33,18 +33,18 @@ jobs:
         id: generate_tag
         run: |
           current_tag="${{steps.get_latest_tag.outputs.tag}}"
-          echo "Last tag is $(( current_tag ))"
-          major=$(echo $current_tag | cut -d'.' -f1 | cut -c2-)
+          echo "Last tag is ${{current_tag}}"
+          major=$(echo $current_tag | cut -d'.' -f1 | sed 's/v//')
           minor=$(echo $current_tag | cut -d'.' -f2)
           patch=$(echo $current_tag | cut -d'.' -f3)
-          next_version="v$(( major )).$(( minor + 1 )).$(( patch ))"
+          next_version="v${{major}}.$((minor + 1)).${{patch}}"
           echo "new_tag=$next_version" >> $GITHUB_OUTPUT
 
       - name: Create New Tag
         run: |
           tag="${{steps.generate_tag.outputs.new_tag}}"
           git tag $tag
-          echo "Next tag is $(( tag ))"
+          echo "Next tag is $tag"
 
       - name: Push New Tag
         run: |
