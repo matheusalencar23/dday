@@ -21,7 +21,7 @@ jobs:
       - name: Set up Git
         run: |
             git config --global user.email "matheusalencar6942@gmail.com"
-            git config --global user.name "Matheus Alencar
+            git config --global user.name "Matheus Alencar"
 
       - name: Get Latest Tag
         id: get_latest_tag
