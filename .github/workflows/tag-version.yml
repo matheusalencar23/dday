@@ -34,10 +34,10 @@ jobs:
         run: |
           major=$(echo $latest_tag | cut -d'.' -f1)
           minor=$(echo $latest_tag | cut -d'.' -f2)
-          minor=$(echo $latest_tag | cut -d'.' -f3)
+          patch=$(echo $latest_tag | cut -d'.' -f3)
           echo "Last tag is ${{ steps.get_latest_tag.outputs.tag }}"
-          echo "Major is $major"
-          echo "Minor tag is $minor"
-          echo "Patch tag is $patch"
-          echo "Next version is $major.{{ $minor + 1 }}.$patch"
+          echo "Major is $(( major ))"
+          echo "Minor tag is $(( minor ))"
+          echo "Patch tag is $(( patch ))"
+          echo "Next version is $major.$(( minor + 1 )).$patch"
 
