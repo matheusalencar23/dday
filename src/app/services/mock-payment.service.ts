@@ -4,11 +4,10 @@ import { Payment } from '../models/payment';
 import { PAYMENTS } from '../mocks/payment';
 import { PaymentFilter } from '../models/payment-filter';
 import { Reponse } from '../models/response';
+import { PaymentService } from '../models/payment-service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class PaymentService {
+@Injectable()
+export class MockPaymentService implements PaymentService {
   getPayments(filter: PaymentFilter | null): Observable<Reponse<Payment[]>> {
     return new Observable<Reponse<Payment[]>>((observer) => {
       observer.next({ data: PAYMENTS, total: PAYMENTS.length });
