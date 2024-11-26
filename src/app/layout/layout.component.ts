@@ -10,13 +10,7 @@ import { InputSearchComponent } from '../components/input-search/input-search.co
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    LogoComponent,
-    SidebarComponent,
-    HeaderComponent,
-    InputSearchComponent,
-  ],
+  imports: [CommonModule, SidebarComponent, HeaderComponent],
 })
 export class LayoutComponent {
   sidebarIsOpen: boolean = false;
