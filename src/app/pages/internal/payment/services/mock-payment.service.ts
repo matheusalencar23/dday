@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, map } from 'rxjs';
-import { Payment } from '../models/payment';
-import { PAYMENTS } from '../mocks/payment';
-import { PaymentFilter } from '../models/payment-filter';
-import { Reponse } from '../models/response';
+import { PAYMENTS } from '../../../../mocks/payment';
+import { Reponse } from '../../../../models/response';
 import { PaymentService } from '../models/payment-service';
+import { Payment } from '../models/payment';
+import { PaymentFilter } from '../models/payment-filter';
 
 @Injectable()
 export class MockPaymentService implements PaymentService {

@@ -1,5 +1,5 @@
-import { Payment } from '../models/payment';
-import { PaymentStatus } from '../models/payment-status.enum';
+import { Payment } from '../pages/internal/payment/models/payment';
+import { PaymentStatus } from '../pages/internal/payment/models/payment-status.enum';
 
 export const PAYMENTS: Payment[] = [
   {
