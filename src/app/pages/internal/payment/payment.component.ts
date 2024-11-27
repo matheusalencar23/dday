@@ -4,9 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Observable, Subject, debounceTime, finalize, startWith } from 'rxjs';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
 import { TableComponent } from 'src/app/components/table/table.component';
-import { Payment } from 'src/app/models/payment';
-import { PaymentFilter } from 'src/app/models/payment-filter';
-import { MockPaymentService } from 'src/app/services/mock-payment.service';
+import { MockPaymentService } from 'src/app/pages/internal/payment/services/mock-payment.service';
 import { TABLE_PAYMENTS_CONFIG } from './data-table-payments-config';
 import { InputSearchComponent } from 'src/app/components/input-search/input-search.component';
 import { SelectComponent } from 'src/app/components/select/select.component';
@@ -14,7 +12,9 @@ import { DefaultOption } from 'src/app/components/select/models/options';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { Reponse } from 'src/app/models/response';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
-import { PaymentService } from 'src/app/models/payment-service';
+import { PaymentService } from './models/payment-service';
+import { PaymentFilter } from './models/payment-filter';
+import { Payment } from './models/payment';
 
 @Component({
   selector: 'app-payment',
@@ -30,6 +30,12 @@ import { PaymentService } from 'src/app/models/payment-service';
     SelectComponent,
     PaginationComponent,
     LoadingSpinnerComponent,
+  ],
+  providers: [
+    {
+      provide: 'PAYMENT_SERVICE',
+      useClass: MockPaymentService,
+    },
   ],
 })
 export class PaymentComponent implements OnInit {

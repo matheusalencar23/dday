@@ -1,5 +1,5 @@
 import { DataTableType } from 'src/app/components/table/models/data-table-type';
-import { PaymentStatus } from 'src/app/models/payment-status.enum';
+import { PaymentStatus } from './models/payment-status.enum';
 
 export const TABLE_PAYMENTS_CONFIG: DataTableType = {
   columns: [
