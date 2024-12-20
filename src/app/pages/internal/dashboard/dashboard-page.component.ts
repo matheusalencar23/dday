@@ -7,6 +7,7 @@ import { RequestPerDayChartComponent } from './components/request-per-day-chart/
 import { AvailableLiquidityChartComponent } from './components/available-liquidity-chart/available-liquidity-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { NGX_ECHARTS_CONFIG } from 'ngx-echarts';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './dashboard-page.component.html',
@@ -19,6 +20,7 @@ import { NGX_ECHARTS_CONFIG } from 'ngx-echarts';
     RequestPerDayChartComponent,
     AvailableLiquidityChartComponent,
     BarChartComponent,
+    TranslateModule,
   ],
   providers: [
     {
