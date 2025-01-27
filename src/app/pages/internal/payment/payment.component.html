@@ -18,7 +18,9 @@
     *ngIf="payments"
     [tableConfig]="tableConfig"
     [tableContent]="payments.data"
-    (orderByEmit)="order($event)"
+    (orderBy)="order($event)"
+    [dataSortProperty]="filter.sortBy"
+    [desc]="filter.desc"
   />
   <dd-pagination
     [page]="filter.page"

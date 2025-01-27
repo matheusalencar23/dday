@@ -35,7 +35,11 @@ export class TableComponent implements OnChanges {
 
   @Input() tableContent: any[] = [];
 
-  @Output() orderByEmit = new EventEmitter<string>();
+  @Input() dataSortProperty: string = '';
+
+  @Input() desc: boolean = false;
+
+  @Output() orderBy = new EventEmitter<string>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['tableContent']) {
@@ -52,5 +56,18 @@ export class TableComponent implements OnChanges {
       backgroundColor: this.colors[randomIndex].bgColor,
       color: this.colors[randomIndex].color,
     };
+  }
+
+  getColorIcon(property: string, order: boolean): string {
+    console.log(property, this.dataSortProperty, order, this.desc);
+
+    if (property === this.dataSortProperty && order === this.desc)
+      return 'var(--text-1)';
+
+    return '';
+  }
+
+  orderByEmit(property: string): void {
+    this.orderBy.emit(property);
   }
 }

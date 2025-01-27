@@ -7,10 +7,18 @@
           <span
             *ngIf="columnHead.sortable"
             class="sortable-icons"
-            (click)="orderByEmit.emit(columnHead.dataProperty)"
+            (click)="orderByEmit(columnHead.dataProperty)"
           >
-            <ng-icon name="tablerCaretUp" size="18"></ng-icon>
-            <ng-icon name="tablerCaretDown" size="18"></ng-icon>
+            <ng-icon
+              name="tablerCaretUp"
+              size="18"
+              [color]="getColorIcon(columnHead.dataProperty, false)"
+            ></ng-icon>
+            <ng-icon
+              name="tablerCaretDown"
+              size="18"
+              [color]="getColorIcon(columnHead.dataProperty, true)"
+            ></ng-icon>
           </span>
         </div>
       </th>
@@ -23,8 +31,8 @@
         [class.id]="columnHead.dataProperty === 'id'"
       >
         <div
-          [ngClass]="columnHead?.statusColorFn?.(columnData[columnHead.dataProperty]) || ''"
-          [ngStyle]="columnHead.dataProperty === 'id' ? columnData.colors : {}"
+          [class]="columnHead?.statusColorFn?.(columnData[columnHead.dataProperty]) || ''"
+          [style]="columnHead.dataProperty === 'id' ? columnData.colors : {}"
         >
           <span>
             <ng-container [ngSwitch]="columnHead.pipe">
