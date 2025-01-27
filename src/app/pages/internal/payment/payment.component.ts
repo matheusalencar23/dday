@@ -73,8 +73,12 @@ export class PaymentComponent implements OnInit {
   }
 
   order(sortBy: string): void {
+    if (this.filter.sortBy === sortBy) {
+      this.filter.desc = !this.filter.desc;
+    } else {
+      this.filter.desc = true;
+    }
     this.filter.sortBy = sortBy;
-    this.filter.desc = !this.filter.desc;
     this.filter.page = 1;
     this.getPayments();
   }
