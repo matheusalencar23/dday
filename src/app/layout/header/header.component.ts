@@ -9,7 +9,9 @@ import {
 } from '@ng-icons/heroicons/outline';
 import { heroBars3Solid } from '@ng-icons/heroicons/solid';
 import { ModalService } from 'src/app/services/modal.service';
-import { LogoComponent } from 'src/app/components/logo/logo.component';
+import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'dd-header',
@@ -32,7 +34,7 @@ export class HeaderComponent {
   constructor(private modalService: ModalService) {}
 
   openLanguageModal(): void {
-    this.modalService.open(LogoComponent, {
+    this.modalService.open(SelectLanguageComponent, {
       animations: {
         modal: {
           enter: 'enter-scaling 0.3s ease-out',
