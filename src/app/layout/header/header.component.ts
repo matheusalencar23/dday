@@ -2,8 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { InputSearchComponent } from '../../components/input-search/input-search.component';
-import { heroInformationCircle, heroBell } from '@ng-icons/heroicons/outline';
+import {
+  heroInformationCircle,
+  heroBell,
+  heroLanguage,
+} from '@ng-icons/heroicons/outline';
 import { heroBars3Solid } from '@ng-icons/heroicons/solid';
+import { ModalService } from 'src/app/services/modal.service';
+import { LogoComponent } from 'src/app/components/logo/logo.component';
 
 @Component({
   selector: 'dd-header',
@@ -12,9 +18,34 @@ import { heroBars3Solid } from '@ng-icons/heroicons/solid';
   standalone: true,
   imports: [CommonModule, NgIconComponent, InputSearchComponent],
   providers: [
-    provideIcons({ heroBars3Solid, heroInformationCircle, heroBell }),
+    provideIcons({
+      heroBars3Solid,
+      heroInformationCircle,
+      heroBell,
+      heroLanguage,
+    }),
   ],
 })
 export class HeaderComponent {
   @Output() openSidebar = new EventEmitter<void>();
+
+  constructor(private modalService: ModalService) {}
+
+  openLanguageModal(): void {
+    this.modalService.open(LogoComponent, {
+      animations: {
+        modal: {
+          enter: 'enter-scaling 0.3s ease-out',
+          leave: 'fade-out 0.3s forwards',
+        },
+        overlay: {
+          enter: 'fade-in 1s',
+          leave: 'fade-out 0.3s forwards',
+        },
+      },
+      size: {
+        width: '40rem',
+      },
+    });
+  }
 }
