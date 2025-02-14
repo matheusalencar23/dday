@@ -10,8 +10,6 @@ import {
 import { heroBars3Solid } from '@ng-icons/heroicons/solid';
 import { ModalService } from 'src/app/services/modal.service';
 import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
-import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'dd-header',

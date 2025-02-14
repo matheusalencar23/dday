@@ -1,5 +1,25 @@
 <h6>Choose a language</h6>
 <ul>
-  <li (click)="setLanguage('pt')">Portuguese</li>
-  <li (click)="setLanguage('en')">English</li>
+  <li>
+    <button (click)="setLanguage('pt')">
+      Portuguese
+      <ng-icon
+        *ngIf="getLanguage() === 'pt'"
+        name="heroCheck"
+        size="22"
+        color="var(--green-1)"
+      ></ng-icon>
+    </button>
+  </li>
+  <li>
+    <button (click)="setLanguage('en')">
+      English
+      <ng-icon
+        *ngIf="getLanguage() === 'en'"
+        name="heroCheck"
+        size="22"
+        color="var(--green-1)"
+      ></ng-icon>
+    </button>
+  </li>
 </ul>
