@@ -12,7 +12,10 @@ import { DefaultOption } from 'src/app/components/select/models/options';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { Reponse } from 'src/app/models/response';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
-import { PaymentService } from './models/payment-service';
+import {
+  PAYMENT_SERVICE_TOKEN,
+  PaymentService,
+} from './models/payment-service';
 import { PaymentFilter } from './models/payment-filter';
 import { Payment } from './models/payment';
 
@@ -33,7 +36,7 @@ import { Payment } from './models/payment';
   ],
   providers: [
     {
-      provide: 'PAYMENT_SERVICE',
+      provide: PAYMENT_SERVICE_TOKEN,
       useClass: MockPaymentService,
     },
   ],
@@ -60,7 +63,7 @@ export class PaymentComponent implements OnInit {
   ];
 
   constructor(
-    @Inject('PAYMENT_SERVICE') private paymentService: PaymentService
+    @Inject(PAYMENT_SERVICE_TOKEN) private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
