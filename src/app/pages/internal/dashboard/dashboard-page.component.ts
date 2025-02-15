@@ -32,25 +32,25 @@ import { TranslateModule } from '@ngx-translate/core';
 export class DashboardPageComponent {
   cardsData: CardInfo[] = [
     {
-      title: 'Advance payment',
+      title: 'app.dashboard.cards.advance-payment',
       value: 31998,
       isCurrency: true,
       percent: 13,
     },
     {
-      title: 'Avarage amount requested',
+      title: 'app.dashboard.cards.average-amount-requested',
       value: 375113.11,
       isCurrency: true,
       percent: 1.1,
     },
     {
-      title: 'Request number',
+      title: 'app.dashboard.cards.request-number',
       value: 130,
       isCurrency: false,
       percent: -5,
     },
     {
-      title: 'New account requests',
+      title: 'app.dashboard.cards.new-account-requests',
       value: 12,
       isCurrency: false,
       percent: -31,

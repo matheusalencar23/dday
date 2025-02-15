@@ -10,13 +10,19 @@ import {
 import { heroBars3Solid } from '@ng-icons/heroicons/solid';
 import { ModalService } from 'src/app/services/modal.service';
 import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'dd-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgIconComponent, InputSearchComponent],
+  imports: [
+    CommonModule,
+    NgIconComponent,
+    InputSearchComponent,
+    TranslateModule,
+  ],
   providers: [
     provideIcons({
       heroBars3Solid,

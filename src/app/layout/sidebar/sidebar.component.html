@@ -20,7 +20,7 @@
       (click)="closeSidebar.emit()"
     >
       <ng-icon [name]="item.icon" size="32"></ng-icon>
-      <span>{{ item.label }}</span>
+      <span>{{ item.label | translate }}</span>
     </li>
   </ul>
 </aside>

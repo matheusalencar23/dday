@@ -1,7 +1,21 @@
 {
   "app": {
+    "search-placeholder": "Pesquisar...",
+    "menu": {
+      "dashboard": "Painel de Controle",
+      "payment": "Pagamento",
+      "employees": "Funcionários",
+      "departments": "Departamentos",
+      "liquidity": "Liquidez"
+    },
     "dashboard": {
-      "title": "Visão geral"
+      "title": "Visão Geral",
+      "cards": {
+        "advance-payment": "Adiantamento de pagamento",
+        "average-amount-requested": "Valor médio solicitado",
+        "request-number": "Número de solicitações",
+        "new-account-requests": "Novas solicitações de conta"
+      }
     }
   }
 }

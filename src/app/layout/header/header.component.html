@@ -5,7 +5,9 @@
     size="22"
     (click)="openSidebar.emit()"
   ></ng-icon>
-  <dd-input-search placeholder="Search..."></dd-input-search>
+  <dd-input-search
+    [placeholder]="'app.search-placeholder' | translate"
+  ></dd-input-search>
   <div class="header-actions">
     <ng-icon
       name="heroInformationCircle"
