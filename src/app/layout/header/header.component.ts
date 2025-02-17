@@ -39,19 +39,7 @@ export class HeaderComponent {
 
   openLanguageModal(): void {
     this.modalService.open(SelectLanguageComponent, {
-      animations: {
-        modal: {
-          enter: 'enter-scaling 0.3s ease-out',
-          leave: 'fade-out 0.3s forwards',
-        },
-        overlay: {
-          enter: 'fade-in 1s',
-          leave: 'fade-out 0.3s forwards',
-        },
-      },
-      size: {
-        width: '40rem',
-      },
+      width: '40rem',
     });
   }
 }

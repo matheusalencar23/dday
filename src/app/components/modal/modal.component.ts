@@ -21,10 +21,7 @@ export class ModalComponent implements AfterViewInit {
   @ViewChild('modal') modal!: ElementRef<HTMLDivElement>;
   @ViewChild('overlay') overlay!: ElementRef<HTMLDivElement>;
   options!: ModalOptions | undefined;
-  modalAnimationEnd!: Observable<Event>;
-  modalLeaveAnimation!: string;
-  overlayLeaveAnimation!: string;
-  overlayAnimationEnd!: Observable<Event>;
+
   modalLeaveTiming!: number;
   overlayLeaveTiming!: number;
 
@@ -45,41 +42,20 @@ export class ModalComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.options = this.modalService.options;
     this.addOptions();
-    this.addEnterAnimations();
-  }
-
-  addEnterAnimations() {
-    this.modal.nativeElement.style.animation =
-      this.options?.animations?.modal?.enter || '';
-    this.overlay.nativeElement.style.animation =
-      this.options?.animations?.overlay?.enter || '';
   }
 
   addOptions() {
-    this.modal.nativeElement.style.minWidth =
-      this.options?.size?.minWidth || 'auto';
-    this.modal.nativeElement.style.width = this.options?.size?.width || 'auto';
-    this.modal.nativeElement.style.maxWidth =
-      this.options?.size?.maxWidth || 'auto';
+    this.modal.nativeElement.style.minWidth = this.options?.minWidth || 'auto';
+    this.modal.nativeElement.style.width = this.options?.width || 'auto';
+    this.modal.nativeElement.style.maxWidth = this.options?.maxWidth || 'auto';
     this.modal.nativeElement.style.minHeight =
-      this.options?.size?.minHeight || 'auto';
-    this.modal.nativeElement.style.height =
-      this.options?.size?.height || 'auto';
+      this.options?.minHeight || 'auto';
+    this.modal.nativeElement.style.height = this.options?.height || 'auto';
     this.modal.nativeElement.style.maxHeight =
-      this.options?.size?.maxHeight || 'auto';
-
-    this.modalLeaveAnimation = this.options?.animations?.modal?.leave || '';
-    this.overlayLeaveAnimation = this.options?.animations?.overlay?.leave || '';
-    this.modalAnimationEnd = this.animationendEvent(this.modal.nativeElement);
-    this.overlayAnimationEnd = this.animationendEvent(
-      this.overlay.nativeElement
-    );
-
-    this.modalLeaveTiming = this.getAnimationTime(this.modalLeaveAnimation);
-    this.overlayLeaveTiming = this.getAnimationTime(this.overlayLeaveAnimation);
+      this.options?.maxHeight || 'auto';
   }
 
-  animationendEvent(element: HTMLDivElement) {
+  animationendEvent(element: HTMLDivElement): Observable<Event> {
     return fromEvent(element, 'animationend');
   }
 
@@ -90,56 +66,8 @@ export class ModalComponent implements AfterViewInit {
   }
 
   close() {
-    this.modal.nativeElement.style.animation = this.modalLeaveAnimation;
-    this.overlay.nativeElement.style.animation = this.overlayLeaveAnimation;
-
-    if (
-      !this.options?.animations?.modal?.leave &&
-      !this.options?.animations?.overlay?.leave
-    ) {
-      this.modalService.options = undefined;
-      this.element.nativeElement.remove();
-      return;
-    }
-
-    this.removeElementIfNoAnimation(
-      this.modal.nativeElement,
-      this.modalLeaveAnimation
-    );
-    this.removeElementIfNoAnimation(
-      this.overlay.nativeElement,
-      this.overlayLeaveAnimation
-    );
-
-    if (this.modalLeaveTiming > this.overlayLeaveTiming) {
-      this.modalAnimationEnd.subscribe(() => {
-        this.element.nativeElement.remove();
-      });
-    } else if (this.modalLeaveTiming < this.overlayLeaveTiming) {
-      this.overlayAnimationEnd.subscribe(() => {
-        this.element.nativeElement.remove();
-      });
-    } else {
-      zip(this.modalAnimationEnd, this.overlayAnimationEnd).subscribe(() => {
-        this.element.nativeElement.remove();
-      });
-    }
-
     this.modalService.options = undefined;
-  }
-
-  getAnimationTime(animation: string) {
-    // Example animation = 'fade-in 0.8s'
-    let animationTime = 0;
-    const splittedAnimation = animation.split(' ');
-    for (const expression of splittedAnimation) {
-      const currentValue = +expression.replace(/s$/, '');
-      if (!isNaN(currentValue)) {
-        animationTime = currentValue;
-        break;
-      }
-    }
-
-    return animationTime;
+    this.element.nativeElement.remove();
+    return;
   }
 }

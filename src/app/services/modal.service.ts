@@ -33,8 +33,7 @@ export class ModalService {
 
   open<C>(
     vcrOrComponent: ViewContainerRef | Type<C>,
-    param?: TemplateRef<Element> | ModalOptions,
-    options?: ModalOptions
+    param?: TemplateRef<Element> | ModalOptions
   ) {
     if (vcrOrComponent instanceof ViewContainerRef) {
       this.openWithTemplate(vcrOrComponent, param as TemplateRef<Element>);
