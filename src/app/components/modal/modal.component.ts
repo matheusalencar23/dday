@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalOptions } from 'src/app/models/modal-options';
-import { fromEvent, Observable, zip } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
@@ -21,9 +20,6 @@ export class ModalComponent implements AfterViewInit {
   @ViewChild('modal') modal!: ElementRef<HTMLDivElement>;
   @ViewChild('overlay') overlay!: ElementRef<HTMLDivElement>;
   options!: ModalOptions | undefined;
-
-  modalLeaveTiming!: number;
-  overlayLeaveTiming!: number;
 
   constructor(
     private modalService: ModalService,
@@ -42,6 +38,12 @@ export class ModalComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.options = this.modalService.options;
     this.addOptions();
+    this.addEnterAnimations();
+  }
+
+  addEnterAnimations() {
+    this.modal.nativeElement.style.animation = 'enter-scaling 0.3s ease-out';
+    this.overlay.nativeElement.style.animation = 'fade-in 1s';
   }
 
   addOptions() {
@@ -53,16 +55,6 @@ export class ModalComponent implements AfterViewInit {
     this.modal.nativeElement.style.height = this.options?.height || 'auto';
     this.modal.nativeElement.style.maxHeight =
       this.options?.maxHeight || 'auto';
-  }
-
-  animationendEvent(element: HTMLDivElement): Observable<Event> {
-    return fromEvent(element, 'animationend');
-  }
-
-  removeElementIfNoAnimation(element: HTMLDivElement, animation: string) {
-    if (!animation) {
-      element.remove();
-    }
   }
 
   close() {
