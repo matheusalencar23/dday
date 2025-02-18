@@ -59,8 +59,6 @@ export class TableComponent implements OnChanges {
   }
 
   getColorIcon(property: string, order: boolean): string {
-    console.log(property, this.dataSortProperty, order, this.desc);
-
     if (property === this.dataSortProperty && order === this.desc)
       return 'var(--text-1)';
 

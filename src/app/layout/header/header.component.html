@@ -5,7 +5,9 @@
     size="22"
     (click)="openSidebar.emit()"
   ></ng-icon>
-  <dd-input-search placeholder="Search..."></dd-input-search>
+  <dd-input-search
+    [placeholder]="'app.search-placeholder' | translate"
+  ></dd-input-search>
   <div class="header-actions">
     <ng-icon
       name="heroInformationCircle"
@@ -13,6 +15,12 @@
       class="icon-action"
     ></ng-icon>
     <ng-icon name="heroBell" size="22" class="icon-action"></ng-icon>
+    <ng-icon
+      name="heroLanguage"
+      size="22"
+      class="icon-action"
+      (click)="openLanguageModal()"
+    ></ng-icon>
     <img src="assets/avatar.svg" alt="avatar" class="avatar-action" />
   </div>
 </header>

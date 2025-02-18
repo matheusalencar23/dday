@@ -1,7 +1,21 @@
 {
   "app": {
+    "search-placeholder": "Search...",
+    "menu": {
+      "dashboard": "Dashboard",
+      "payment": "Payment",
+      "employees": "Employees",
+      "departments": "Departments",
+      "liquidity": "Liquidity"
+    },
     "dashboard": {
-      "title": "Overview"
+      "title": "Overview",
+      "cards": {
+        "advance-payment": "Advance payment",
+        "average-amount-requested": "Average amount requested",
+        "request-number": "Request number",
+        "new-account-requests": "New account requests"
+      }
     }
   }
 }

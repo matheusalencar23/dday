@@ -1,5 +1,5 @@
 <div class="card">
-  <h4>{{ data?.title }}</h4>
+  <h4>{{ data && data.title ? (data.title | translate) : "" }}</h4>
   <span class="value">{{
     data?.isCurrency ? (data?.value | currency) : data?.value
   }}</span>

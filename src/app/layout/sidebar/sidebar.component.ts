@@ -14,13 +14,20 @@ import {
   heroXMarkSolid,
 } from '@ng-icons/heroicons/solid';
 import { tablerPigMoney } from '@ng-icons/tabler-icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'dd-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [CommonModule, LogoComponent, NgIconComponent, RouterModule],
+  imports: [
+    CommonModule,
+    LogoComponent,
+    NgIconComponent,
+    RouterModule,
+    TranslateModule,
+  ],
   providers: [
     provideIcons({
       heroXMarkSolid,
@@ -45,27 +52,27 @@ export class SidebarComponent {
   sidebarItems: SidebarItem[] = [
     {
       icon: 'heroHomeSolid',
-      label: 'Dashboard',
+      label: 'app.menu.dashboard',
       routerLink: DefaultRoutes.DASHBOARD,
     },
     {
       icon: 'heroShoppingBagSolid',
-      label: 'Payment',
+      label: 'app.menu.payment',
       routerLink: DefaultRoutes.PAYMENT,
     },
     {
       icon: 'heroUserSolid',
-      label: 'Employees',
+      label: 'app.menu.employees',
       routerLink: DefaultRoutes.EMPLOYEES,
     },
     {
       icon: 'heroUserGroupSolid',
-      label: 'Departments',
+      label: 'app.menu.departments',
       routerLink: DefaultRoutes.DEPARTMENTS,
     },
     {
       icon: 'tablerPigMoney',
-      label: 'Liquidity',
+      label: 'app.menu.liquidity',
       routerLink: DefaultRoutes.LIQUIDITY,
     },
   ];
