@@ -14,7 +14,14 @@
         "advance-payment": "Advance payment",
         "average-amount-requested": "Average amount requested",
         "request-number": "Request number",
-        "new-account-requests": "New account requests"
+        "new-account-requests": "New account requests",
+        "month-to-date": "month to date"
+      },
+      "charts": {
+        "titles": {
+          "total-amount-requested": "Total amount requested",
+          "total-number-of-requested": "Total number of requested"
+        }
       }
     }
   }

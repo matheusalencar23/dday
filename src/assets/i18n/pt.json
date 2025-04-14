@@ -14,7 +14,14 @@
         "advance-payment": "Adiantamento de pagamento",
         "average-amount-requested": "Valor médio solicitado",
         "request-number": "Número de solicitações",
-        "new-account-requests": "Novas solicitações de conta"
+        "new-account-requests": "Novas solicitações de conta",
+        "month-to-date": "do mês até a data"
+      },
+      "charts": {
+        "titles": {
+          "total-amount-requested": "Valor total solicitado",
+          "total-number-of-requested": "Número total de solicitações"
+        }
       }
     }
   }
