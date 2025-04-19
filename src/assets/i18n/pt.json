@@ -20,7 +20,12 @@
       "charts": {
         "titles": {
           "total-amount-requested": "Valor total solicitado",
-          "total-number-of-requested": "Número total de solicitações"
+          "total-number-of-requested": "Número total de solicitações",
+          "request-per-day": "Solicitações por dia"
+        },
+        "subtitles": {
+          "previous-month": "Mês anterior",
+          "current-month": "Mês atual"
         }
       }
     }

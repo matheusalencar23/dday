@@ -20,7 +20,7 @@ export class SelectLanguageComponent {
   constructor(private languageService: LanguageService) {}
 
   setLanguage(language: string): void {
-    this.languageService.setLanguage(language);
+    this.languageService.useLanguage(language);
   }
 
   getLanguage(): string {
