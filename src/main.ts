@@ -7,6 +7,8 @@ import { importProvidersFrom } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LocalStorage } from './app/utils/local-storage';
+import { LocalStorageKey } from './app/models/local-storage-key';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -20,7 +22,7 @@ bootstrapApplication(AppComponent, {
           useFactory: HttpLoaderFactory,
           deps: [HttpClient],
         },
-        defaultLanguage: 'en',
+        defaultLanguage: LocalStorage.getItem(LocalStorageKey.LANGUAGE) || 'en',
       })
     ),
   ],
