@@ -17,28 +17,28 @@ import { ModalOptions } from '../models/modal-options';
 export class ModalService {
   newModalComponent!: ComponentRef<ModalComponent>;
   options!: ModalOptions | undefined;
+  vcr!: ViewContainerRef;
 
   constructor(
     private appRef: ApplicationRef,
     private injector: EnvironmentInjector
   ) {}
 
-  open(
-    vcrOrComponent: ViewContainerRef,
-    content: TemplateRef<Element>,
-    options?: ModalOptions
-  ): void;
+  open(contentOrComponent: TemplateRef<Element>, options?: ModalOptions): void;
 
-  open<C>(vcrOrComponent: Type<C>, options?: ModalOptions): void;
+  open<C>(contentOrComponent: Type<C>, options?: ModalOptions): void;
 
   open<C>(
-    vcrOrComponent: ViewContainerRef | Type<C>,
-    param?: TemplateRef<Element> | ModalOptions
+    contentOrComponent: TemplateRef<Element> | Type<C>,
+    options?: ModalOptions
   ) {
-    if (vcrOrComponent instanceof ViewContainerRef) {
-      this.openWithTemplate(vcrOrComponent, param as TemplateRef<Element>);
+    if (contentOrComponent instanceof TemplateRef) {
+      this.openWithTemplate(
+        this.vcr,
+        contentOrComponent as TemplateRef<Element>
+      );
     } else {
-      this.openWithComponent(vcrOrComponent);
+      this.openWithComponent(contentOrComponent);
     }
   }
 
