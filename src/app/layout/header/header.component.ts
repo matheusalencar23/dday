@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { InputSearchComponent } from '../../components/input-search/input-search.component';
 import {
@@ -38,12 +38,6 @@ export class HeaderComponent {
   constructor(private modalService: ModalService) {}
 
   openLanguageModal(): void {
-    this.modalService.open(SelectLanguageComponent, {
-      width: '40rem',
-    });
-  }
-
-  open(view: TemplateRef<Element>) {
-    this.modalService.open(view);
+    this.modalService.open(SelectLanguageComponent);
   }
 }

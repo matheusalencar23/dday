@@ -40,6 +40,7 @@ export class ModalService {
     } else {
       this.openWithComponent(contentOrComponent);
     }
+    this.options = options;
   }
 
   private openWithTemplate(
