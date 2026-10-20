@@ -1,12 +1,11 @@
 <select
-  name="select"
-  id="select"
+  [attr.aria-label]="ariaLabel"
   [(ngModel)]="value"
-  (ngModelChange)="onChange($event)"
+  (ngModelChange)="valueChanged($event)"
   (blur)="onBlur()"
   [disabled]="disabled"
 >
-  <option *ngFor="let item of items" [value]="item[itemValueLabel]">
-    {{ item[itemLabel] }}
+  <option *ngFor="let item of items" [ngValue]="item.value">
+    {{ item.label }}
   </option>
 </select>

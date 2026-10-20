@@ -18,11 +18,19 @@ header {
 
 .menu-bar-icon {
   display: none;
+  width: 40px;
+  height: 40px;
   margin-right: 24px;
   @include icon-button();
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (max-width: 768px) {
-    display: block;
+    display: inline-flex;
   }
 }
 
@@ -30,10 +38,26 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+
+  ng-icon {
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+  }
 }
 
 .icon-action {
   @include icon-button();
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
 }
 
 .icon-action,

@@ -1,21 +1,106 @@
 {
   "app": {
     "search-placeholder": "Search...",
+    "header": {
+      "open-menu": "Open navigation menu",
+      "close-menu": "Close navigation menu",
+      "change-language": "Change language",
+      "main-navigation": "Main navigation"
+    },
+    "language": {
+      "title": "Choose a language",
+      "portuguese": "Portuguese",
+      "english": "English"
+    },
+    "common": {
+      "add": "Add",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "remove": "Remove",
+      "actions": "Actions",
+      "dialog": "Dialog",
+      "sort-by": "Sort by {{column}}",
+      "first-page": "First page",
+      "previous-page": "Previous page",
+      "next-page": "Next page",
+      "last-page": "Last page",
+      "empty": "No records to show"
+    },
     "menu": {
       "dashboard": "Dashboard",
-      "payment": "Payment",
+      "payment": "Payments",
       "employees": "Employees",
       "departments": "Departments",
       "liquidity": "Liquidity"
     },
+    "pagination": {
+      "range": "{{start}}–{{end}} of {{total}}"
+    },
     "dashboard": {
       "title": "Overview",
       "cards": {
-        "advance-payment": "Advance payment",
-        "average-amount-requested": "Average amount requested",
-        "request-number": "Request number",
-        "new-account-requests": "New account requests"
-      }
+        "pending-amount": "Pending payment amount",
+        "average-payment": "Average payment",
+        "request-number": "Payment requests",
+        "available-liquidity": "Available liquidity"
+      },
+      "request-trend": "Payment requests per day",
+      "monthly-amount": "Payment amount per month",
+      "monthly-requests": "Total payment requests per month",
+      "current-month": "Current month",
+      "previous-month": "Previous month",
+      "liquidity": "Available liquidity"
+    },
+    "payments": {
+      "title": "Advance payments",
+      "search": "Search by name...",
+      "name": "Name",
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status",
+      "payroll-date": "Payroll date",
+      "items-per-page": "Items per page",
+      "statuses": {
+        "Pending": "Pending",
+        "Completed": "Completed",
+        "Error": "Error"
+      },
+      "show-count": "Show {{count}}"
+    },
+    "employees": {
+      "title": "Employees",
+      "search": "Search employees...",
+      "add": "Add employee",
+      "edit": "Edit employee",
+      "list": "Employee list",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "department": "Department",
+      "unassigned": "Unassigned"
+    },
+    "departments": {
+      "title": "Departments",
+      "search": "Search departments...",
+      "add": "Add department",
+      "edit": "Edit department",
+      "list": "Department list",
+      "name": "Name",
+      "manager": "Manager",
+      "description": "Description",
+      "members": "Employees",
+      "delete-note": "Removing a department leaves its employees unassigned."
+    },
+    "liquidity": {
+      "title": "Liquidity",
+      "available": "Available balance",
+      "of-opening-balance": "From the initial study balance of {{amount}}",
+      "remaining": "available",
+      "pending-title": "Pending payments",
+      "pending-description": "Amounts reserved for payments awaiting completion.",
+      "pending-list": "Payments affecting available liquidity",
+      "no-pending": "There are no pending payments."
     }
   }
 }

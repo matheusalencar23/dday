@@ -3,24 +3,31 @@
   @overlay
   *ngIf="isOpen"
   (click)="closeSidebar.emit()"
+  aria-hidden="true"
 ></div>
 <aside [ngClass]="isOpen ? 'open' : ''">
   <dd-logo></dd-logo>
-  <ng-icon
-    name="heroXMarkSolid"
-    size="22"
+  <button
+    type="button"
     class="close-icon"
+    [attr.aria-label]="'app.header.close-menu' | translate"
     (click)="closeSidebar.emit()"
-  ></ng-icon>
-  <ul>
-    <li
-      *ngFor="let item of sidebarItems"
-      [routerLink]="item.routerLink"
-      routerLinkActive="active"
-      (click)="closeSidebar.emit()"
-    >
-      <ng-icon [name]="item.icon" size="32"></ng-icon>
-      <span>{{ item.label | translate }}</span>
-    </li>
-  </ul>
+  >
+    <ng-icon name="heroXMarkSolid" size="22" aria-hidden="true"></ng-icon>
+  </button>
+  <nav [attr.aria-label]="'app.header.main-navigation' | translate">
+    <ul>
+      <li *ngFor="let item of sidebarItems">
+        <a
+          [routerLink]="item.routerLink"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="closeSidebar.emit()"
+        >
+          <ng-icon [name]="item.icon" size="28" aria-hidden="true"></ng-icon>
+          <span>{{ item.label | translate }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </aside>

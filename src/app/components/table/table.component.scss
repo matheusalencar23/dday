@@ -30,10 +30,15 @@
           justify-content: space-between;
           align-items: center;
 
-          span.sortable-icons {
+          button.sortable-icons {
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
 
             ng-icon:first-child {
               margin-bottom: -5px;

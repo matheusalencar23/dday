@@ -1,2 +1,34 @@
-<dd-page-title> Manage Departments </dd-page-title>
-<p>Departments</p>
+<dd-page-title>{{ 'app.departments.title' | translate }}</dd-page-title>
+
+<div class="filter">
+  <dd-input-search
+    [placeholder]="'app.departments.search' | translate"
+    [ariaLabel]="'app.departments.search' | translate"
+    [hasBorder]="true"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="filterByTerm($event)"
+  />
+  <dd-select
+    [items]="itemsPerPageOptions"
+    [(ngModel)]="filter.itemsPerPage"
+    (ngModelChange)="showDepartments()"
+    [ariaLabel]="'app.payments.items-per-page' | translate"
+  />
+</div>
+
+<dd-loading-spinner *ngIf="loading" />
+<ng-container *ngIf="departments$ | async as departments">
+  <dd-table
+    [tableConfig]="tableConfig"
+    [tableContent]="departments.data"
+    (orderBy)="order($event)"
+    [dataSortProperty]="filter.sortBy"
+    [desc]="filter.desc"
+  />
+  <dd-pagination
+    [page]="filter.page"
+    [itemsPerPage]="filter.itemsPerPage"
+    [total]="departments.total"
+    (pageEvent)="pagination($event)"
+  />
+</ng-container>

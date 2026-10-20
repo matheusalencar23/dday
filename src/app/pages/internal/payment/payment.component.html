@@ -1,15 +1,16 @@
-<dd-page-title>Advance Payments</dd-page-title>
+<dd-page-title>{{ 'app.payments.title' | translate }}</dd-page-title>
 <div class="filter">
   <dd-input-search
-    placeholder="Search by..."
+    [placeholder]="'app.payments.search' | translate"
     [hasBorder]="true"
     [(ngModel)]="searchTerm"
     (ngModelChange)="filterByTerm($event)"
   />
   <dd-select
-    [items]="itensPerPageOptions"
-    [(ngModel)]="filter.itensPerPage"
+    [items]="itemsPerPageOptions"
+    [(ngModel)]="filter.itemsPerPage"
     (ngModelChange)="showPayments()"
+    [ariaLabel]="'app.payments.items-per-page' | translate"
   />
 </div>
 <dd-loading-spinner *ngIf="loading" />
@@ -24,7 +25,7 @@
   />
   <dd-pagination
     [page]="filter.page"
-    [itensPerPage]="filter.itensPerPage"
+    [itemsPerPage]="filter.itemsPerPage"
     [total]="payments.total"
     (pageEvent)="pagination($event)"
   />

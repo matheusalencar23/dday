@@ -1,13 +1,19 @@
 <table>
   <thead>
     <tr>
-      <th *ngFor="let columnHead of tableConfig.columns">
+      <th
+        *ngFor="let columnHead of tableConfig.columns"
+        scope="col"
+        [attr.aria-sort]="getSortDirection(columnHead.dataProperty)"
+      >
         <div>
-          <span>{{ columnHead.title }}</span>
-          <span
+          <span>{{ columnHead.title | translate }}</span>
+          <button
             *ngIf="columnHead.sortable"
             class="sortable-icons"
+            type="button"
             (click)="orderByEmit(columnHead.dataProperty)"
+            [attr.aria-label]="'app.common.sort-by' | translate : { column: (columnHead.title | translate) }"
           >
             <ng-icon
               name="tablerCaretUp"
@@ -19,7 +25,7 @@
               size="18"
               [color]="getColorIcon(columnHead.dataProperty, true)"
             ></ng-icon>
-          </span>
+          </button>
         </div>
       </th>
     </tr>
@@ -41,16 +47,20 @@
           <span>
             <ng-container [ngSwitch]="columnHead.pipe">
               <ng-container *ngSwitchCase="'currency'">
-                {{ columnData[columnHead.dataProperty] | currency }}
+                {{ columnData[columnHead.dataProperty] | currency : currencyCode : 'symbol' : undefined : locale }}
               </ng-container>
               <ng-container *ngSwitchCase="'date'">
                 {{
                   columnData[columnHead.dataProperty]
-                    | date : columnHead.pipeParameters
+                    | date : columnHead.pipeParameters : undefined : locale
                 }}
               </ng-container>
               <ng-container *ngSwitchDefault>
-                {{ columnData[columnHead.dataProperty] }}
+                {{
+                  columnHead.dataProperty === 'status'
+                    ? ('app.payments.statuses.' + columnData[columnHead.dataProperty] | translate)
+                    : columnData[columnHead.dataProperty]
+                }}
               </ng-container>
             </ng-container>
           </span>

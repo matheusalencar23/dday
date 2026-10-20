@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, delay, map, of } from 'rxjs';
-import { PAYMENTS } from '../../../../mocks/payment';
 import { PaginatedResponse } from '../../../../models/response';
+import { StudyDataService } from '../../../../services/study-data.service';
 import { PaymentService } from '../models/payment-service';
 import { Payment } from '../models/payment';
 import { PaymentFilter } from '../models/payment-filter';
 
 @Injectable()
 export class MockPaymentService implements PaymentService {
+  constructor(private readonly studyData: StudyDataService) {}
+
   getPayments(filter: PaymentFilter | null): Observable<PaginatedResponse<Payment>> {
-    return of([...PAYMENTS]).pipe(
-      delay(500),
+    return of(this.studyData.getPaymentSnapshot()).pipe(
+      delay(Math.random() * 1000),
       map((response) => {
         const searchTerm = filter?.searchTerm?.trim().toLocaleLowerCase();
         let data = searchTerm
@@ -28,9 +30,9 @@ export class MockPaymentService implements PaymentService {
         }
 
         const total = data.length;
-        if (filter && filter.page > 0 && filter.itensPerPage > 0) {
-          const start = (filter.page - 1) * filter.itensPerPage;
-          data = data.slice(start, start + filter.itensPerPage);
+        if (filter && filter.page > 0 && filter.itemsPerPage > 0) {
+          const start = (filter.page - 1) * filter.itemsPerPage;
+          data = data.slice(start, start + filter.itemsPerPage);
         }
 
         return { data, total };

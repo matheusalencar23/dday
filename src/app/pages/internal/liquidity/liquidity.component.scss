@@ -1,0 +1,95 @@
+.liquidity-page {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.balance-card,
+.pending-card,
+.list-panel {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--border-1);
+  border-radius: 12px;
+  background: var(--bg-1);
+}
+
+.balance-card h2,
+.pending-card h2,
+.list-panel h2 {
+  margin-bottom: 12px;
+  color: var(--text-2);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.balance {
+  color: var(--text-3);
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 700;
+}
+
+.caption,
+.percent {
+  margin-top: 8px;
+  color: var(--text-4);
+  font-size: 14px;
+}
+
+.meter {
+  height: 12px;
+  margin-top: 24px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e8f5ec;
+}
+
+.meter-value {
+  height: 100%;
+  border-radius: inherit;
+  background: #16a34a;
+  transition: width 250ms ease;
+}
+
+.list-panel {
+  grid-column: 1 / -1;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border-1);
+}
+
+th {
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+td {
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .liquidity-page {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .list-panel {
+    grid-column: auto;
+  }
+}

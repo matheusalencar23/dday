@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
   Output,
-  Renderer2,
   forwardRef,
 } from '@angular/core';
 import {
@@ -33,30 +31,32 @@ import { heroMagnifyingGlassSolid } from '@ng-icons/heroicons/solid';
   ],
 })
 export class InputSearchComponent implements ControlValueAccessor {
-  protected _hasBorder: boolean = false;
-
   @Input() placeholder: string = '';
+  @Input() ariaLabel = '';
   @HostBinding('class.bordered') @Input() hasBorder = false;
 
   @Output() blur = new EventEmitter<void>();
 
   value: string = '';
   disabled: boolean = false;
-  onChange: any = () => {};
-  onTouch: any = () => {};
+  private onChange: (value: string) => void = () => {};
+  private onTouch: () => void = () => {};
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2) {}
-
-  writeValue(value: any): void {
-    this.value = value;
+  writeValue(value: string | null): void {
+    this.value = value ?? '';
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
+  }
+
+  valueChanged(value: string): void {
+    this.value = value;
+    this.onChange(value);
   }
 
   setDisabledState(isDisabled: boolean): void {

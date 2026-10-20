@@ -1,13 +1,14 @@
 <ng-icon
   name="heroMagnifyingGlassSolid"
   size="20"
-  [color]="_hasBorder ? '#999CA0' : '#000'"
+  [color]="hasBorder ? '#999CA0' : '#000'"
 ></ng-icon>
 <input
   type="text"
+  [attr.aria-label]="ariaLabel || placeholder"
   [placeholder]="placeholder"
   [(ngModel)]="value"
-  (ngModelChange)="onChange($event)"
+  (ngModelChange)="valueChanged($event)"
   (blur)="onBlur()"
   [disabled]="disabled"
 />

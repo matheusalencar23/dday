@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CardInfo } from '../../models/card-info';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'dd-card',
@@ -13,14 +14,13 @@ import { TranslateModule } from '@ngx-translate/core';
 export class CardComponent {
   @Input() data?: CardInfo;
 
-  getPercentClass(): string {
-    if (this.data && this.data?.percent > 0) return 'positive';
-    if (this.data && this.data?.percent < 0) return 'negative';
-    return '';
+  constructor(private readonly translateService: TranslateService) {}
+
+  get currencyCode(): string {
+    return this.translateService.currentLang === 'pt' ? 'BRL' : 'USD';
   }
 
-  getPercent(): number {
-    if (this.data?.percent) return this.data?.percent / 100;
-    return 0;
+  get locale(): string {
+    return this.translateService.currentLang === 'pt' ? 'pt-BR' : 'en-US';
   }
 }

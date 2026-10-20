@@ -1,18 +1,19 @@
 # Dday
 
-Painel administrativo fictício para praticar Angular e interfaces de gestão. O projeto não se conecta a APIs: os pagamentos vêm de dados locais em `src/app/mocks/payment.ts`, e os gráficos usam valores fixos ou gerados no navegador.
+Painel administrativo fictício para praticar Angular e interfaces de gestão. Não há integração com APIs. Os pagamentos, funcionários e departamentos começam com dados locais; cadastros e alterações existem apenas em memória e são reiniciados ao recarregar a página. A interface usa Poppins pelo Google Fonts.
 
-## Estado atual
+## Funcionalidades
 
-- Angular 15 com componentes standalone, rotas carregadas sob demanda e estilos SCSS.
-- Dashboard com cartões e gráficos de solicitações e liquidez.
-- Pagamentos com busca por nome, ordenação, seleção do tamanho da página e paginação, usando um serviço mock.
-- Menu lateral, cabeçalho e modal de seleção de idioma (português e inglês).
-- As telas de funcionários, departamentos e liquidez ainda são estruturas iniciais, sem fluxos de gestão.
+- Dashboard com indicadores e gráficos calculados a partir dos pagamentos mock.
+- Pagamentos com busca, ordenação e paginação local.
+- Funcionários com cadastro, edição e remoção; departamentos podem ser associados a funcionários.
+- Departamentos com cadastro, edição, remoção e contagem de funcionários. Ao remover um departamento, seus funcionários ficam sem associação.
+- Liquidez calculada a partir do saldo inicial fictício e dos pagamentos pendentes.
+- Interface em português e inglês, com navegação responsiva e controles acessíveis por teclado.
 
 ## Executar localmente
 
-Requer Node.js e npm compatíveis com as dependências do Angular 15.
+O projeto permanece em Angular 15. Requer Node.js compatível com essa versão.
 
 ```bash
 npm ci
@@ -27,18 +28,16 @@ npm run build
 
 ## Organização
 
-- `src/app/pages/internal`: páginas do painel e rotas internas.
-- `src/app/pages/internal/payment`: listagem, filtros e serviço de pagamentos fictícios.
-- `src/app/mocks`: dados locais usados pela aplicação.
+- `src/app/services/study-data.service.ts`: estado local e cálculos compartilhados.
+- `src/app/mocks`: conjuntos de dados iniciais.
+- `src/app/pages/internal`: dashboard, pagamentos, funcionários, departamentos e liquidez.
 - `src/assets/i18n`: textos em português e inglês.
 
-## Próximas evoluções sugeridas
+## Evoluções futuras
 
-1. Completar funcionários e departamentos com dados locais, formulários e operações de criar, editar e remover.
-2. Fazer a tela de liquidez explorar o mesmo conjunto de dados que alimenta os gráficos do dashboard.
-3. Centralizar os dados mock e derivar cartões e gráficos deles para manter os números coerentes entre telas.
-4. Revisar acessibilidade, responsividade e textos para que todas as páginas usem as traduções existentes.
-5. Atualizar Angular e dependências em uma etapa própria, verificando compatibilidade antes de migrar a aplicação.
+- Persistir os dados mock no navegador, mantendo o modo de estudo sem servidor.
+- Adicionar busca, filtros e estados de confirmação/feedback às telas de gestão.
+- Incluir testes para os cálculos e operações CRUD.
 
 ## Tecnologias
 

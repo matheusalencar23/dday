@@ -30,6 +30,19 @@
         cursor: default;
       }
     }
+
+    .current-page {
+      width: 2.625rem;
+      height: 2.625rem;
+      border: 1px solid #000;
+      border-radius: 0.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-1);
+      font: inherit;
+      font-weight: 600;
+    }
   }
 
   @media screen and (max-width: 576px) {

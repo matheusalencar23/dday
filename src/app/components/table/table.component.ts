@@ -8,11 +8,13 @@ import { CommonModule } from '@angular/common';
 import { DataTableType } from './models/data-table-type';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { tablerCaretDown, tablerCaretUp } from '@ng-icons/tabler-icons';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'dd-table',
   standalone: true,
-  imports: [CommonModule, NgIconComponent],
+  imports: [CommonModule, NgIconComponent, TranslateModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   providers: [provideIcons({ tablerCaretUp, tablerCaretDown })],
@@ -39,6 +41,16 @@ export class TableComponent {
 
   @Output() orderBy = new EventEmitter<string>();
 
+  constructor(private readonly translateService: TranslateService) {}
+
+  get currencyCode(): string {
+    return this.translateService.currentLang === 'pt' ? 'BRL' : 'USD';
+  }
+
+  get locale(): string {
+    return this.translateService.currentLang === 'pt' ? 'pt-BR' : 'en-US';
+  }
+
   getColors(id: string | number): { backgroundColor: string; color: string } {
     const key = String(id);
     const hash = Array.from(key).reduce(
@@ -58,6 +70,11 @@ export class TableComponent {
       return 'var(--text-1)';
 
     return '';
+  }
+
+  getSortDirection(property: string): 'ascending' | 'descending' | 'none' {
+    if (property !== this.dataSortProperty) return 'none';
+    return this.desc ? 'descending' : 'ascending';
   }
 
   orderByEmit(property: string): void {

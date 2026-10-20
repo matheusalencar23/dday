@@ -1,17 +1,19 @@
 <div class="buttons">
-  <button (click)="first()" [disabled]="page === 1">
+  <button type="button" (click)="first()" [disabled]="page === 1" [attr.aria-label]="'app.common.first-page' | translate">
     <ng-icon name="heroChevronDoubleLeft" size="24" />
   </button>
-  <button (click)="previous()" [disabled]="page === 1">
+  <button type="button" (click)="previous()" [disabled]="page === 1" [attr.aria-label]="'app.common.previous-page' | translate">
     <ng-icon name="heroChevronLeft" size="24" />
   </button>
-  <button>{{ page }}</button>
-  <button (click)="next()" [disabled]="page >= total / itensPerPage">
+  <span class="current-page" aria-current="page">{{ page }}</span>
+  <button type="button" (click)="next()" [disabled]="page >= totalPages" [attr.aria-label]="'app.common.next-page' | translate">
     <ng-icon name="heroChevronRight" size="24" />
   </button>
-  <button (click)="last()" [disabled]="page >= total / itensPerPage">
+  <button type="button" (click)="last()" [disabled]="page >= totalPages" [attr.aria-label]="'app.common.last-page' | translate">
     <ng-icon name="heroChevronDoubleRight" size="24" />
   </button>
 </div>
 
-<div class="helper" *ngIf="total">{{ helperText() }}</div>
+<div class="helper" *ngIf="total">
+  {{ 'app.pagination.range' | translate : range() }}
+</div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -10,20 +10,21 @@ import { NgxEchartsModule } from 'ngx-echarts';
   standalone: true,
   imports: [CommonModule, NgxEchartsModule],
 })
-export class AvailableLiquidityChartComponent {
-  color: string = '#F87171';
+export class AvailableLiquidityChartComponent implements OnChanges {
+  @Input() title = '';
+  private readonly value = Math.round(Math.random() * 100);
+  private readonly color = '#16A34A';
 
-  options: EChartsOption = {
-    title: {
-      text: 'Available liquidity',
-      left: 'center',
-      textStyle: {
-        fontSize: 16,
-        fontFamily: "'Poppins', 'sans-serif'",
+  options: EChartsOption = {};
+
+  ngOnChanges(): void {
+    this.options = {
+      title: {
+        text: this.title,
+        left: 'center',
+        textStyle: { fontSize: 16, fontFamily: "'Poppins', sans-serif" },
       },
-    },
-    series: [
-      {
+      series: [{
         type: 'gauge',
         startAngle: 240,
         endAngle: 300,
@@ -70,7 +71,7 @@ export class AvailableLiquidityChartComponent {
           valueAnimation: true,
           fontSize: 40,
           offsetCenter: [0, 0],
-          fontFamily: "'Poppins', 'sans-serif'",
+          fontFamily: "'Poppins', sans-serif",
           backgroundColor: this.color,
           width: 80,
           height: 80,
@@ -78,15 +79,16 @@ export class AvailableLiquidityChartComponent {
           color: '#fff',
           fontWeight: 400,
           formatter: function (value) {
-            return value + '%';
+            return `${Math.round(value)}%`;
           },
         },
         data: [
           {
-            value: Math.round(Math.random() * 100),
+            value: this.value,
           },
         ],
       },
-    ],
-  };
+      ],
+    };
+  }
 }

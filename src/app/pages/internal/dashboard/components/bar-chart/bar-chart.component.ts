@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { generateRandomNumericData } from 'src/app/utils/data';
-import { months, reorderMonths } from 'src/app/utils/date';
+import { generateRandomChartData, getRollingMonthLabels } from '../../dashboard-chart-data';
 
 @Component({
   selector: 'dd-bar-chart',
@@ -17,6 +16,8 @@ export class BarChartComponent implements OnChanges {
 
   @Input() color: string = '#16A34A';
   @Input() title: string = '';
+  private readonly labels = getRollingMonthLabels();
+  private readonly values = generateRandomChartData(this.labels.length);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['color'] || changes['title']) {
@@ -30,7 +31,7 @@ export class BarChartComponent implements OnChanges {
         text: this.title,
         textStyle: {
           fontSize: 16,
-          fontFamily: "'Poppins', 'sans-serif'",
+          fontFamily: "'Poppins', sans-serif",
         },
       },
       tooltip: {
@@ -45,7 +46,7 @@ export class BarChartComponent implements OnChanges {
       xAxis: [
         {
           type: 'category',
-          data: reorderMonths(),
+          data: this.labels,
           axisTick: {
             alignWithLabel: true,
           },
@@ -59,12 +60,12 @@ export class BarChartComponent implements OnChanges {
       series: [
         {
           type: 'bar',
-          barWidth: 24,
+          barWidth: 14,
           itemStyle: {
             borderRadius: [12, 12, 0, 0],
             color: this.color,
           },
-          data: generateRandomNumericData(months.length),
+          data: this.values,
         },
       ],
     };

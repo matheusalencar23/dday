@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LanguageService } from 'src/app/services/language.service';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroCheck } from '@ng-icons/heroicons/outline';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'dd-select-language',
   standalone: true,
-  imports: [CommonModule, NgIconComponent],
+  imports: [CommonModule, NgIconComponent, TranslateModule],
   templateUrl: './select-language.component.html',
   styleUrls: ['./select-language.component.scss'],
   providers: [
@@ -19,7 +20,7 @@ import { heroCheck } from '@ng-icons/heroicons/outline';
 export class SelectLanguageComponent {
   constructor(private languageService: LanguageService) {}
 
-  setLanguage(language: string): void {
+  setLanguage(language: 'en' | 'pt'): void {
     this.languageService.setLanguage(language);
   }
 

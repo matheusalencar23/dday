@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalService } from './services/modal.service';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,10 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('modalContainer', { read: ViewContainerRef, static: true })
   modalContainerRef!: ViewContainerRef;
 
-  constructor(private modalService: ModalService) {}
+  constructor(
+    private modalService: ModalService,
+    private languageService: LanguageService
+  ) {}
 
   ngAfterViewInit(): void {
     this.modalService.vcr = this.modalContainerRef;

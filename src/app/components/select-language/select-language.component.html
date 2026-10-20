@@ -1,8 +1,8 @@
-<h6>Choose a language</h6>
-<ul>
+<h2>{{ 'app.language.title' | translate }}</h2>
+<ul [attr.aria-label]="'app.language.title' | translate">
   <li>
-    <button (click)="setLanguage('pt')">
-      Portuguese
+    <button type="button" (click)="setLanguage('pt')" [attr.aria-pressed]="getLanguage() === 'pt'">
+      {{ 'app.language.portuguese' | translate }}
       <ng-icon
         *ngIf="getLanguage() === 'pt'"
         name="heroCheck"
@@ -12,8 +12,8 @@
     </button>
   </li>
   <li>
-    <button (click)="setLanguage('en')">
-      English
+    <button type="button" (click)="setLanguage('en')" [attr.aria-pressed]="getLanguage() === 'en'">
+      {{ 'app.language.english' | translate }}
       <ng-icon
         *ngIf="getLanguage() === 'en'"
         name="heroCheck"

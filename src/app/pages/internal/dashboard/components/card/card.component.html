@@ -1,10 +1,8 @@
 <div class="card">
   <h4>{{ data && data.title ? (data.title | translate) : "" }}</h4>
   <span class="value">{{
-    data?.isCurrency ? (data?.value | currency) : data?.value
+    data?.isCurrency
+      ? (data?.value | currency : currencyCode : 'symbol' : undefined : locale)
+      : data?.value
   }}</span>
-  <span [ngClass]="getPercentClass()" class="percent">
-    {{ getPercent() | percent : ".1-1" }}
-    <span>month to date</span>
-  </span>
 </div>

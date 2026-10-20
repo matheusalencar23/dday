@@ -11,6 +11,7 @@ import {
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { DefaultOption } from './models/options';
 
 @Component({
   selector: 'dd-select',
@@ -27,30 +28,34 @@ import {
   ],
 })
 export class SelectComponent implements ControlValueAccessor {
-  @Input() items: any[] = [];
-  @Input() itemLabel: string = 'label';
-  @Input() itemValueLabel: string = 'value';
+  @Input() items: DefaultOption[] = [];
+  @Input() ariaLabel = '';
 
-  value: string = '';
+  value: string | number | null = null;
   disabled: boolean = false;
-  onChange: any = () => {};
-  onTouch: any = () => {};
+  private onChange: (value: string | number | null) => void = () => {};
+  private onTouch: () => void = () => {};
 
   @Output() blur = new EventEmitter<void>();
 
-  writeValue(value: any): void {
+  writeValue(value: string | number | null): void {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  valueChanged(value: string | number | null): void {
+    this.value = value;
+    this.onChange(value);
+  }
+
+  registerOnChange(fn: (value: string | number | null) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouch = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 

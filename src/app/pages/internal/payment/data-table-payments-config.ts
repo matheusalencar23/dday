@@ -4,28 +4,28 @@ import { PaymentStatus } from './models/payment-status.enum';
 export const TABLE_PAYMENTS_CONFIG: DataTableType = {
   columns: [
     { title: '#', dataProperty: 'id' },
-    { title: 'Name', dataProperty: 'name', sortable: true },
+    { title: 'app.payments.name', dataProperty: 'name', sortable: true },
     {
-      title: 'Amount',
+      title: 'app.payments.amount',
       dataProperty: 'amount',
       pipe: 'currency',
       sortable: true,
     },
     {
-      title: 'Date',
+      title: 'app.payments.date',
       dataProperty: 'date',
       pipe: 'date',
       pipeParameters: 'dd.MM.yyyy',
       sortable: true,
     },
     {
-      title: 'Status',
+      title: 'app.payments.status',
       dataProperty: 'status',
       sortable: true,
       statusColorFn: handleStatusColor,
     },
     {
-      title: 'Payroll date',
+      title: 'app.payments.payroll-date',
       dataProperty: 'payrollDate',
       pipe: 'date',
       pipeParameters: 'MMM yyyy',

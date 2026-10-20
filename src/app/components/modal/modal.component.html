@@ -1,7 +1,14 @@
 <div class="modal-wrapper">
-  <section class="modal" #modal>
+  <section
+    class="modal"
+    #modal
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'app.common.dialog' | translate"
+    tabindex="-1"
+  >
     <ng-content></ng-content>
   </section>
 
-  <div class="modal-overlay" #overlay (click)="onClose()"></div>
+  <div class="modal-overlay" #overlay (click)="onClose()" aria-hidden="true"></div>
 </div>

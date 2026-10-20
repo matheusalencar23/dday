@@ -1,2 +1,34 @@
-<dd-page-title> Manage Employees </dd-page-title>
-<p>Employees</p>
+<dd-page-title>{{ 'app.employees.title' | translate }}</dd-page-title>
+
+<div class="filter">
+  <dd-input-search
+    [placeholder]="'app.employees.search' | translate"
+    [ariaLabel]="'app.employees.search' | translate"
+    [hasBorder]="true"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="filterByTerm($event)"
+  />
+  <dd-select
+    [items]="itemsPerPageOptions"
+    [(ngModel)]="filter.itemsPerPage"
+    (ngModelChange)="showEmployees()"
+    [ariaLabel]="'app.payments.items-per-page' | translate"
+  />
+</div>
+
+<dd-loading-spinner *ngIf="loading" />
+<ng-container *ngIf="employees$ | async as employees">
+  <dd-table
+    [tableConfig]="tableConfig"
+    [tableContent]="employees.data"
+    (orderBy)="order($event)"
+    [dataSortProperty]="filter.sortBy"
+    [desc]="filter.desc"
+  />
+  <dd-pagination
+    [page]="filter.page"
+    [itemsPerPage]="filter.itemsPerPage"
+    [total]="employees.total"
+    (pageEvent)="pagination($event)"
+  />
+</ng-container>

@@ -5,13 +5,23 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class LanguageService {
-  constructor(private translateService: TranslateService) {}
+  private readonly storageKey = 'dday-language';
 
-  setLanguage(language: string): void {
+  constructor(private translateService: TranslateService) {
+    const savedLanguage = localStorage.getItem(this.storageKey);
+    const language = savedLanguage === 'pt' ? 'pt' : 'en';
     this.translateService.setDefaultLang(language);
+    this.translateService.use(language);
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
+  }
+
+  setLanguage(language: 'en' | 'pt'): void {
+    localStorage.setItem(this.storageKey, language);
+    this.translateService.use(language);
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
   }
 
   getLanguage(): string {
-    return this.translateService.getDefaultLang();
+    return this.translateService.currentLang || this.translateService.getDefaultLang();
   }
 }

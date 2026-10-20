@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   EMPTY,
   Observable,
@@ -41,6 +42,7 @@ import { Payment } from './models/payment';
     SelectComponent,
     PaginationComponent,
     LoadingSpinnerComponent,
+    TranslateModule,
   ],
   providers: [
     {
@@ -59,16 +61,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   filter: PaymentFilter = {
     page: 1,
-    itensPerPage: 5,
+    itemsPerPage: 5,
     sortBy: '',
     desc: true,
   };
 
-  itensPerPageOptions: DefaultOption[] = [
-    { value: 5, label: 'Show 5' },
-    { value: 10, label: 'Show 10' },
-    { value: 15, label: 'Show 15' },
-    { value: 25, label: 'Show 25' },
+  itemsPerPageOptions: DefaultOption[] = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 15, label: '15' },
+    { value: 25, label: '25' },
   ];
 
   constructor(
@@ -112,9 +114,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   getPayments(): void {
+    const filter = { ...this.filter };
     this.loading = true;
     this.payments$ = this.paymentService
-      .getPayments({ ...this.filter })
+      .getPayments(filter)
       .pipe(finalize(() => (this.loading = false)));
   }
 

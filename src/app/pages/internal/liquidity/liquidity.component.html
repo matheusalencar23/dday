@@ -1,2 +1,52 @@
-<dd-page-title> Liquidity </dd-page-title>
-<p>Liquidity</p>
+<dd-page-title>{{ 'app.liquidity.title' | translate }}</dd-page-title>
+
+<section class="liquidity-page" *ngIf="dashboard$ | async as dashboard">
+  <article class="balance-card">
+    <div>
+      <h2>{{ 'app.liquidity.available' | translate }}</h2>
+      <p class="balance">{{ dashboard.availableLiquidity | currency : currencyCode : 'symbol' : undefined : locale }}</p>
+      <p class="caption">
+        {{ 'app.liquidity.of-opening-balance' | translate : { amount: (openingLiquidity | currency : currencyCode : 'symbol' : undefined : locale) } }}
+      </p>
+    </div>
+    <div class="meter" role="meter"
+      [attr.aria-valuenow]="dashboard.liquidityPercent"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [attr.aria-label]="'app.liquidity.available' | translate">
+      <div class="meter-value" [style.width.%]="dashboard.liquidityPercent"></div>
+    </div>
+    <p class="percent">{{ dashboard.liquidityPercent }}% {{ 'app.liquidity.remaining' | translate }}</p>
+  </article>
+
+  <article class="pending-card">
+    <h2>{{ 'app.liquidity.pending-title' | translate }}</h2>
+    <p class="balance">{{ dashboard.pendingAmount | currency : currencyCode : 'symbol' : undefined : locale }}</p>
+    <p class="caption">{{ 'app.liquidity.pending-description' | translate }}</p>
+  </article>
+
+  <section class="list-panel" aria-labelledby="pending-list-title">
+    <h2 id="pending-list-title">{{ 'app.liquidity.pending-list' | translate }}</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">{{ 'app.payments.name' | translate }}</th>
+            <th scope="col">{{ 'app.payments.amount' | translate }}</th>
+            <th scope="col">{{ 'app.payments.date' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of pendingPayments$ | async; trackBy: trackPayment">
+            <td>{{ payment.name }}</td>
+            <td>{{ payment.amount | currency : currencyCode : 'symbol' : undefined : locale }}</td>
+            <td>{{ formatDate(payment.date) }}</td>
+          </tr>
+          <tr *ngIf="(pendingPayments$ | async)?.length === 0">
+            <td colspan="3">{{ 'app.liquidity.no-pending' | translate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

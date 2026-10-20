@@ -1,21 +1,106 @@
 {
   "app": {
     "search-placeholder": "Pesquisar...",
+    "header": {
+      "open-menu": "Abrir menu de navegação",
+      "close-menu": "Fechar menu de navegação",
+      "change-language": "Alterar idioma",
+      "main-navigation": "Navegação principal"
+    },
+    "language": {
+      "title": "Escolha um idioma",
+      "portuguese": "Português",
+      "english": "Inglês"
+    },
+    "common": {
+      "add": "Adicionar",
+      "save": "Salvar alterações",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "remove": "Remover",
+      "actions": "Ações",
+      "dialog": "Caixa de diálogo",
+      "sort-by": "Ordenar por {{column}}",
+      "first-page": "Primeira página",
+      "previous-page": "Página anterior",
+      "next-page": "Próxima página",
+      "last-page": "Última página",
+      "empty": "Nenhum registro para exibir"
+    },
     "menu": {
-      "dashboard": "Painel de Controle",
-      "payment": "Pagamento",
+      "dashboard": "Painel de controle",
+      "payment": "Pagamentos",
       "employees": "Funcionários",
       "departments": "Departamentos",
       "liquidity": "Liquidez"
     },
+    "pagination": {
+      "range": "{{start}}–{{end}} de {{total}}"
+    },
     "dashboard": {
-      "title": "Visão Geral",
+      "title": "Visão geral",
       "cards": {
-        "advance-payment": "Adiantamento de pagamento",
-        "average-amount-requested": "Valor médio solicitado",
-        "request-number": "Número de solicitações",
-        "new-account-requests": "Novas solicitações de conta"
-      }
+        "pending-amount": "Valor de pagamentos pendentes",
+        "average-payment": "Valor médio por pagamento",
+        "request-number": "Solicitações de pagamento",
+        "available-liquidity": "Liquidez disponível"
+      },
+      "request-trend": "Solicitações de pagamento por dia",
+      "monthly-amount": "Valor pago por mês",
+      "monthly-requests": "Total de solicitações por mês",
+      "current-month": "Mês atual",
+      "previous-month": "Mês anterior",
+      "liquidity": "Liquidez disponível"
+    },
+    "payments": {
+      "title": "Adiantamentos de pagamento",
+      "search": "Buscar por nome...",
+      "name": "Nome",
+      "amount": "Valor",
+      "date": "Data",
+      "status": "Status",
+      "payroll-date": "Data da folha",
+      "items-per-page": "Itens por página",
+      "statuses": {
+        "Pending": "Pendente",
+        "Completed": "Concluído",
+        "Error": "Erro"
+      },
+      "show-count": "Exibir {{count}}"
+    },
+    "employees": {
+      "title": "Funcionários",
+      "search": "Buscar funcionários...",
+      "add": "Adicionar funcionário",
+      "edit": "Editar funcionário",
+      "list": "Lista de funcionários",
+      "name": "Nome",
+      "email": "E-mail",
+      "role": "Cargo",
+      "department": "Departamento",
+      "unassigned": "Sem departamento"
+    },
+    "departments": {
+      "title": "Departamentos",
+      "search": "Buscar departamentos...",
+      "add": "Adicionar departamento",
+      "edit": "Editar departamento",
+      "list": "Lista de departamentos",
+      "name": "Nome",
+      "manager": "Responsável",
+      "description": "Descrição",
+      "members": "Funcionários",
+      "delete-note": "Ao remover um departamento, seus funcionários ficam sem departamento."
+    },
+    "liquidity": {
+      "title": "Liquidez",
+      "available": "Saldo disponível",
+      "of-opening-balance": "Do saldo inicial fictício de {{amount}}",
+      "remaining": "disponível",
+      "pending-title": "Pagamentos pendentes",
+      "pending-description": "Valores reservados para pagamentos que aguardam conclusão.",
+      "pending-list": "Pagamentos que afetam a liquidez disponível",
+      "no-pending": "Não há pagamentos pendentes."
     }
   }
 }

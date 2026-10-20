@@ -4,6 +4,6 @@ export interface PaymentFilter {
   sortBy: string;
   desc: boolean;
   page: number;
-  itensPerPage: number;
+  itemsPerPage: number;
   searchTerm?: string;
 }

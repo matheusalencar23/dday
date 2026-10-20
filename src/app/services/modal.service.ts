@@ -15,7 +15,9 @@ import { ModalOptions } from '../models/modal-options';
   providedIn: 'root',
 })
 export class ModalService {
-  newModalComponent!: ComponentRef<ModalComponent>;
+  private modalComponent?: ComponentRef<ModalComponent>;
+  private contentComponent?: ComponentRef<unknown>;
+  private modalInBody = false;
   options!: ModalOptions | undefined;
   vcr!: ViewContainerRef;
 
@@ -32,6 +34,7 @@ export class ModalService {
     contentOrComponent: TemplateRef<Element> | Type<C>,
     options?: ModalOptions
   ) {
+    if (this.modalComponent) this.destroy();
     if (contentOrComponent instanceof TemplateRef) {
       this.openWithTemplate(
         this.vcr,
@@ -47,32 +50,52 @@ export class ModalService {
     vcr: ViewContainerRef,
     content: TemplateRef<Element>
   ) {
+    this.modalInBody = false;
     vcr.clear();
     const innerContent = vcr.createEmbeddedView(content);
 
-    this.newModalComponent = vcr.createComponent(ModalComponent, {
+    this.modalComponent = vcr.createComponent(ModalComponent, {
       environmentInjector: this.injector,
       projectableNodes: [innerContent.rootNodes],
     });
   }
 
   private openWithComponent(component: Type<unknown>) {
-    const newComponent = createComponent(component, {
+    this.modalInBody = true;
+    this.contentComponent = createComponent(component, {
       environmentInjector: this.injector,
     });
 
-    this.newModalComponent = createComponent(ModalComponent, {
+    this.modalComponent = createComponent(ModalComponent, {
       environmentInjector: this.injector,
-      projectableNodes: [[newComponent.location.nativeElement]],
+      projectableNodes: [[this.contentComponent.location.nativeElement]],
     });
 
-    document.body.appendChild(this.newModalComponent.location.nativeElement);
+    document.body.appendChild(this.modalComponent.location.nativeElement);
 
-    this.appRef.attachView(newComponent.hostView);
-    this.appRef.attachView(this.newModalComponent.hostView);
+    this.appRef.attachView(this.contentComponent.hostView);
+    this.appRef.attachView(this.modalComponent.hostView);
   }
 
   close() {
-    this.newModalComponent.instance.close();
+    this.modalComponent?.instance.close();
+  }
+
+  destroy(): void {
+    if (this.modalInBody) {
+      if (this.contentComponent) {
+        this.appRef.detachView(this.contentComponent.hostView);
+        this.contentComponent.destroy();
+        this.contentComponent = undefined;
+      }
+      if (this.modalComponent) {
+        this.appRef.detachView(this.modalComponent.hostView);
+        this.modalComponent.destroy();
+        this.modalComponent = undefined;
+      }
+    } else if (this.vcr) {
+      this.vcr.clear();
+      this.modalComponent = undefined;
+    }
   }
 }
