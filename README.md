@@ -1,27 +1,45 @@
 # Dday
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
+Painel administrativo fictício para praticar Angular e interfaces de gestão. O projeto não se conecta a APIs: os pagamentos vêm de dados locais em `src/app/mocks/payment.ts`, e os gráficos usam valores fixos ou gerados no navegador.
 
-## Development server
+## Estado atual
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular 15 com componentes standalone, rotas carregadas sob demanda e estilos SCSS.
+- Dashboard com cartões e gráficos de solicitações e liquidez.
+- Pagamentos com busca por nome, ordenação, seleção do tamanho da página e paginação, usando um serviço mock.
+- Menu lateral, cabeçalho e modal de seleção de idioma (português e inglês).
+- As telas de funcionários, departamentos e liquidez ainda são estruturas iniciais, sem fluxos de gestão.
 
-## Code scaffolding
+## Executar localmente
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Requer Node.js e npm compatíveis com as dependências do Angular 15.
 
-## Build
+```bash
+npm ci
+npm start
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Abra <http://localhost:4200/>. Para gerar a versão de produção:
 
-## Running unit tests
+```bash
+npm run build
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Organização
 
-## Running end-to-end tests
+- `src/app/pages/internal`: páginas do painel e rotas internas.
+- `src/app/pages/internal/payment`: listagem, filtros e serviço de pagamentos fictícios.
+- `src/app/mocks`: dados locais usados pela aplicação.
+- `src/assets/i18n`: textos em português e inglês.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Próximas evoluções sugeridas
 
-## Further help
+1. Completar funcionários e departamentos com dados locais, formulários e operações de criar, editar e remover.
+2. Fazer a tela de liquidez explorar o mesmo conjunto de dados que alimenta os gráficos do dashboard.
+3. Centralizar os dados mock e derivar cartões e gráficos deles para manter os números coerentes entre telas.
+4. Revisar acessibilidade, responsividade e textos para que todas as páginas usem as traduções existentes.
+5. Atualizar Angular e dependências em uma etapa própria, verificando compatibilidade antes de migrar a aplicação.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Tecnologias
+
+Angular 15, TypeScript, RxJS, SCSS, ngx-translate e ECharts.

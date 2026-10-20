@@ -1,67 +1,57 @@
 import { Injectable } from '@angular/core';
-import { Observable, delay, map } from 'rxjs';
+import { Observable, delay, map, of } from 'rxjs';
 import { PAYMENTS } from '../../../../mocks/payment';
-import { Reponse } from '../../../../models/response';
+import { PaginatedResponse } from '../../../../models/response';
 import { PaymentService } from '../models/payment-service';
 import { Payment } from '../models/payment';
 import { PaymentFilter } from '../models/payment-filter';
 
 @Injectable()
 export class MockPaymentService implements PaymentService {
-  getPayments(filter: PaymentFilter | null): Observable<Reponse<Payment[]>> {
-    return new Observable<Reponse<Payment[]>>((observer) => {
-      observer.next({ data: PAYMENTS, total: PAYMENTS.length });
-      observer.complete();
-    }).pipe(
+  getPayments(filter: PaymentFilter | null): Observable<PaginatedResponse<Payment>> {
+    return of([...PAYMENTS]).pipe(
       delay(500),
       map((response) => {
-        if (filter?.searchTerm) {
-          const data = response.data.filter((item) =>
-            item.name
-              .toLowerCase()
-              .includes(filter?.searchTerm?.toLowerCase() as string)
+        const searchTerm = filter?.searchTerm?.trim().toLocaleLowerCase();
+        let data = searchTerm
+          ? response.filter((payment) =>
+              payment.name.toLocaleLowerCase().includes(searchTerm)
+            )
+          : response;
+
+        if (filter?.sortBy && data.length > 0 && filter.sortBy in data[0]) {
+          const sortBy = filter.sortBy as keyof Payment;
+          const direction = filter.desc ? -1 : 1;
+          data = [...data].sort(
+            (a, b) => comparePayments(a[sortBy], b[sortBy]) * direction
           );
-          return {
-            total: data.length,
-            data,
-          };
         }
-        return response;
-      }),
-      map((response) => {
-        if (
-          filter?.sortBy &&
-          response.data?.length &&
-          filter?.sortBy in response.data[0]
-        ) {
-          return {
-            total: response.total,
-            data: response.data.sort((a, b) => {
-              const parameterToSort = filter.sortBy as keyof Payment;
-              if (a[parameterToSort] > b[parameterToSort]) {
-                return filter.desc ? -1 : 1;
-              }
-              if (a[parameterToSort] < b[parameterToSort]) {
-                return filter.desc ? 1 : -1;
-              }
-              return 0;
-            }),
-          };
+
+        const total = data.length;
+        if (filter && filter.page > 0 && filter.itensPerPage > 0) {
+          const start = (filter.page - 1) * filter.itensPerPage;
+          data = data.slice(start, start + filter.itensPerPage);
         }
-        return response;
-      }),
-      map((response) => {
-        if (filter?.page) {
-          return {
-            total: response.total,
-            data: [...response.data].splice(
-              filter.page - 1,
-              filter.itensPerPage
-            ),
-          };
-        }
-        return response;
+
+        return { data, total };
       })
     );
   }
+}
+
+function comparePayments(
+  first: Payment[keyof Payment],
+  second: Payment[keyof Payment]
+): number {
+  if (first instanceof Date && second instanceof Date) {
+    return first.getTime() - second.getTime();
+  }
+
+  if (typeof first === 'number' && typeof second === 'number') {
+    return first - second;
+  }
+
+  return String(first).localeCompare(String(second), undefined, {
+    sensitivity: 'base',
+  });
 }

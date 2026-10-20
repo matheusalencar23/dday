@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable, Subject, debounceTime, finalize, startWith } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  Subject,
+  debounceTime,
+  finalize,
+  startWith,
+  takeUntil,
+} from 'rxjs';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { MockPaymentService } from 'src/app/pages/internal/payment/services/mock-payment.service';
@@ -10,7 +18,7 @@ import { InputSearchComponent } from 'src/app/components/input-search/input-sear
 import { SelectComponent } from 'src/app/components/select/select.component';
 import { DefaultOption } from 'src/app/components/select/models/options';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
-import { Reponse } from 'src/app/models/response';
+import { PaginatedResponse } from 'src/app/models/response';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 import {
   PAYMENT_SERVICE_TOKEN,
@@ -41,9 +49,10 @@ import { Payment } from './models/payment';
     },
   ],
 })
-export class PaymentComponent implements OnInit {
-  payments$: Observable<Reponse<Payment[]>> = new Observable();
-  saerchTerm$ = new Subject<string>();
+export class PaymentComponent implements OnInit, OnDestroy {
+  payments$: Observable<PaginatedResponse<Payment>> = EMPTY;
+  private readonly searchTermChanges = new Subject<string>();
+  private readonly destroy$ = new Subject<void>();
   searchTerm = '';
   tableConfig = TABLE_PAYMENTS_CONFIG;
   loading = false;
@@ -67,12 +76,19 @@ export class PaymentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.saerchTerm$.pipe(debounceTime(400), startWith('')).subscribe({
-      next: (term: string) => {
-        this.filter.searchTerm = term;
-        this.getPayments();
-      },
-    });
+    this.searchTermChanges
+      .pipe(debounceTime(400), startWith(''), takeUntil(this.destroy$))
+      .subscribe({
+        next: (term: string) => {
+          this.filter.searchTerm = term;
+          this.getPayments();
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   order(sortBy: string): void {
@@ -87,7 +103,7 @@ export class PaymentComponent implements OnInit {
   }
 
   filterByTerm(term: string): void {
-    this.saerchTerm$.next(term);
+    this.searchTermChanges.next(term);
   }
 
   showPayments(): void {
@@ -98,7 +114,7 @@ export class PaymentComponent implements OnInit {
   getPayments(): void {
     this.loading = true;
     this.payments$ = this.paymentService
-      .getPayments(this.filter)
+      .getPayments({ ...this.filter })
       .pipe(finalize(() => (this.loading = false)));
   }
 

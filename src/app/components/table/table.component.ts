@@ -2,9 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableType } from './models/data-table-type';
@@ -19,8 +17,8 @@ import { tablerCaretDown, tablerCaretUp } from '@ng-icons/tabler-icons';
   styleUrls: ['./table.component.scss'],
   providers: [provideIcons({ tablerCaretUp, tablerCaretDown })],
 })
-export class TableComponent implements OnChanges {
-  colors = [
+export class TableComponent {
+  private readonly colors = [
     { bgColor: '#bdd9fe', color: '#217efd' },
     { bgColor: '#ffb5364a', color: '#ffb536' },
     { bgColor: '#f4cefa', color: '#db5aee' },
@@ -41,20 +39,17 @@ export class TableComponent implements OnChanges {
 
   @Output() orderBy = new EventEmitter<string>();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tableContent']) {
-      this.tableContent.forEach((item) => {
-        item.colors = this.getColors();
-      });
-    }
-  }
-
-  getColors(): { [klass: string]: any } | null | undefined {
-    const randomIndex = Math.floor(Math.random() * this.colors.length);
+  getColors(id: string | number): { backgroundColor: string; color: string } {
+    const key = String(id);
+    const hash = Array.from(key).reduce(
+      (value, character) => (value * 31 + character.charCodeAt(0)) >>> 0,
+      0
+    );
+    const color = this.colors[hash % this.colors.length];
 
     return {
-      backgroundColor: this.colors[randomIndex].bgColor,
-      color: this.colors[randomIndex].color,
+      backgroundColor: color.bgColor,
+      color: color.color,
     };
   }
 

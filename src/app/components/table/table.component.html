@@ -32,7 +32,11 @@
       >
         <div
           [class]="columnHead?.statusColorFn?.(columnData[columnHead.dataProperty]) || ''"
-          [style]="columnHead.dataProperty === 'id' ? columnData.colors : {}"
+          [style]="
+            columnHead.dataProperty === 'id'
+              ? getColors(columnData.id)
+              : {}
+          "
         >
           <span>
             <ng-container [ngSwitch]="columnHead.pipe">
