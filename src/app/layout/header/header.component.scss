@@ -37,13 +37,21 @@ header {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+
+  .icon-frame {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+  }
 
   ng-icon {
     display: block;
-    width: 26px;
-    height: 26px;
-    flex: 0 0 26px;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
   }
 }
 
@@ -63,4 +71,9 @@ header {
 .icon-action,
 .avatar-action {
   cursor: pointer;
+}
+
+.avatar-action {
+  width: 40px;
+  height: 40px;
 }

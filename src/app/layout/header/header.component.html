@@ -5,19 +5,19 @@
     [attr.aria-label]="'app.header.open-menu' | translate"
     (click)="openSidebar.emit()"
   >
-    <ng-icon name="heroBars3Solid" size="26" aria-hidden="true"></ng-icon>
+    <ng-icon name="heroBars3Solid" size="22" aria-hidden="true"></ng-icon>
   </button>
   <dd-input-search
     [placeholder]="'app.search-placeholder' | translate"
     [ariaLabel]="'app.search-placeholder' | translate"
   ></dd-input-search>
   <div class="header-actions">
-    <ng-icon
-      name="heroInformationCircle"
-      size="22"
-      aria-hidden="true"
-    ></ng-icon>
-    <ng-icon name="heroBell" size="22" aria-hidden="true"></ng-icon>
+    <span class="icon-frame" aria-hidden="true">
+      <ng-icon name="heroInformationCircle" size="22"></ng-icon>
+    </span>
+    <span class="icon-frame" aria-hidden="true">
+      <ng-icon name="heroBell" size="22"></ng-icon>
+    </span>
     <button
       type="button"
       class="icon-action"

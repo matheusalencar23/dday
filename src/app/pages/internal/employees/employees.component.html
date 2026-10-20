@@ -18,17 +18,19 @@
 
 <dd-loading-spinner *ngIf="loading" />
 <ng-container *ngIf="employees$ | async as employees">
-  <dd-table
-    [tableConfig]="tableConfig"
-    [tableContent]="employees.data"
-    (orderBy)="order($event)"
-    [dataSortProperty]="filter.sortBy"
-    [desc]="filter.desc"
-  />
-  <dd-pagination
-    [page]="filter.page"
-    [itemsPerPage]="filter.itemsPerPage"
-    [total]="employees.total"
-    (pageEvent)="pagination($event)"
-  />
+  <ng-container *ngIf="!loading">
+    <dd-table
+      [tableConfig]="tableConfig"
+      [tableContent]="employees.data"
+      (orderBy)="order($event)"
+      [dataSortProperty]="filter.sortBy"
+      [desc]="filter.desc"
+    />
+    <dd-pagination
+      [page]="filter.page"
+      [itemsPerPage]="filter.itemsPerPage"
+      [total]="employees.total"
+      (pageEvent)="pagination($event)"
+    />
+  </ng-container>
 </ng-container>
