@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { generateRandomChartData, getRollingMonthLabels } from '../../dashboard-chart-data';
 
 @Component({
   selector: 'dd-request-per-day-chart',
@@ -12,12 +11,12 @@ import { generateRandomChartData, getRollingMonthLabels } from '../../dashboard-
   imports: [CommonModule, NgxEchartsModule],
 })
 export class RequestPerDayChartComponent implements OnChanges {
+  @Input() labels: string[] = [];
+  @Input() values: number[] = [];
+  @Input() previousValues: number[] = [];
+  @Input() currentLabel = '';
+  @Input() previousLabel = '';
   @Input() title = '';
-  @Input() currentMonthLabel = '';
-  @Input() previousMonthLabel = '';
-  private readonly labels = getRollingMonthLabels();
-  private readonly currentValues = generateRandomChartData(this.labels.length);
-  private readonly previousValues = generateRandomChartData(this.labels.length);
   options: EChartsOption = {};
 
   ngOnChanges(_changes: SimpleChanges): void {
@@ -36,7 +35,7 @@ export class RequestPerDayChartComponent implements OnChanges {
         axisPointer: { type: 'cross', label: { backgroundColor: '#6a7985' } },
       },
       legend: {
-        data: [this.currentMonthLabel, this.previousMonthLabel],
+        data: [this.currentLabel, this.previousLabel],
         orient: 'horizontal',
         left: 'right',
       },
@@ -44,32 +43,33 @@ export class RequestPerDayChartComponent implements OnChanges {
       xAxis: [{ type: 'category', boundaryGap: false, data: this.labels }],
       yAxis: [{ type: 'value', minInterval: 1 }],
       series: [
-        {
-          name: this.currentMonthLabel,
-          type: 'line',
+        ...[
+          { name: this.currentLabel, data: this.values },
+          { name: this.previousLabel, data: this.previousValues },
+        ].map((item) => ({
+          name: item.name,
+          type: 'line' as const,
           smooth: true,
+          showSymbol: false,
           areaStyle: {
             opacity: 0.8,
             color: new graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(22, 163, 74, 1)' },
-              { offset: 1, color: 'rgba(22, 163, 74, 0.1)' },
+              {
+                offset: 0,
+                color: item.name === this.currentLabel
+                  ? 'rgba(22, 163, 74, 1)'
+                  : 'rgba(246, 199, 125, 1)',
+              },
+              {
+                offset: 1,
+                color: item.name === this.currentLabel
+                  ? 'rgba(22, 163, 74, 0.1)'
+                  : 'rgba(246, 199, 125, 0.1)',
+              },
             ]),
           },
-          data: this.currentValues,
-        },
-        {
-          name: this.previousMonthLabel,
-          type: 'line',
-          smooth: true,
-          areaStyle: {
-            opacity: 0.8,
-            color: new graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(246, 199, 125, 1)' },
-              { offset: 1, color: 'rgba(246, 199, 125, 0.1)' },
-            ]),
-          },
-          data: this.previousValues,
-        },
+          data: item.data,
+        })),
       ],
     };
   }

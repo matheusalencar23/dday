@@ -11,8 +11,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
   imports: [CommonModule, NgxEchartsModule],
 })
 export class AvailableLiquidityChartComponent implements OnChanges {
+  @Input() value = 0;
   @Input() title = '';
-  private readonly value = Math.round(Math.random() * 100);
   private readonly color = '#16A34A';
 
   options: EChartsOption = {};
@@ -84,7 +84,7 @@ export class AvailableLiquidityChartComponent implements OnChanges {
         },
         data: [
           {
-            value: this.value,
+            value: Math.max(0, Math.min(100, this.value)),
           },
         ],
       },

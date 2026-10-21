@@ -45,17 +45,16 @@
         "request-number": "Payment requests",
         "available-liquidity": "Available liquidity"
       },
-      "request-trend": "Payment requests per day",
-      "monthly-amount": "Payment amount per month",
-      "monthly-requests": "Total payment requests per month",
-      "current-month": "Current month",
-      "previous-month": "Previous month",
+      "request-trend": "Payment amount per month",
+      "yearly-amount": "Payment amount per year",
+      "yearly-requests": "Payment requests per year",
       "liquidity": "Available liquidity"
     },
     "payments": {
       "title": "Advance payments",
-      "search": "Search by name...",
-      "name": "Name",
+      "search": "Search by employee or department...",
+      "employee": "Employee",
+      "department": "Department",
       "amount": "Amount",
       "date": "Date",
       "status": "Status",
@@ -78,6 +77,8 @@
       "email": "Email",
       "role": "Role",
       "department": "Department",
+      "payment-count": "Payment requests",
+      "pending-amount": "Pending amount",
       "unassigned": "Unassigned"
     },
     "departments": {
@@ -90,6 +91,8 @@
       "manager": "Manager",
       "description": "Description",
       "members": "Employees",
+      "payment-count": "Payment requests",
+      "pending-amount": "Pending amount",
       "delete-note": "Removing a department leaves its employees unassigned."
     },
     "liquidity": {

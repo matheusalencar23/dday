@@ -1,6 +1,6 @@
 export interface Department {
   id: number;
   name: string;
-  manager: string;
+  managerId: number;
   description: string;
 }

@@ -31,19 +31,21 @@
       <table>
         <thead>
           <tr>
-            <th scope="col">{{ 'app.payments.name' | translate }}</th>
+            <th scope="col">{{ 'app.payments.employee' | translate }}</th>
+            <th scope="col">{{ 'app.payments.department' | translate }}</th>
             <th scope="col">{{ 'app.payments.amount' | translate }}</th>
             <th scope="col">{{ 'app.payments.date' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let payment of pendingPayments$ | async; trackBy: trackPayment">
-            <td>{{ payment.name }}</td>
+            <td>{{ payment.employeeName }}</td>
+            <td>{{ payment.departmentName }}</td>
             <td>{{ payment.amount | currency : currencyCode : 'symbol' : undefined : locale }}</td>
             <td>{{ formatDate(payment.date) }}</td>
           </tr>
           <tr *ngIf="(pendingPayments$ | async)?.length === 0">
-            <td colspan="3">{{ 'app.liquidity.no-pending' | translate }}</td>
+            <td colspan="4">{{ 'app.liquidity.no-pending' | translate }}</td>
           </tr>
         </tbody>
       </table>

@@ -12,11 +12,16 @@ import { TableComponent } from 'src/app/components/table/table.component';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 import { TableViewFilter, createTableView } from 'src/app/utils/table-view';
 import { StudyDataService } from 'src/app/services/study-data.service';
+import { PaymentStatus } from '../payment/models/payment-status.enum';
 import { Department } from '../departments/models/department';
 import { Employee } from './models/employee';
 import { TABLE_EMPLOYEES_CONFIG } from './data-table-employees-config';
 
-type EmployeeRow = Employee & { department: string };
+type EmployeeRow = Employee & {
+  department: string;
+  paymentCount: number;
+  pendingAmount: number;
+};
 
 @Component({
   selector: 'app-employees',
@@ -48,13 +53,21 @@ export class EmployeesComponent {
   readonly employees$ = combineLatest([
     this.studyData.employees$,
     this.studyData.departments$,
+    this.studyData.payments$,
     this.filterChanges,
   ]).pipe(
-    map(([employees, departments, filter]) => {
+    map(([employees, departments, payments, filter]) => {
       const rows = employees.map((employee) => ({
         ...employee,
         department: this.departmentName(employee.departmentId, departments),
-      }));
+        paymentCount: payments.filter((payment) => payment.employeeId === employee.id).length,
+        pendingAmount: payments
+          .filter(
+            (payment) =>
+              payment.employeeId === employee.id && payment.status === PaymentStatus.PENDING
+          )
+          .reduce((total, payment) => total + payment.amount, 0),
+      } satisfies EmployeeRow));
       return createTableView(rows, filter, ['name', 'email', 'role', 'department']);
     }),
     delayWhen(() => timer(Math.random() * 1000)),

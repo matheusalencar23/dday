@@ -26,7 +26,7 @@ import {
   PaymentService,
 } from './models/payment-service';
 import { PaymentFilter } from './models/payment-filter';
-import { Payment } from './models/payment';
+import { PaymentListRow } from './models/payment';
 
 @Component({
   selector: 'app-payment',
@@ -52,7 +52,7 @@ import { Payment } from './models/payment';
   ],
 })
 export class PaymentComponent implements OnInit, OnDestroy {
-  payments$: Observable<PaginatedResponse<Payment>> = EMPTY;
+  payments$: Observable<PaginatedResponse<PaymentListRow>> = EMPTY;
   private readonly searchTermChanges = new Subject<string>();
   private readonly destroy$ = new Subject<void>();
   searchTerm = '';

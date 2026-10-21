@@ -8,18 +8,26 @@
 
   <div class="charts">
     <dd-request-per-day-chart
+      [labels]="dashboard.monthlyLabels"
+      [values]="dashboard.currentYearMonthlyAmounts"
+      [previousValues]="dashboard.previousYearMonthlyAmounts"
+      [currentLabel]="dashboard.currentYearLabel"
+      [previousLabel]="dashboard.previousYearLabel"
       [title]="'app.dashboard.request-trend' | translate"
-      [currentMonthLabel]="'app.dashboard.current-month' | translate"
-      [previousMonthLabel]="'app.dashboard.previous-month' | translate"
     ></dd-request-per-day-chart>
     <dd-bar-chart
-      [title]="'app.dashboard.monthly-amount' | translate"
+      [labels]="dashboard.yearlyLabels"
+      [values]="dashboard.yearlyAmountTotals"
+      [title]="'app.dashboard.yearly-amount' | translate"
       color="#F6C77D"
     ></dd-bar-chart>
     <dd-bar-chart
-      [title]="'app.dashboard.monthly-requests' | translate"
+      [labels]="dashboard.yearlyLabels"
+      [values]="dashboard.yearlyRequestCounts"
+      [title]="'app.dashboard.yearly-requests' | translate"
     ></dd-bar-chart>
     <dd-available-liquidity-chart
+      [value]="dashboard.liquidityPercent"
       [title]="'app.dashboard.liquidity' | translate"
     ></dd-available-liquidity-chart>
   </div>

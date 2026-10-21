@@ -45,17 +45,16 @@
         "request-number": "Solicitações de pagamento",
         "available-liquidity": "Liquidez disponível"
       },
-      "request-trend": "Solicitações de pagamento por dia",
-      "monthly-amount": "Valor pago por mês",
-      "monthly-requests": "Total de solicitações por mês",
-      "current-month": "Mês atual",
-      "previous-month": "Mês anterior",
+      "request-trend": "Valor dos pagamentos por mês",
+      "yearly-amount": "Valor pago por ano",
+      "yearly-requests": "Solicitações de pagamento por ano",
       "liquidity": "Liquidez disponível"
     },
     "payments": {
       "title": "Adiantamentos de pagamento",
-      "search": "Buscar por nome...",
-      "name": "Nome",
+      "search": "Buscar por funcionário ou departamento...",
+      "employee": "Funcionário",
+      "department": "Departamento",
       "amount": "Valor",
       "date": "Data",
       "status": "Status",
@@ -78,6 +77,8 @@
       "email": "E-mail",
       "role": "Cargo",
       "department": "Departamento",
+      "payment-count": "Solicitações de pagamento",
+      "pending-amount": "Valor pendente",
       "unassigned": "Sem departamento"
     },
     "departments": {
@@ -90,6 +91,8 @@
       "manager": "Responsável",
       "description": "Descrição",
       "members": "Funcionários",
+      "payment-count": "Solicitações de pagamento",
+      "pending-amount": "Valor pendente",
       "delete-note": "Ao remover um departamento, seus funcionários ficam sem departamento."
     },
     "liquidity": {

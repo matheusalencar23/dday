@@ -3,26 +3,27 @@ import { Observable, delay, map, of } from 'rxjs';
 import { PaginatedResponse } from '../../../../models/response';
 import { StudyDataService } from '../../../../services/study-data.service';
 import { PaymentService } from '../models/payment-service';
-import { Payment } from '../models/payment';
+import { PaymentListRow } from '../models/payment';
 import { PaymentFilter } from '../models/payment-filter';
 
 @Injectable()
 export class MockPaymentService implements PaymentService {
   constructor(private readonly studyData: StudyDataService) {}
 
-  getPayments(filter: PaymentFilter | null): Observable<PaginatedResponse<Payment>> {
-    return of(this.studyData.getPaymentSnapshot()).pipe(
+  getPayments(filter: PaymentFilter | null): Observable<PaginatedResponse<PaymentListRow>> {
+    return of(this.studyData.getPaymentRowsSnapshot()).pipe(
       delay(Math.random() * 1000),
       map((response) => {
         const searchTerm = filter?.searchTerm?.trim().toLocaleLowerCase();
         let data = searchTerm
           ? response.filter((payment) =>
-              payment.name.toLocaleLowerCase().includes(searchTerm)
+              payment.employeeName.toLocaleLowerCase().includes(searchTerm) ||
+              payment.departmentName.toLocaleLowerCase().includes(searchTerm)
             )
           : response;
 
         if (filter?.sortBy && data.length > 0 && filter.sortBy in data[0]) {
-          const sortBy = filter.sortBy as keyof Payment;
+          const sortBy = filter.sortBy as keyof PaymentListRow;
           const direction = filter.desc ? -1 : 1;
           data = [...data].sort(
             (a, b) => comparePayments(a[sortBy], b[sortBy]) * direction
@@ -42,8 +43,8 @@ export class MockPaymentService implements PaymentService {
 }
 
 function comparePayments(
-  first: Payment[keyof Payment],
-  second: Payment[keyof Payment]
+  first: PaymentListRow[keyof PaymentListRow],
+  second: PaymentListRow[keyof PaymentListRow]
 ): number {
   if (first instanceof Date && second instanceof Date) {
     return first.getTime() - second.getTime();

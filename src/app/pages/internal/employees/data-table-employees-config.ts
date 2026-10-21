@@ -7,5 +7,12 @@ export const TABLE_EMPLOYEES_CONFIG: DataTableType = {
     { title: 'app.employees.email', dataProperty: 'email', sortable: true },
     { title: 'app.employees.role', dataProperty: 'role', sortable: true },
     { title: 'app.employees.department', dataProperty: 'department', sortable: true },
+    { title: 'app.employees.payment-count', dataProperty: 'paymentCount', sortable: true },
+    {
+      title: 'app.employees.pending-amount',
+      dataProperty: 'pendingAmount',
+      pipe: 'currency',
+      sortable: true,
+    },
   ],
 };

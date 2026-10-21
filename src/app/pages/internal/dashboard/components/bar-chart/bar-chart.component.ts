@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { generateRandomChartData, getRollingMonthLabels } from '../../dashboard-chart-data';
 
 @Component({
   selector: 'dd-bar-chart',
@@ -16,11 +15,11 @@ export class BarChartComponent implements OnChanges {
 
   @Input() color: string = '#16A34A';
   @Input() title: string = '';
-  private readonly labels = getRollingMonthLabels();
-  private readonly values = generateRandomChartData(this.labels.length);
+  @Input() labels: string[] = [];
+  @Input() values: number[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['color'] || changes['title']) {
+    if (changes['color'] || changes['title'] || changes['labels'] || changes['values']) {
       this.handleOptions();
     }
   }

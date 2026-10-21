@@ -4,7 +4,8 @@ import { PaymentStatus } from './models/payment-status.enum';
 export const TABLE_PAYMENTS_CONFIG: DataTableType = {
   columns: [
     { title: '#', dataProperty: 'id' },
-    { title: 'app.payments.name', dataProperty: 'name', sortable: true },
+    { title: 'app.payments.employee', dataProperty: 'employeeName', sortable: true },
+    { title: 'app.payments.department', dataProperty: 'departmentName', sortable: true },
     {
       title: 'app.payments.amount',
       dataProperty: 'amount',
