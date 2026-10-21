@@ -46,7 +46,7 @@ export class DepartmentsPageComponent {
     searchTerm: '',
     page: 1,
     itemsPerPage: 5,
-    sortBy: 'name',
+    sortBy: '',
     desc: false,
   };
   private readonly filterChanges = new BehaviorSubject<TableViewFilter>(this.filter);

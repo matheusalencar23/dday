@@ -16,10 +16,7 @@ export interface DashboardSummary {
   liquidityPercent: number;
   availableLiquidity: number;
   monthlyLabels: string[];
-  currentYearMonthlyAmounts: number[];
-  previousYearMonthlyAmounts: number[];
-  currentYearLabel: string;
-  previousYearLabel: string;
+  monthlyPaymentSeries: Array<{ name: string; data: number[] }>;
   yearlyLabels: string[];
   yearlyRequestCounts: number[];
   yearlyAmountTotals: number[];
@@ -147,10 +144,7 @@ export class StudyDataService {
   ): Pick<
     DashboardSummary,
     | 'monthlyLabels'
-    | 'currentYearMonthlyAmounts'
-    | 'previousYearMonthlyAmounts'
-    | 'currentYearLabel'
-    | 'previousYearLabel'
+    | 'monthlyPaymentSeries'
     | 'yearlyLabels'
     | 'yearlyRequestCounts'
     | 'yearlyAmountTotals'
@@ -173,8 +167,6 @@ export class StudyDataService {
     }
 
     const years = Array.from(yearlyTotals.keys()).sort((first, second) => first - second);
-    const currentYear = years[years.length - 1];
-    const previousYear = years[years.length - 2];
     const locale = language === 'pt' ? 'pt-BR' : 'en-US';
     const monthlyLabels = Array.from({ length: 12 }, (_, month) =>
       new Date(2024, month, 1).toLocaleDateString(locale, { month: 'short' })
@@ -182,10 +174,10 @@ export class StudyDataService {
 
     return {
       monthlyLabels,
-      currentYearMonthlyAmounts: currentYear === undefined ? Array(12).fill(0) : monthlyTotals.get(currentYear) ?? Array(12).fill(0),
-      previousYearMonthlyAmounts: previousYear === undefined ? Array(12).fill(0) : monthlyTotals.get(previousYear) ?? Array(12).fill(0),
-      currentYearLabel: currentYear === undefined ? '' : String(currentYear),
-      previousYearLabel: previousYear === undefined ? '' : String(previousYear),
+      monthlyPaymentSeries: years.map((year) => ({
+        name: String(year),
+        data: monthlyTotals.get(year) ?? Array(12).fill(0),
+      })),
       yearlyLabels: years.map(String),
       yearlyRequestCounts: years.map((year) => yearlyTotals.get(year)?.count ?? 0),
       yearlyAmountTotals: years.map((year) => yearlyTotals.get(year)?.amount ?? 0),

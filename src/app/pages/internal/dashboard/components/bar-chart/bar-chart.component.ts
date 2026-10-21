@@ -19,7 +19,12 @@ export class BarChartComponent implements OnChanges {
   @Input() values: number[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['color'] || changes['title'] || changes['labels'] || changes['values']) {
+    if (
+      changes['color'] ||
+      changes['title'] ||
+      changes['labels'] ||
+      changes['values']
+    ) {
       this.handleOptions();
     }
   }
@@ -59,7 +64,7 @@ export class BarChartComponent implements OnChanges {
       series: [
         {
           type: 'bar',
-          barWidth: 14,
+          barWidth: 24,
           itemStyle: {
             borderRadius: [12, 12, 0, 0],
             color: this.color,

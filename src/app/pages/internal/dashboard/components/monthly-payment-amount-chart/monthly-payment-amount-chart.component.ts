@@ -4,24 +4,23 @@ import { EChartsOption, graphic } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
-  selector: 'dd-request-per-day-chart',
-  templateUrl: './request-per-day-chart.component.html',
-  styleUrls: ['./request-per-day-chart.component.scss'],
+  selector: 'dd-monthly-payment-amount-chart',
+  templateUrl: './monthly-payment-amount-chart.component.html',
+  styleUrls: ['./monthly-payment-amount-chart.component.scss'],
   standalone: true,
   imports: [CommonModule, NgxEchartsModule],
 })
-export class RequestPerDayChartComponent implements OnChanges {
+export class MonthlyPaymentAmountChartComponent implements OnChanges {
   @Input() labels: string[] = [];
-  @Input() values: number[] = [];
-  @Input() previousValues: number[] = [];
-  @Input() currentLabel = '';
-  @Input() previousLabel = '';
+  @Input() series: Array<{ name: string; data: number[] }> = [];
   @Input() title = '';
   options: EChartsOption = {};
 
+  private readonly colors = ['#8B5CF6', '#3B82F6', '#F97316', '#F6C77D', '#16A34A'];
+
   ngOnChanges(_changes: SimpleChanges): void {
     this.options = {
-      color: ['#16A34A', '#F6C77D'],
+      color: this.series.map((_, index) => this.colors[index % this.colors.length]),
       title: {
         text: this.title,
         textStyle: {
@@ -35,18 +34,21 @@ export class RequestPerDayChartComponent implements OnChanges {
         axisPointer: { type: 'cross', label: { backgroundColor: '#6a7985' } },
       },
       legend: {
-        data: [this.currentLabel, this.previousLabel],
+        data: this.series.map((item) => item.name),
+        selected: Object.fromEntries(
+          this.series.map((item, index) => [item.name, index >= this.series.length - 2])
+        ),
         orient: 'horizontal',
         left: 'right',
       },
       grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
       xAxis: [{ type: 'category', boundaryGap: false, data: this.labels }],
       yAxis: [{ type: 'value', minInterval: 1 }],
-      series: [
-        ...[
-          { name: this.currentLabel, data: this.values },
-          { name: this.previousLabel, data: this.previousValues },
-        ].map((item) => ({
+      series: this.series.map((item, index) => {
+        const color = this.colors[index % this.colors.length];
+        const [red, green, blue] = color.match(/[\da-f]{2}/gi)!.map((value) => parseInt(value, 16));
+
+        return {
           name: item.name,
           type: 'line' as const,
           smooth: true,
@@ -54,23 +56,13 @@ export class RequestPerDayChartComponent implements OnChanges {
           areaStyle: {
             opacity: 0.8,
             color: new graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: item.name === this.currentLabel
-                  ? 'rgba(22, 163, 74, 1)'
-                  : 'rgba(246, 199, 125, 1)',
-              },
-              {
-                offset: 1,
-                color: item.name === this.currentLabel
-                  ? 'rgba(22, 163, 74, 0.1)'
-                  : 'rgba(246, 199, 125, 0.1)',
-              },
+              { offset: 0, color: `rgba(${red}, ${green}, ${blue}, 1)` },
+              { offset: 1, color: `rgba(${red}, ${green}, ${blue}, 0.1)` },
             ]),
           },
           data: item.data,
-        })),
-      ],
+        };
+      }),
     };
   }
 }

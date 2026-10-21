@@ -7,14 +7,11 @@
   </div>
 
   <div class="charts">
-    <dd-request-per-day-chart
+    <dd-monthly-payment-amount-chart
       [labels]="dashboard.monthlyLabels"
-      [values]="dashboard.currentYearMonthlyAmounts"
-      [previousValues]="dashboard.previousYearMonthlyAmounts"
-      [currentLabel]="dashboard.currentYearLabel"
-      [previousLabel]="dashboard.previousYearLabel"
-      [title]="'app.dashboard.request-trend' | translate"
-    ></dd-request-per-day-chart>
+      [series]="dashboard.monthlyPaymentSeries"
+      [title]="'app.dashboard.payment-amount-trend' | translate"
+    ></dd-monthly-payment-amount-chart>
     <dd-bar-chart
       [labels]="dashboard.yearlyLabels"
       [values]="dashboard.yearlyAmountTotals"

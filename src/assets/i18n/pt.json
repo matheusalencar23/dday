@@ -45,7 +45,7 @@
         "request-number": "Solicitações de pagamento",
         "available-liquidity": "Liquidez disponível"
       },
-      "request-trend": "Valor dos pagamentos por mês",
+      "payment-amount-trend": "Valor dos pagamentos por mês",
       "yearly-amount": "Valor pago por ano",
       "yearly-requests": "Solicitações de pagamento por ano",
       "liquidity": "Liquidez disponível"

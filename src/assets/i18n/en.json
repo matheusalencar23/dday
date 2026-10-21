@@ -45,7 +45,7 @@
         "request-number": "Payment requests",
         "available-liquidity": "Available liquidity"
       },
-      "request-trend": "Payment amount per month",
+      "payment-amount-trend": "Payment amount per month",
       "yearly-amount": "Payment amount per year",
       "yearly-requests": "Payment requests per year",
       "liquidity": "Available liquidity"
