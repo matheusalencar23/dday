@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DefaultRoutes } from 'src/app/models/routes';
 import { SidebarItem } from '../models/sidebar-item';
+import { NAVIGATION_ITEMS } from '../navigation-items';
 import { CommonModule } from '@angular/common';
 import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -49,33 +49,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class SidebarComponent {
-  sidebarItems: SidebarItem[] = [
-    {
-      icon: 'heroHomeSolid',
-      label: 'app.menu.dashboard',
-      routerLink: DefaultRoutes.DASHBOARD,
-    },
-    {
-      icon: 'heroShoppingBagSolid',
-      label: 'app.menu.payment',
-      routerLink: DefaultRoutes.PAYMENT,
-    },
-    {
-      icon: 'heroUserSolid',
-      label: 'app.menu.employees',
-      routerLink: DefaultRoutes.EMPLOYEES,
-    },
-    {
-      icon: 'heroUserGroupSolid',
-      label: 'app.menu.departments',
-      routerLink: DefaultRoutes.DEPARTMENTS,
-    },
-    {
-      icon: 'tablerPigMoney',
-      label: 'app.menu.liquidity',
-      routerLink: DefaultRoutes.LIQUIDITY,
-    },
-  ];
+  readonly sidebarItems: SidebarItem[] = NAVIGATION_ITEMS;
 
   @Input() isOpen: boolean = false;
 

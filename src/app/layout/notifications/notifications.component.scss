@@ -1,0 +1,115 @@
+:host {
+  position: relative;
+  display: inline-flex;
+}
+
+.trigger {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--danger-1);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: min(22rem, calc(100vw - 2rem));
+  border: 1px solid var(--border-1);
+  border-radius: 0.75rem;
+  background: var(--bg-1);
+  box-shadow: 0 12px 32px rgba(23, 15, 73, 0.12);
+
+  h2 {
+    padding: 1rem 1rem 0.5rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0 0.5rem 0.5rem;
+  }
+}
+
+a {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--bg-2);
+    outline: none;
+  }
+}
+
+.dot {
+  flex: 0 0 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  background: var(--primary-1);
+
+  .error & {
+    background: var(--danger-1);
+  }
+
+  .warning & {
+    background: #f2994a;
+  }
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.125rem;
+  font-size: 0.875rem;
+
+  span {
+    color: var(--text-4);
+  }
+}
+
+.count {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.empty {
+  padding: 0 1rem 1rem;
+  color: var(--text-4);
+}

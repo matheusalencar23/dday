@@ -1,8 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { BehaviorSubject, combineLatest, delayWhen, map, tap, timer } from 'rxjs';
+import {
+  BehaviorSubject,
+  Subject,
+  combineLatest,
+  delayWhen,
+  distinctUntilChanged,
+  map,
+  takeUntil,
+  tap,
+  timer,
+} from 'rxjs';
 import { InputSearchComponent } from 'src/app/components/input-search/input-search.component';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
@@ -57,7 +68,8 @@ type DepartmentRow = {
   ],
   providers: [provideIcons({ heroPlus })],
 })
-export class DepartmentsPageComponent {
+export class DepartmentsPageComponent implements OnDestroy {
+  private readonly destroy$ = new Subject<void>();
   filter: TableViewFilter = {
     searchTerm: '',
     page: 1,
@@ -116,8 +128,27 @@ export class DepartmentsPageComponent {
 
   constructor(
     private readonly studyData: StudyDataService,
-    private readonly modalService: ModalService
-  ) {}
+    private readonly modalService: ModalService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
+  ) {
+    // A URL (?search=) é a fonte da busca: permite links diretos, como os da busca global.
+    this.route.queryParamMap
+      .pipe(
+        map((params) => params.get('search') ?? ''),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((term) => {
+        this.searchTerm = term;
+        this.updateFilter({ searchTerm: term, page: 1 });
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   openForm(row?: DepartmentRow): void {
     const data: DepartmentFormData = {
@@ -154,8 +185,12 @@ export class DepartmentsPageComponent {
   }
 
   filterByTerm(term: string): void {
-    this.searchTerm = term;
-    this.updateFilter({ searchTerm: term, page: 1 });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { search: term || null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
   showDepartments(): void {

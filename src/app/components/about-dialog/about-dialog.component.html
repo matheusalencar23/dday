@@ -1,0 +1,22 @@
+<div class="dd-form">
+  <h2 class="dd-form__title">{{ 'app.about.title' | translate }}</h2>
+  <p class="dd-form__text">{{ 'app.about.description' | translate }}</p>
+
+  <div>
+    <h3>{{ 'app.about.highlights-title' | translate }}</h3>
+    <ul>
+      <li *ngFor="let highlight of highlights">{{ highlight | translate }}</li>
+    </ul>
+  </div>
+
+  <p class="notice">{{ 'app.about.data-notice' | translate }}</p>
+
+  <div class="dd-form__actions">
+    <a class="dd-button" [href]="repositoryUrl" target="_blank" rel="noopener noreferrer">
+      {{ 'app.about.repository' | translate }}
+    </a>
+    <button type="button" class="dd-button dd-button--primary" data-autofocus (click)="close()">
+      {{ 'app.about.close' | translate }}
+    </button>
+  </div>
+</div>

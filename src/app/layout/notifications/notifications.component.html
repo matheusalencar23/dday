@@ -1,0 +1,44 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <button
+    #trigger
+    type="button"
+    class="trigger"
+    aria-haspopup="true"
+    aria-controls="notifications-panel"
+    [attr.aria-expanded]="isOpen"
+    [attr.aria-label]="'app.notifications.open' | translate : { count: vm.unread }"
+    (click)="toggle()"
+  >
+    <ng-icon name="heroBell" size="22" aria-hidden="true"></ng-icon>
+    <span class="badge" *ngIf="vm.unread" aria-hidden="true">
+      {{ vm.unread > 9 ? '9+' : vm.unread }}
+    </span>
+  </button>
+
+  <section
+    *ngIf="isOpen"
+    id="notifications-panel"
+    class="panel"
+    role="region"
+    aria-labelledby="notifications-title"
+  >
+    <h2 id="notifications-title">{{ 'app.notifications.title' | translate }}</h2>
+
+    <ul *ngIf="vm.notifications.length; else empty">
+      <li *ngFor="let notification of vm.notifications; trackBy: trackNotification">
+        <a [routerLink]="notification.route" [class]="notification.severity" (click)="close()">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">
+            <strong>{{ notification.titleKey | translate }}</strong>
+            <span>{{ notification.descriptionKey | translate : notification.params }}</span>
+          </span>
+          <span class="count" *ngIf="notification.count">{{ notification.count }}</span>
+        </a>
+      </li>
+    </ul>
+
+    <ng-template #empty>
+      <p class="empty">{{ 'app.notifications.empty' | translate }}</p>
+    </ng-template>
+  </section>
+</ng-container>

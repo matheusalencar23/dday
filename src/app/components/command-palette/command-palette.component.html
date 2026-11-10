@@ -1,0 +1,65 @@
+<div class="search-field">
+  <ng-icon name="heroMagnifyingGlass" size="20" aria-hidden="true"></ng-icon>
+  <input
+    type="text"
+    role="combobox"
+    autocomplete="off"
+    spellcheck="false"
+    data-autofocus
+    aria-autocomplete="list"
+    aria-controls="palette-results"
+    [attr.aria-expanded]="results.length > 0"
+    [attr.aria-activedescendant]="results.length ? optionId(activeIndex) : null"
+    [attr.aria-label]="'app.search.label' | translate"
+    [placeholder]="'app.search.placeholder' | translate"
+    [value]="term"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+  />
+  <span class="spinner" *ngIf="loading" aria-hidden="true"></span>
+</div>
+
+<div
+  id="palette-results"
+  class="results"
+  role="listbox"
+  [attr.aria-label]="'app.search.results' | translate"
+>
+  <div
+    *ngFor="let group of groups"
+    role="group"
+    [attr.aria-labelledby]="'palette-group-' + group.type"
+  >
+    <p class="group-title" [id]="'palette-group-' + group.type">
+      {{ group.titleKey | translate }}
+    </p>
+    <div
+      *ngFor="let result of group.results; trackBy: trackResult"
+      class="option"
+      role="option"
+      [id]="optionId(result.index)"
+      [class.active]="result.index === activeIndex"
+      [attr.aria-selected]="result.index === activeIndex"
+      (click)="select(result)"
+      (mousemove)="activeIndex = result.index"
+    >
+      <ng-icon [name]="result.icon" size="18" aria-hidden="true"></ng-icon>
+      <span class="label">
+        {{ result.type === 'page' ? (result.label | translate) : result.label }}
+      </span>
+      <span class="description" *ngIf="result.description">{{ result.description }}</span>
+    </div>
+  </div>
+</div>
+
+<p class="empty" role="status">
+  <span *ngIf="!loading && !results.length">
+    {{ 'app.search.no-results' | translate : { term: term } }}
+  </span>
+</p>
+
+<p class="footer" aria-hidden="true">
+  <span><kbd>↑</kbd><kbd>↓</kbd> {{ 'app.search.hint-navigate' | translate }}</span>
+  <span><kbd>Enter</kbd> {{ 'app.search.hint-open' | translate }}</span>
+  <span><kbd>Esc</kbd> {{ 'app.search.hint-close' | translate }}</span>
+</p>

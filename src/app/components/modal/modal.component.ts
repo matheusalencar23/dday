@@ -71,7 +71,9 @@ export class ModalComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.addOptions();
     this.addEnterAnimations();
-    this.modal.nativeElement.focus();
+    const autofocusTarget =
+      this.modal.nativeElement.querySelector<HTMLElement>('[data-autofocus]');
+    (autofocusTarget ?? this.modal.nativeElement).focus();
   }
 
   private addEnterAnimations(): void {
@@ -85,7 +87,7 @@ export class ModalComponent implements AfterViewInit {
     this.modal.nativeElement.style.maxWidth = this.options?.maxWidth || 'auto';
     this.modal.nativeElement.style.minHeight = this.options?.minHeight || 'auto';
     this.modal.nativeElement.style.height = this.options?.height || 'auto';
-    this.modal.nativeElement.style.maxHeight = this.options?.maxHeight || 'auto';
+    this.modal.nativeElement.style.maxHeight = this.options?.maxHeight || 'calc(100vh - 2rem)';
     this.modalAnimationEnd = fromEvent(this.modal.nativeElement, 'animationend');
     this.overlayAnimationEnd = fromEvent(this.overlay.nativeElement, 'animationend');
   }

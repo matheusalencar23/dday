@@ -5,7 +5,8 @@
       "open-menu": "Abrir menu de navegação",
       "close-menu": "Fechar menu de navegação",
       "change-language": "Alterar idioma",
-      "main-navigation": "Navegação principal"
+      "main-navigation": "Navegação principal",
+      "about": "Sobre o projeto"
     },
     "language": {
       "title": "Escolha um idioma",
@@ -122,6 +123,58 @@
       "emailTaken": "Este e-mail já está em uso por outro funcionário.",
       "departmentTaken": "Já existe um departamento com esse nome.",
       "checking": "Verificando disponibilidade..."
+    },
+    "search": {
+      "label": "Busca global",
+      "placeholder": "Buscar páginas, funcionários ou departamentos...",
+      "results": "Resultados da busca",
+      "no-results": "Nenhum resultado para \"{{term}}\".",
+      "pages": "Páginas",
+      "employees": "Funcionários",
+      "departments": "Departamentos",
+      "hint-navigate": "navegar",
+      "hint-open": "abrir",
+      "hint-close": "fechar"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "open": "Notificações ({{count}} não lidas)",
+      "empty": "Tudo em dia! Nenhuma notificação.",
+      "names": "{{names}}",
+      "payment-errors": {
+        "title": "Pagamentos com erro",
+        "description": "Solicitações que falharam e precisam ser revisadas."
+      },
+      "overdue-payroll": {
+        "title": "Pendências com folha vencida",
+        "description": "Pagamentos pendentes cuja data de folha já passou."
+      },
+      "low-liquidity": {
+        "title": "Liquidez baixa",
+        "description": "O saldo disponível está em {{percent}}% do valor inicial."
+      },
+      "departments-without-manager": {
+        "title": "Departamentos sem responsável"
+      },
+      "employees-without-department": {
+        "title": "Funcionários sem departamento"
+      }
+    },
+    "about": {
+      "title": "Sobre o Dday",
+      "description": "Painel administrativo fictício criado para praticar Angular e interfaces de gestão: pagamentos, funcionários, departamentos e liquidez.",
+      "highlights-title": "Destaques técnicos",
+      "highlights": {
+        "standalone": "Angular 15 com componentes standalone e rotas lazy",
+        "rxjs": "Estado reativo com RxJS (BehaviorSubject, combineLatest, switchMap)",
+        "forms": "Formulários reativos tipados com validação assíncrona",
+        "i18n": "Interface em português e inglês com ngx-translate",
+        "a11y": "Navegação por teclado, foco gerenciado e atributos ARIA",
+        "tests": "Testes e2e com Cypress"
+      },
+      "data-notice": "Não há servidor: os dados são fictícios e as requisições são simuladas com atraso. As alterações ficam em memória e são desfeitas ao recarregar a página.",
+      "repository": "Ver no GitHub",
+      "close": "Fechar"
     }
   }
 }

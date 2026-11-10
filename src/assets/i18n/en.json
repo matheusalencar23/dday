@@ -5,7 +5,8 @@
       "open-menu": "Open navigation menu",
       "close-menu": "Close navigation menu",
       "change-language": "Change language",
-      "main-navigation": "Main navigation"
+      "main-navigation": "Main navigation",
+      "about": "About the project"
     },
     "language": {
       "title": "Choose a language",
@@ -122,6 +123,58 @@
       "emailTaken": "This email is already used by another employee.",
       "departmentTaken": "A department with this name already exists.",
       "checking": "Checking availability..."
+    },
+    "search": {
+      "label": "Global search",
+      "placeholder": "Search pages, employees or departments...",
+      "results": "Search results",
+      "no-results": "No results for \"{{term}}\".",
+      "pages": "Pages",
+      "employees": "Employees",
+      "departments": "Departments",
+      "hint-navigate": "navigate",
+      "hint-open": "open",
+      "hint-close": "close"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "open": "Notifications ({{count}} unread)",
+      "empty": "All caught up! No notifications.",
+      "names": "{{names}}",
+      "payment-errors": {
+        "title": "Failed payments",
+        "description": "Requests that failed and need to be reviewed."
+      },
+      "overdue-payroll": {
+        "title": "Overdue payroll",
+        "description": "Pending payments whose payroll date has passed."
+      },
+      "low-liquidity": {
+        "title": "Low liquidity",
+        "description": "Available balance is at {{percent}}% of the initial amount."
+      },
+      "departments-without-manager": {
+        "title": "Departments without a manager"
+      },
+      "employees-without-department": {
+        "title": "Employees without a department"
+      }
+    },
+    "about": {
+      "title": "About Dday",
+      "description": "A fictional admin panel built to practice Angular and management interfaces: payments, employees, departments and liquidity.",
+      "highlights-title": "Technical highlights",
+      "highlights": {
+        "standalone": "Angular 15 with standalone components and lazy routes",
+        "rxjs": "Reactive state with RxJS (BehaviorSubject, combineLatest, switchMap)",
+        "forms": "Typed reactive forms with async validation",
+        "i18n": "Portuguese and English interface with ngx-translate",
+        "a11y": "Keyboard navigation, managed focus and ARIA attributes",
+        "tests": "End-to-end tests with Cypress"
+      },
+      "data-notice": "There is no server: data is fictional and requests are simulated with a delay. Changes live in memory and are reset when the page reloads.",
+      "repository": "View on GitHub",
+      "close": "Close"
     }
   }
 }

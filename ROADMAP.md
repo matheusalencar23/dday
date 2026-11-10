@@ -30,8 +30,11 @@ Entregue:
 - 8 dos 40 pagamentos base tinham `payrollDate` anterior à data da solicitação; foram ajustados para o dia 15 do mês seguinte, mesma regra dos pagamentos gerados.
 - Os cargos (`role`) continuam sem tradução: são texto livre digitado no cadastro, então não faz sentido traduzi-los.
 
-### 0.3 Elementos decorativos sem função
-A busca global do header, o sino de notificações e o ícone de informações são apenas visuais. Ou ganham função (ver 2.4 e 2.5) ou saem da tela.
+### 0.3 Elementos decorativos sem função — ✅ concluído
+A busca, o sino e o ícone de informações do header eram apenas visuais. Todos ganharam função:
+- Busca → busca global (item 2.4).
+- Sino → central de notificações (item 2.5).
+- Informações → modal "Sobre o Dday", com destaques técnicos, aviso de que os dados são simulados e link para o repositório.
 
 ---
 
@@ -60,7 +63,7 @@ Salvar o estado em `localStorage` (já previsto no README) com um botão "Restau
 **Demonstra:** UX madura, serviços globais, acessibilidade.
 
 ### 1.4 Testes e CI
-Hoje existe apenas um teste de componente (que falha: o `app.component.spec.ts` não fornece o `TranslateService`), um e2e de fumaça e o e2e de CRUD.
+Hoje existe apenas um teste de componente (que falha: o `app.component.spec.ts` não fornece o `TranslateService`), um e2e de fumaça e os e2e de CRUD (`crud.cy.ts`) e do header (`header.cy.ts`).
 
 - Testes unitários de `StudyDataService` (CRUD, remoção em cascata, cálculo de liquidez), `createTableView` e do interceptor fake.
 - Testes de componente para formulários (validações).
@@ -88,8 +91,10 @@ Transformar a lista de pagamentos em um fluxo de trabalho real:
 
 **Demonstra:** regras de negócio, máquina de estados simples, reatividade com RxJS.
 
-### 2.2 Filtros avançados sincronizados com a URL
-Filtros por status, departamento e intervalo de datas na tela de pagamentos, com página, ordenação e busca refletidas em **query params**. Links ficam compartilháveis e o botão "voltar" do navegador funciona.
+### 2.2 Filtros avançados sincronizados com a URL — 🟡 iniciado
+Já feito: a busca das telas de funcionários e departamentos vive em `?search=` (a URL é a fonte da verdade).
+
+Falta: filtros por status, departamento e intervalo de datas na tela de pagamentos, com página, ordenação e busca refletidas em **query params**. Links ficam compartilháveis e o botão "voltar" do navegador funciona.
 
 **Demonstra:** domínio do Router, estado derivado da URL.
 
@@ -98,13 +103,15 @@ Rota `/employees/:id` com resolver, dados do funcionário, histórico de pagamen
 
 **Demonstra:** rotas parametrizadas, resolvers, reaproveitamento de componentes de gráfico.
 
-### 2.4 Busca global (command palette)
-Ativar a busca do header com atalho `Ctrl+K`: resultados agrupados por funcionários, departamentos e pagamentos, navegação por teclado e debounce.
+### 2.4 Busca global (command palette) — ✅ concluído
+Busca do header com atalho `Ctrl+K` / `⌘K`: resultados agrupados em páginas, funcionários e departamentos, busca sem acentos, `debounceTime` + `switchMap` sobre uma busca "no servidor" com latência simulada, navegação por teclado (setas, Home/End, Enter) no padrão ARIA de combobox. Selecionar um registro abre a listagem já filtrada (`?search=`).
+
+Possível evolução: incluir pagamentos nos resultados e ações rápidas ("Adicionar funcionário").
 
 **Demonstra:** operadores RxJS (`debounceTime`, `switchMap`), acessibilidade de combobox, atalhos de teclado.
 
-### 2.5 Central de notificações
-O sino do header passa a listar eventos gerados pelo próprio app: pagamentos com erro, pendências próximas da data de folha, liquidez abaixo de um limite.
+### 2.5 Central de notificações — ✅ concluído
+O `NotificationService` deriva alertas dos dados (pagamentos com erro, pendências com folha vencida, liquidez abaixo de 50%, departamentos sem responsável, funcionários sem departamento). O contador de não lidas zera ao abrir o painel e volta quando o conteúdo de um alerta muda (ex.: ao remover o responsável de um departamento). Cada alerta leva à tela relacionada.
 
 ### 2.6 Autenticação e perfis simulados
 - Tela de login com usuários de demonstração (ex.: "Admin" e "Somente leitura").
@@ -143,8 +150,7 @@ Registro das alterações feitas na sessão (quem, o quê, quando), exibido em u
 
 | Ordem | Item | Motivo |
 | --- | --- | --- |
-| ✅ | 0.1 CRUD na interface e 0.2 dados mock | Concluídos |
-| 1 | 0.3 Elementos decorativos | Rápido; evita botões que não fazem nada |
+| ✅ | 0.1, 0.2, 0.3, 2.4 e 2.5 | Concluídos |
 | 2 | 1.1 Backend fake via interceptor | Base para todos os itens seguintes e ótimo assunto de entrevista |
 | 3 | 1.4 Testes e CI | Sinal de qualidade visível logo no repositório |
 | 4 | 2.1 Fluxo de aprovação | Funcionalidade de negócio mais impressionante |

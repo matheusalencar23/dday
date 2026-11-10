@@ -34,6 +34,52 @@ header {
   }
 }
 
+.search-trigger {
+  display: inline-flex;
+  flex: 0 1 20rem;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  height: 40px;
+  margin-right: auto;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-4);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--bg-2);
+  }
+
+  span {
+    flex: 1;
+    overflow: hidden;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  kbd {
+    padding: 1px 6px;
+    border: 1px solid var(--border-1);
+    border-radius: 4px;
+    font: inherit;
+    font-size: 12px;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  ng-icon {
+    color: #000;
+  }
+}
+
 .header-actions {
   display: flex;
   align-items: center;

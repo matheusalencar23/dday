@@ -74,6 +74,14 @@ export class StudyDataService {
     );
   }
 
+  getSnapshot(): { payments: Payment[]; employees: Employee[]; departments: Department[] } {
+    return {
+      payments: this.paymentsSubject.value,
+      employees: this.employeesSubject.value,
+      departments: this.departmentsSubject.value,
+    };
+  }
+
   getDepartmentsManagedBy(employeeId: number): Department[] {
     return this.departmentsSubject.value.filter(
       (department) => department.managerId === employeeId

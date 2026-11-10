@@ -10,6 +10,8 @@
 
     dd-header {
       position: fixed;
+      // Acima do conteúdo (inclusive colunas fixas da tabela) para o painel de notificações
+      z-index: 3;
       left: 247px;
       right: 0;
       top: 0;

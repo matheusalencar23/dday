@@ -35,9 +35,13 @@ O build de produção aplica os budgets definidos em `angular.json`: estilos por
 - **Formulários**: reactive forms tipados com `NonNullableFormBuilder`; validadores assíncronos de unicidade e o helper `controlError` (chaves `app.validation.*`) ficam em `src/app/utils/form-validators.ts`, e `whenValidated` aguarda validações pendentes antes do submit. Botões e campos usam as classes globais `dd-button`, `dd-form` e `dd-field` de `src/assets/styles/forms.scss`, o que mantém os estilos de componente dentro do budget.
 - **i18n**: todo texto visível ao usuário é uma chave de tradução (`app.<área>.<chave>`) que deve existir tanto em `src/assets/i18n/en.json` quanto em `pt.json`. O `LanguageService` persiste a escolha no `localStorage` (`dday-language`); o padrão é `en`.
 - **Gráficos**: ECharts via `ngx-echarts`, em `pages/internal/dashboard/components/`.
+- **Header**: a busca (`dd-command-palette`, aberta com `Ctrl+K`) usa o `GlobalSearchService`; o sino (`dd-notifications`) usa o `NotificationService`, que deriva alertas dos streams do `StudyDataService`. Os itens de navegação ficam em `src/app/layout/navigation-items.ts`, compartilhados pela sidebar e pela busca.
+- **Busca na URL**: nas telas de funcionários e departamentos o termo de busca vive em `?search=`; o campo apenas navega e a página reage a `queryParamMap`.
 
 ## Convenções
 
 - Seletores de componentes compartilhados/de layout usam o prefixo `dd-` (componentes de página usam `app-`). Estilos em SCSS; fonte Poppins via Google Fonts.
 - Imports usam caminhos absolutos `src/app/...`.
+- O header é `position: fixed` com `z-index: 3` (acima das colunas fixas da tabela); a sidebar mobile usa 4/10 e o modal 11/12. Popovers do header precisam ficar dentro dessa camada.
+- Em modais, marque o elemento que deve receber o foco inicial com `data-autofocus`.
 - `src/_redirects` é copiado para o build como fallback de SPA em hospedagem estática (estilo Netlify).
