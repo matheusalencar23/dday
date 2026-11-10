@@ -20,10 +20,16 @@
             "outputPath": "dist/dday",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/_redirects"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/_redirects"
+            ],
             "styles": [
               "src/styles.scss",
               "src/assets/styles/modal-animations.scss",
@@ -84,11 +90,19 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
@@ -136,12 +150,25 @@
               "devServerTarget": "dday:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@cypress/schematic", "@schematics/angular"]
+    "schematicCollections": [
+      "@angular-eslint/schematics",
+      "@cypress/schematic",
+      "@schematics/angular"
+    ]
   }
 }

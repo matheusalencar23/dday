@@ -15,11 +15,13 @@ npm run build       # build de produção -> dist/dday
 npm test            # testes unitários Karma/Jasmine (ng test, modo watch)
 npm run test:ci     # execução única em Chrome headless com cobertura (usado no CI)
 npm run cypress:run # testes e2e com Cypress (requer o servidor rodando em :4200)
+npm run lint        # ESLint (@angular-eslint 15)
+npm run format      # Prettier; format:check só verifica (usado no CI)
 ```
 
 Para rodar um único arquivo de teste: `npx ng test --include src/app/app.component.spec.ts` (ou use temporariamente `fdescribe`/`fit`). Os specs unitários ficam ao lado do código (`*.spec.ts`); para testar o backend simulado, use `provideHttpClient(withInterceptors([fakeBackendInterceptor]))` + `fakeAsync`/`tick` para vencer a latência (veja `fake-backend.interceptor.spec.ts`). Os e2e ficam em `cypress/e2e/` (`crud`, `header`, `fake-backend`); para forçar falhas no e2e, ligue o interruptor no modal Sobre e faça stub de `Math.random` para 0.
 
-CI: `.github/workflows/ci.yml` (Node 24) roda `test:ci` + `build` e, em paralelo, o Cypress via `cypress-io/github-action`. O `package-lock.json` é versionado e o `package.json` declara `allowScripts` (npm 11): ao adicionar dependência com script de instalação necessário, aprove com `npm install-scripts approve <pkg>`.
+CI: `.github/workflows/ci.yml` (Node 24) roda `lint`, `format:check`, `test:ci` e `build` e, em paralelo, o Cypress via `cypress-io/github-action`. O `package-lock.json` é versionado e o `package.json` declara `allowScripts` (npm 11): ao adicionar dependência com script de instalação necessário, aprove com `npm install-scripts approve <pkg>`.
 
 Cypress: no terminal do VS Code a variável `ELECTRON_RUN_AS_NODE=1` impede o Cypress de abrir ("bad option: --no-sandbox"); rode com `env -u ELECTRON_RUN_AS_NODE npx cypress run`. Para não depender de um `npm start` já aberto na 4200, suba outro servidor (`npx ng serve --port 4300`) e passe `--config baseUrl=http://localhost:4300`.
 
@@ -43,7 +45,8 @@ O build de produção aplica os budgets definidos em `angular.json`: estilos por
 
 ## Convenções
 
-- Seletores de componentes compartilhados/de layout usam o prefixo `dd-` (componentes de página usam `app-`). Estilos em SCSS; fonte Poppins via Google Fonts.
+- Todos os seletores de componente usam o prefixo `dd-` (inclusive páginas e o raiz `dd-root`), exigido pelo ESLint. Estilos em SCSS; fonte Poppins via Google Fonts.
+- Formatação pelo Prettier (`.prettierrc.json`: aspas simples, 100 colunas, parser `angular` para HTML). Rode `npm run format` antes de commitar; o CI falha se houver diferença. Supressões de lint só com justificativa (ex.: `TableRow` em `data-table-type.ts`).
 - Imports usam caminhos absolutos `src/app/...`.
 - O header é `position: fixed` com `z-index: 3` (acima das colunas fixas da tabela); a sidebar mobile usa 4/10 e o modal 11/12. Popovers do header precisam ficar dentro dessa camada.
 - Em modais, marque o elemento que deve receber o foco inicial com `data-autofocus`.

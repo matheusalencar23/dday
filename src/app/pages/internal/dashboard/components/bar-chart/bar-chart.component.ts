@@ -13,8 +13,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
 export class BarChartComponent implements OnChanges {
   options: EChartsOption = {};
 
-  @Input() color: string = '#16A34A';
-  @Input() title: string = '';
+  @Input() color = '#16A34A';
+  @Input() title = '';
   @Input() labels: string[] = [];
   @Input() values: number[] = [];
 

@@ -52,11 +52,16 @@ function notifications(db: FakeDatabase): NotificationDto[] {
   if (failed.length) result.push({ id: 'payment-errors', severity: 'error', count: failed.length });
 
   const overdue = db.pendingPayments().filter((payment) => payment.payrollDate < today);
-  if (overdue.length) result.push({ id: 'overdue-payroll', severity: 'warning', count: overdue.length });
+  if (overdue.length)
+    result.push({ id: 'overdue-payroll', severity: 'warning', count: overdue.length });
 
   const { liquidityPercent } = db.liquidity();
   if (liquidityPercent < LOW_LIQUIDITY_PERCENT) {
-    result.push({ id: 'low-liquidity', severity: 'warning', params: { percent: liquidityPercent } });
+    result.push({
+      id: 'low-liquidity',
+      severity: 'warning',
+      params: { percent: liquidityPercent },
+    });
   }
 
   const withoutManager = db.getDepartments().filter((department) => department.managerId === null);
@@ -108,7 +113,11 @@ function search(db: FakeDatabase, term: string): SearchResponse {
 
 /** Normaliza para comparação: minúsculas e sem acentos. */
 function normalize(value: string): string {
-  return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLocaleLowerCase().trim();
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase()
+    .trim();
 }
 
 function listNames(items: Array<{ name: string }>): string {

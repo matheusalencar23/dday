@@ -32,7 +32,7 @@ import { EmployeeRow } from './models/employee';
 const MODAL_WIDTH = 'min(32rem, calc(100vw - 2rem))';
 
 @Component({
-  selector: 'app-employees',
+  selector: 'dd-employees-page',
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.scss'],
   standalone: true,

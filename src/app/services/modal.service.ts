@@ -20,7 +20,8 @@ export class ModalService {
   private modalComponent?: ComponentRef<ModalComponent>;
   private contentComponent?: ComponentRef<unknown>;
   private modalInBody = false;
-  private activeRef?: ModalRef<any>;
+  /** O serviço só precisa avisar o modal ativo de que ele saiu da tela. */
+  private activeRef?: Pick<ModalRef, 'notifyClosed'>;
   private previousFocus: HTMLElement | null = null;
   options!: ModalOptions | undefined;
   vcr!: ViewContainerRef;
@@ -70,9 +71,9 @@ export class ModalService {
     });
   }
 
-  private openWithComponent(
+  private openWithComponent<R>(
     component: Type<unknown>,
-    modalRef: ModalRef<any>,
+    modalRef: ModalRef<R>,
     data: unknown
   ) {
     this.modalInBody = true;

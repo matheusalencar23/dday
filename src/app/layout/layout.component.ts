@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, Renderer2 } from '@angular/core';
-import { LogoComponent } from '../components/logo/logo.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
-import { InputSearchComponent } from '../components/input-search/input-search.component';
 
 @Component({
   selector: 'dd-layout',
@@ -13,7 +11,7 @@ import { InputSearchComponent } from '../components/input-search/input-search.co
   imports: [CommonModule, SidebarComponent, HeaderComponent],
 })
 export class LayoutComponent {
-  sidebarIsOpen: boolean = false;
+  sidebarIsOpen = false;
 
   constructor(private renderer: Renderer2) {}
 

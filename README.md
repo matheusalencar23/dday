@@ -35,9 +35,11 @@ npm run build
 ```bash
 npm run test:ci      # testes unitários (Karma + Chrome headless) com cobertura
 npm run cypress:run  # testes e2e (com o servidor rodando em http://localhost:4200)
+npm run lint         # ESLint
+npm run format       # Prettier (format:check apenas verifica)
 ```
 
-O GitHub Actions roda testes unitários, build e e2e a cada push e pull request.
+O GitHub Actions roda lint, verificação de formatação, testes unitários, build e e2e a cada push e pull request.
 
 ## Organização
 

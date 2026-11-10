@@ -23,7 +23,7 @@ import { PaymentFilter } from './models/payment-filter';
 import { PaymentListRow } from './models/payment';
 
 @Component({
-  selector: 'app-payment',
+  selector: 'dd-payment-page',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
   standalone: true,

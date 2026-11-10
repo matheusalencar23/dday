@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { EChartsOption, graphic } from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -18,7 +18,7 @@ export class MonthlyPaymentAmountChartComponent implements OnChanges {
 
   private readonly colors = ['#8B5CF6', '#3B82F6', '#F97316', '#F6C77D', '#16A34A'];
 
-  ngOnChanges(_changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.options = {
       color: this.series.map((_, index) => this.colors[index % this.colors.length]),
       title: {
@@ -46,7 +46,9 @@ export class MonthlyPaymentAmountChartComponent implements OnChanges {
       yAxis: [{ type: 'value', minInterval: 1 }],
       series: this.series.map((item, index) => {
         const color = this.colors[index % this.colors.length];
-        const [red, green, blue] = color.match(/[\da-f]{2}/gi)!.map((value) => parseInt(value, 16));
+        const [red, green, blue] = (color.match(/[\da-f]{2}/gi) ?? []).map((value) =>
+          parseInt(value, 16)
+        );
 
         return {
           name: item.name,

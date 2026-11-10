@@ -5,7 +5,7 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataTableType } from './models/data-table-type';
+import { DataTableType, TableRow } from './models/data-table-type';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { tablerCaretDown, tablerCaretUp } from '@ng-icons/tabler-icons';
 import { heroPencilSquare, heroTrash } from '@ng-icons/heroicons/outline';
@@ -36,23 +36,23 @@ export class TableComponent {
 
   @Input() tableConfig: DataTableType = { columns: [] };
 
-  @Input() tableContent: any[] = [];
+  @Input() tableContent: TableRow[] = [];
 
-  @Input() dataSortProperty: string = '';
+  @Input() dataSortProperty = '';
 
-  @Input() desc: boolean = false;
+  @Input() desc = false;
 
   /** Exibe a coluna de ações (editar/remover) em cada linha. */
   @Input() actions = false;
 
   /** Texto que identifica a linha nos rótulos acessíveis das ações. */
-  @Input() rowLabel: (row: any) => string = (row) => String(row.name ?? row.id);
+  @Input() rowLabel: (row: TableRow) => string = (row) => String(row.name ?? row.id);
 
   @Output() orderBy = new EventEmitter<string>();
 
-  @Output() edit = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<TableRow>();
 
-  @Output() remove = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<TableRow>();
 
   constructor(private readonly translateService: TranslateService) {}
 
@@ -90,7 +90,7 @@ export class TableComponent {
     return this.desc ? 'descending' : 'ascending';
   }
 
-  trackRow(index: number, row: any): unknown {
+  trackRow(index: number, row: TableRow): unknown {
     return row?.id ?? index;
   }
 

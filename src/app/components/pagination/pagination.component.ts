@@ -25,9 +25,9 @@ import {
   ],
 })
 export class PaginationComponent {
-  @Input() page: number = 1;
-  @Input() total: number = 1;
-  @Input() itemsPerPage: number = 1;
+  @Input() page = 1;
+  @Input() total = 1;
+  @Input() itemsPerPage = 1;
   @Output() pageEvent = new EventEmitter<{ page: number }>();
 
   get totalPages(): number {

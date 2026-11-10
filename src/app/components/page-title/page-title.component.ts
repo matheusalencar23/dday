@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
   imports: [CommonModule],
 })
 export class PageTitleComponent {
-  @Input() title: string = 'Page title';
+  @Input() title = 'Page title';
 }

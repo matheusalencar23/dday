@@ -1,8 +1,6 @@
 import {
   Component,
-  EventEmitter,
   Input,
-  Output,
   forwardRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -32,11 +30,13 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() ariaLabel = '';
 
   value: string | number | null = null;
-  disabled: boolean = false;
-  private onChange: (value: string | number | null) => void = () => {};
-  private onTouch: () => void = () => {};
-
-  @Output() blur = new EventEmitter<void>();
+  disabled = false;
+  private onChange: (value: string | number | null) => void = () => {
+    // Substituída pelo Angular em registerOnChange.
+  };
+  private onTouch: () => void = () => {
+    // Substituída pelo Angular em registerOnTouched.
+  };
 
   writeValue(value: string | number | null): void {
     this.value = value;
@@ -60,7 +60,6 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   onBlur(): void {
-    this.blur.emit();
     this.onTouch();
   }
 }

@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   HostBinding,
   Input,
-  Output,
   forwardRef,
 } from '@angular/core';
 import {
@@ -31,16 +29,18 @@ import { heroMagnifyingGlassSolid } from '@ng-icons/heroicons/solid';
   ],
 })
 export class InputSearchComponent implements ControlValueAccessor {
-  @Input() placeholder: string = '';
+  @Input() placeholder = '';
   @Input() ariaLabel = '';
   @HostBinding('class.bordered') @Input() hasBorder = false;
 
-  @Output() blur = new EventEmitter<void>();
-
-  value: string = '';
-  disabled: boolean = false;
-  private onChange: (value: string) => void = () => {};
-  private onTouch: () => void = () => {};
+  value = '';
+  disabled = false;
+  private onChange: (value: string) => void = () => {
+    // Substituída pelo Angular em registerOnChange.
+  };
+  private onTouch: () => void = () => {
+    // Substituída pelo Angular em registerOnTouched.
+  };
 
   writeValue(value: string | null): void {
     this.value = value ?? '';
@@ -64,7 +64,6 @@ export class InputSearchComponent implements ControlValueAccessor {
   }
 
   onBlur(): void {
-    this.blur.emit();
     this.onTouch();
   }
 }

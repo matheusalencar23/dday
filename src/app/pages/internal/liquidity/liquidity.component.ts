@@ -11,7 +11,7 @@ import { toLoadState } from 'src/app/utils/load-state';
 import { PaymentListRow } from '../payment/models/payment';
 
 @Component({
-  selector: 'app-liquidity',
+  selector: 'dd-liquidity-page',
   templateUrl: './liquidity.component.html',
   styleUrls: ['./liquidity.component.scss'],
   standalone: true,

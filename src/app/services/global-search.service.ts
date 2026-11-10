@@ -28,14 +28,18 @@ export interface SearchResultGroup {
 
 /** Normaliza para comparação: minúsculas e sem acentos. */
 function normalize(value: string): string {
-  return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLocaleLowerCase().trim();
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLocaleLowerCase()
+    .trim();
 }
 
 @Injectable({ providedIn: 'root' })
 export class GlobalSearchService {
   constructor(
     private readonly api: ReportsApiService,
-    private readonly translateService: TranslateService
+    private readonly translateService: TranslateService,
   ) {}
 
   /**
@@ -47,9 +51,13 @@ export class GlobalSearchService {
     const pages = this.searchPages(query);
     if (!query) return of([pages]);
 
-    return this.api.search(term).pipe(
-      map((response) => [pages, ...this.toGroups(response)].filter((group) => group.results.length))
-    );
+    return this.api
+      .search(term)
+      .pipe(
+        map((response) =>
+          [pages, ...this.toGroups(response)].filter((group) => group.results.length),
+        ),
+      );
   }
 
   private searchPages(query: string): SearchResultGroup {
@@ -57,7 +65,7 @@ export class GlobalSearchService {
       type: 'page',
       titleKey: 'app.search.pages',
       results: NAVIGATION_ITEMS.filter(
-        (item) => !query || normalize(this.translateService.instant(item.label)).includes(query)
+        (item) => !query || normalize(this.translateService.instant(item.label)).includes(query),
       ).map((item) => ({
         type: 'page',
         id: item.routerLink,

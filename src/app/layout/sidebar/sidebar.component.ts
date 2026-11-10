@@ -51,7 +51,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class SidebarComponent {
   readonly sidebarItems: SidebarItem[] = NAVIGATION_ITEMS;
 
-  @Input() isOpen: boolean = false;
+  @Input() isOpen = false;
 
   @Output() closeSidebar = new EventEmitter<void>();
 }
