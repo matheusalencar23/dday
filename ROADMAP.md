@@ -52,10 +52,8 @@ Proposta original:
 
 **Demonstra:** interceptors, separação entre camada de dados e UI, tratamento de erro HTTP, arquitetura pronta para produção.
 
-### 1.2 Persistência no navegador
-Salvar o estado em `localStorage` (já previsto no README) com um botão "Restaurar dados de demonstração". Assim o avaliador vê suas alterações persistirem ao recarregar.
-
-**Demonstra:** sincronização de estado, versionamento simples do schema salvo.
+### 1.2 Persistência no navegador — ❌ descartado
+Decisão: nada de dados da aplicação fica salvo no navegador (a única exceção é o idioma escolhido). A cada carregamento, o backend simulado volta ao estado inicial.
 
 ### 1.3 Feedback ao usuário
 - Serviço de **toasts** (sucesso, erro, info) acessível (`aria-live`).
@@ -64,14 +62,14 @@ Salvar o estado em `localStorage` (já previsto no README) com um botão "Restau
 
 **Demonstra:** UX madura, serviços globais, acessibilidade.
 
-### 1.4 Testes e CI
-Hoje existe apenas um teste de componente (que falha: o `app.component.spec.ts` não fornece o `TranslateService`), um e2e de fumaça e os e2e de CRUD (`crud.cy.ts`) e do header (`header.cy.ts`).
+### 1.4 Testes e CI — ✅ concluído
+Entregue:
+- 55 testes unitários (Karma/Jasmine): interceptor do backend simulado (rotas, 201/204/404/409/422/503, serialização JSON), `FakeDatabase` (cascatas, liquidez, agregações), `createTableView`, `ListController`, validadores de formulário, `whenValidated` (com teste de regressão do bug de `emitEvent: false`) e `ModalRef`. O `app.component.spec.ts` foi corrigido.
+- 10 testes e2e (Cypress) cobrindo CRUD, header e backend simulado.
+- GitHub Actions (`.github/workflows/ci.yml`): testes unitários com cobertura + build de produção, e e2e em paralelo; badge no README.
+- Cypress fixado em 15.1.0, `package-lock.json` versionado (era ignorado, o que quebrava o `npm ci`) e política `allowScripts` do npm 11 explícita.
 
-- Testes unitários de `StudyDataService` (CRUD, remoção em cascata, cálculo de liquidez), `createTableView` e do interceptor fake.
-- Testes de componente para formulários (validações).
-- Fluxos e2e no Cypress: cadastrar funcionário, filtrar pagamentos, trocar idioma.
-- GitHub Actions rodando lint, testes e build a cada push, com badge no README.
-- Fixar a versão do Cypress (hoje está como `"latest"`, o que pode quebrar com Angular 15/Node).
+Possíveis evoluções: testes de componente dos formulários e da tabela; limite mínimo de cobertura no CI; lint (item 1.5).
 
 **Demonstra:** disciplina de engenharia — um dos sinais mais valorizados por recrutadores técnicos.
 
@@ -152,8 +150,8 @@ Registro das alterações feitas na sessão (quem, o quê, quando), exibido em u
 
 | Ordem | Item | Motivo |
 | --- | --- | --- |
-| ✅ | 0.1, 0.2, 0.3, 1.1, 2.4 e 2.5 | Concluídos |
-| 1 | 1.4 Testes e CI | Sinal de qualidade visível logo no repositório |
+| ✅ | 0.1, 0.2, 0.3, 1.1, 1.4, 2.4 e 2.5 | Concluídos |
+| 1 | 1.5 Lint e formatação | Rápido e completa o pipeline de CI |
 | 2 | 2.1 Fluxo de aprovação | Funcionalidade de negócio mais impressionante |
 | 3 | 2.6 Autenticação e perfis | Cobre guards e diretivas, temas recorrentes em vagas Angular |
 | 4 | 2.2 Filtros na URL e 2.3 Detalhe | Mostram domínio do Router |

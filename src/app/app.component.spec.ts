@@ -1,20 +1,22 @@
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppComponent } from './app.component';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ModalService } from './services/modal.service';
 
 describe(AppComponent.name, () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, TranslateModule.forRoot()],
+      providers: [provideRouter([])],
     });
-
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
   });
 
-  it('should render element', () => {
-    expect(component).toBeTruthy();
+  it('cria o componente e registra o container de modais', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance).toBeTruthy();
+    expect(TestBed.inject(ModalService).vcr).toBeDefined();
   });
 });

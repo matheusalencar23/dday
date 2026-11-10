@@ -1,5 +1,7 @@
 # Dday
 
+[![CI](https://github.com/matheusalencar23/dday/actions/workflows/ci.yml/badge.svg)](https://github.com/matheusalencar23/dday/actions/workflows/ci.yml)
+
 Painel administrativo fictício para praticar Angular e interfaces de gestão. Não há servidor real: um `HttpInterceptor` simula uma API REST (`/api/*`) com dados fictícios em memória, latência, códigos HTTP e falhas opcionais. Os serviços usam `HttpClient` normalmente, então trocar por uma API de verdade é só remover o interceptor. Cadastros e alterações são reiniciados ao recarregar a página. A interface usa Poppins pelo Google Fonts.
 
 ## Funcionalidades
@@ -27,6 +29,15 @@ Abra <http://localhost:4200/>. Para gerar a versão de produção:
 ```bash
 npm run build
 ```
+
+## Testes
+
+```bash
+npm run test:ci      # testes unitários (Karma + Chrome headless) com cobertura
+npm run cypress:run  # testes e2e (com o servidor rodando em http://localhost:4200)
+```
+
+O GitHub Actions roda testes unitários, build e e2e a cada push e pull request.
 
 ## Organização
 
