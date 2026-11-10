@@ -95,6 +95,50 @@
       tr td.id div {
         @include defautlTag();
       }
+
+      td.empty {
+        text-align: center;
+        color: var(--text-2);
+        padding: 2rem;
+      }
+
+    }
+
+    // A coluna de ações fica fixa à direita para continuar visível com rolagem horizontal.
+    .actions-head,
+    td.actions {
+      position: sticky;
+      right: 0;
+      background: var(--bg-1);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .actions-head {
+      z-index: 2;
+    }
+
+    .row-action {
+      display: inline-flex;
+      padding: 6px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--bg-2);
+        color: var(--primary-1);
+      }
+
+      &.danger:hover {
+        color: var(--danger-1);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--primary-1);
+      }
     }
   }
 }

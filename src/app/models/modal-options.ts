@@ -5,4 +5,6 @@ export interface ModalOptions {
   minHeight?: string;
   height?: string;
   maxHeight?: string;
+  /** Chave de tradução usada como nome acessível do diálogo. */
+  ariaLabel?: string;
 }

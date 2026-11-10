@@ -25,7 +25,11 @@
       "previous-page": "Página anterior",
       "next-page": "Próxima página",
       "last-page": "Última página",
-      "empty": "Nenhum registro para exibir"
+      "empty": "Nenhum registro para exibir",
+      "edit-item": "Editar {{name}}",
+      "remove-item": "Remover {{name}}",
+      "saving": "Salvando...",
+      "removing": "Removendo..."
     },
     "menu": {
       "dashboard": "Painel de controle",
@@ -79,7 +83,10 @@
       "department": "Departamento",
       "payment-count": "Solicitações de pagamento",
       "pending-amount": "Valor pendente",
-      "unassigned": "Sem departamento"
+      "unassigned": "Sem departamento",
+      "remove-title": "Remover funcionário",
+      "remove-message": "Tem certeza de que deseja remover {{name}}? Os pagamentos já registrados continuam no histórico.",
+      "remove-manager-note": "Este funcionário é responsável por: {{departments}}. Esses departamentos ficarão sem responsável."
     },
     "departments": {
       "title": "Departamentos",
@@ -93,7 +100,10 @@
       "members": "Funcionários",
       "payment-count": "Solicitações de pagamento",
       "pending-amount": "Valor pendente",
-      "delete-note": "Ao remover um departamento, seus funcionários ficam sem departamento."
+      "delete-note": "Ao remover um departamento, seus funcionários ficam sem departamento.",
+      "remove-title": "Remover departamento",
+      "remove-message": "Tem certeza de que deseja remover o departamento {{name}}?",
+      "no-manager": "Sem responsável"
     },
     "liquidity": {
       "title": "Liquidez",
@@ -104,6 +114,14 @@
       "pending-description": "Valores reservados para pagamentos que aguardam conclusão.",
       "pending-list": "Pagamentos que afetam a liquidez disponível",
       "no-pending": "Não há pagamentos pendentes."
+    },
+    "validation": {
+      "required": "Campo obrigatório.",
+      "email": "Informe um e-mail válido.",
+      "maxlength": "Use no máximo {{requiredLength}} caracteres.",
+      "emailTaken": "Este e-mail já está em uso por outro funcionário.",
+      "departmentTaken": "Já existe um departamento com esse nome.",
+      "checking": "Verificando disponibilidade..."
     }
   }
 }

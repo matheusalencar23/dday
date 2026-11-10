@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { DataTableType } from './models/data-table-type';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { tablerCaretDown, tablerCaretUp } from '@ng-icons/tabler-icons';
+import { heroPencilSquare, heroTrash } from '@ng-icons/heroicons/outline';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,7 +18,9 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [CommonModule, NgIconComponent, TranslateModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  providers: [provideIcons({ tablerCaretUp, tablerCaretDown })],
+  providers: [
+    provideIcons({ tablerCaretUp, tablerCaretDown, heroPencilSquare, heroTrash }),
+  ],
 })
 export class TableComponent {
   private readonly colors = [
@@ -39,7 +42,17 @@ export class TableComponent {
 
   @Input() desc: boolean = false;
 
+  /** Exibe a coluna de ações (editar/remover) em cada linha. */
+  @Input() actions = false;
+
+  /** Texto que identifica a linha nos rótulos acessíveis das ações. */
+  @Input() rowLabel: (row: any) => string = (row) => String(row.name ?? row.id);
+
   @Output() orderBy = new EventEmitter<string>();
+
+  @Output() edit = new EventEmitter<any>();
+
+  @Output() remove = new EventEmitter<any>();
 
   constructor(private readonly translateService: TranslateService) {}
 
@@ -75,6 +88,10 @@ export class TableComponent {
   getSortDirection(property: string): 'ascending' | 'descending' | 'none' {
     if (property !== this.dataSortProperty) return 'none';
     return this.desc ? 'descending' : 'ascending';
+  }
+
+  trackRow(index: number, row: any): unknown {
+    return row?.id ?? index;
   }
 
   orderByEmit(property: string): void {

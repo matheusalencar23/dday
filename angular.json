@@ -26,7 +26,8 @@
             "assets": ["src/favicon.ico", "src/assets", "src/_redirects"],
             "styles": [
               "src/styles.scss",
-              "src/assets/styles/modal-animations.scss"
+              "src/assets/styles/modal-animations.scss",
+              "src/assets/styles/forms.scss"
             ],
             "scripts": []
           },

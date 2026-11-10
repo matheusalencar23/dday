@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, startWith } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPLOYEES } from '../mocks/employees';
 import { DEPARTMENTS } from '../mocks/departments';
@@ -9,6 +9,10 @@ import { Employee } from '../pages/internal/employees/models/employee';
 import { Payment, PaymentListRow } from '../pages/internal/payment/models/payment';
 import { PaymentStatus } from '../pages/internal/payment/models/payment-status.enum';
 import { CardInfo } from '../pages/internal/dashboard/models/card-info';
+import { simulateRequest } from '../utils/simulate-request';
+
+export type EmployeeInput = Omit<Employee, 'id'> & { id?: number };
+export type DepartmentInput = Omit<Department, 'id'> & { id?: number };
 
 export interface DashboardSummary {
   cards: CardInfo[];
@@ -70,45 +74,77 @@ export class StudyDataService {
     );
   }
 
-  saveEmployee(employee: Omit<Employee, 'id'> & { id?: number }): void {
-    const current = this.employeesSubject.value;
-    const id = employee.id ?? this.nextId(current);
-    const nextEmployee = { ...employee, id } as Employee;
-    const exists = current.some((item) => item.id === id);
-    this.employeesSubject.next(
-      exists
-        ? current.map((item) => (item.id === id ? nextEmployee : item))
-        : [...current, nextEmployee]
+  getDepartmentsManagedBy(employeeId: number): Department[] {
+    return this.departmentsSubject.value.filter(
+      (department) => department.managerId === employeeId
     );
   }
 
-  removeEmployee(id: number): void {
-    this.employeesSubject.next(
-      this.employeesSubject.value.filter((employee) => employee.id !== id)
+  isEmailTaken(email: string, ignoreId?: number): boolean {
+    const normalized = email.trim().toLocaleLowerCase();
+    return this.employeesSubject.value.some(
+      (employee) =>
+        employee.id !== ignoreId && employee.email.toLocaleLowerCase() === normalized
     );
   }
 
-  saveDepartment(department: Omit<Department, 'id'> & { id?: number }): void {
-    const current = this.departmentsSubject.value;
-    const id = department.id ?? this.nextId(current);
-    const nextDepartment = { ...department, id } as Department;
-    const exists = current.some((item) => item.id === id);
-    this.departmentsSubject.next(
-      exists
-        ? current.map((item) => (item.id === id ? nextDepartment : item))
-        : [...current, nextDepartment]
+  isDepartmentNameTaken(name: string, ignoreId?: number): boolean {
+    const normalized = name.trim().toLocaleLowerCase();
+    return this.departmentsSubject.value.some(
+      (department) =>
+        department.id !== ignoreId && department.name.toLocaleLowerCase() === normalized
     );
   }
 
-  removeDepartment(id: number): void {
-    this.departmentsSubject.next(
-      this.departmentsSubject.value.filter((department) => department.id !== id)
-    );
-    this.employeesSubject.next(
-      this.employeesSubject.value.map((employee) =>
-        employee.departmentId === id ? { ...employee, departmentId: null } : employee
-      )
-    );
+  saveEmployee(employee: EmployeeInput): Observable<Employee> {
+    return simulateRequest(() => {
+      const current = this.employeesSubject.value;
+      const saved: Employee = { ...employee, id: employee.id ?? this.nextId(current) };
+      this.employeesSubject.next(this.upsert(current, saved));
+      return saved;
+    });
+  }
+
+  /** Remove o funcionário; departamentos que ele gerenciava ficam sem responsável. */
+  removeEmployee(id: number): Observable<void> {
+    return simulateRequest(() => {
+      this.employeesSubject.next(
+        this.employeesSubject.value.filter((employee) => employee.id !== id)
+      );
+      if (this.getDepartmentsManagedBy(id).length) {
+        this.departmentsSubject.next(
+          this.departmentsSubject.value.map((department) =>
+            department.managerId === id ? { ...department, managerId: null } : department
+          )
+        );
+      }
+    });
+  }
+
+  saveDepartment(department: DepartmentInput): Observable<Department> {
+    return simulateRequest(() => {
+      const current = this.departmentsSubject.value;
+      const saved: Department = {
+        ...department,
+        id: department.id ?? this.nextId(current),
+      };
+      this.departmentsSubject.next(this.upsert(current, saved));
+      return saved;
+    });
+  }
+
+  /** Remove o departamento; seus funcionários ficam sem departamento. */
+  removeDepartment(id: number): Observable<void> {
+    return simulateRequest(() => {
+      this.departmentsSubject.next(
+        this.departmentsSubject.value.filter((department) => department.id !== id)
+      );
+      this.employeesSubject.next(
+        this.employeesSubject.value.map((employee) =>
+          employee.departmentId === id ? { ...employee, departmentId: null } : employee
+        )
+      );
+    });
   }
 
   private createDashboardSummary(payments: Payment[], language: string): DashboardSummary {
@@ -202,6 +238,12 @@ export class StudyDataService {
         departmentName: department?.name ?? '—',
       };
     });
+  }
+
+  private upsert<T extends { id: number }>(items: T[], item: T): T[] {
+    return items.some((current) => current.id === item.id)
+      ? items.map((current) => (current.id === item.id ? item : current))
+      : [...items, item];
   }
 
   private nextId(items: Array<{ id: number }>): number {

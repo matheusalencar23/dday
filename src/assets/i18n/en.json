@@ -25,7 +25,11 @@
       "previous-page": "Previous page",
       "next-page": "Next page",
       "last-page": "Last page",
-      "empty": "No records to show"
+      "empty": "No records to show",
+      "edit-item": "Edit {{name}}",
+      "remove-item": "Remove {{name}}",
+      "saving": "Saving...",
+      "removing": "Removing..."
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -79,7 +83,10 @@
       "department": "Department",
       "payment-count": "Payment requests",
       "pending-amount": "Pending amount",
-      "unassigned": "Unassigned"
+      "unassigned": "Unassigned",
+      "remove-title": "Remove employee",
+      "remove-message": "Are you sure you want to remove {{name}}? Payments already registered stay in the history.",
+      "remove-manager-note": "This employee manages: {{departments}}. These departments will have no manager."
     },
     "departments": {
       "title": "Departments",
@@ -93,7 +100,10 @@
       "members": "Employees",
       "payment-count": "Payment requests",
       "pending-amount": "Pending amount",
-      "delete-note": "Removing a department leaves its employees unassigned."
+      "delete-note": "Removing a department leaves its employees unassigned.",
+      "remove-title": "Remove department",
+      "remove-message": "Are you sure you want to remove the {{name}} department?",
+      "no-manager": "No manager"
     },
     "liquidity": {
       "title": "Liquidity",
@@ -104,6 +114,14 @@
       "pending-description": "Amounts reserved for payments awaiting completion.",
       "pending-list": "Payments affecting available liquidity",
       "no-pending": "There are no pending payments."
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Enter a valid email address.",
+      "maxlength": "Use at most {{requiredLength}} characters.",
+      "emailTaken": "This email is already used by another employee.",
+      "departmentTaken": "A department with this name already exists.",
+      "checking": "Checking availability..."
     }
   }
 }

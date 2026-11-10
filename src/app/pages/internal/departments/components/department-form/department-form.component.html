@@ -1,0 +1,60 @@
+<form class="dd-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h2 class="dd-form__title">
+    {{ (department ? 'app.departments.edit' : 'app.departments.add') | translate }}
+  </h2>
+
+  <fieldset [disabled]="saving">
+    <div class="dd-field">
+      <label for="department-name">{{ 'app.departments.name' | translate }}</label>
+      <input
+        id="department-name"
+        type="text"
+        formControlName="name"
+        autocomplete="off"
+        [attr.aria-invalid]="!!error('name')"
+        aria-describedby="department-name-status"
+      />
+      <p class="dd-field__error" id="department-name-status" *ngIf="error('name') as e; else nameHint">
+        {{ e.key | translate : e.params }}
+      </p>
+      <ng-template #nameHint>
+        <p class="dd-field__hint" id="department-name-status" *ngIf="form.controls.name.pending">
+          {{ 'app.validation.checking' | translate }}
+        </p>
+      </ng-template>
+    </div>
+
+    <div class="dd-field">
+      <label for="department-description">{{ 'app.departments.description' | translate }}</label>
+      <textarea
+        id="department-description"
+        formControlName="description"
+        rows="3"
+        [attr.aria-invalid]="!!error('description')"
+        aria-describedby="department-description-error"
+      ></textarea>
+      <p class="dd-field__error" id="department-description-error" *ngIf="error('description') as e">
+        {{ e.key | translate : e.params }}
+      </p>
+    </div>
+
+    <div class="dd-field">
+      <label for="department-manager">{{ 'app.departments.manager' | translate }}</label>
+      <select id="department-manager" formControlName="managerId">
+        <option [ngValue]="null">{{ 'app.departments.no-manager' | translate }}</option>
+        <option *ngFor="let employee of employees$ | async" [ngValue]="employee.id">
+          {{ employee.name }}
+        </option>
+      </select>
+    </div>
+  </fieldset>
+
+  <div class="dd-form__actions">
+    <button type="button" class="dd-button" (click)="cancel()" [disabled]="saving">
+      {{ 'app.common.cancel' | translate }}
+    </button>
+    <button type="submit" class="dd-button dd-button--primary" [disabled]="saving" [attr.aria-busy]="saving">
+      {{ (saving ? 'app.common.saving' : 'app.common.save') | translate }}
+    </button>
+  </div>
+</form>

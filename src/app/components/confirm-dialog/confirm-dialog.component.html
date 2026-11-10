@@ -1,0 +1,20 @@
+<div class="dd-form">
+  <h2 class="dd-form__title">{{ data.title | translate }}</h2>
+  <p class="dd-form__text">{{ data.message | translate : data.messageParams }}</p>
+  <p class="dd-form__text" *ngIf="data.note">{{ data.note | translate : data.noteParams }}</p>
+
+  <div class="dd-form__actions">
+    <button type="button" class="dd-button" (click)="cancel()" [disabled]="busy">
+      {{ 'app.common.cancel' | translate }}
+    </button>
+    <button
+      type="button"
+      class="dd-button dd-button--danger"
+      (click)="confirm()"
+      [disabled]="busy"
+      [attr.aria-busy]="busy"
+    >
+      {{ (busy ? 'app.common.removing' : data.confirmLabel || 'app.common.remove') | translate }}
+    </button>
+  </div>
+</div>

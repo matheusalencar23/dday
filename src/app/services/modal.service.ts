@@ -4,12 +4,14 @@ import {
   createComponent,
   EnvironmentInjector,
   Injectable,
+  Injector,
   TemplateRef,
   Type,
   ViewContainerRef,
 } from '@angular/core';
 import { ModalComponent } from '../components/modal/modal.component';
 import { ModalOptions } from '../models/modal-options';
+import { MODAL_DATA, ModalRef } from '../models/modal-ref';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +20,8 @@ export class ModalService {
   private modalComponent?: ComponentRef<ModalComponent>;
   private contentComponent?: ComponentRef<unknown>;
   private modalInBody = false;
+  private activeRef?: ModalRef<any>;
+  private previousFocus: HTMLElement | null = null;
   options!: ModalOptions | undefined;
   vcr!: ViewContainerRef;
 
@@ -26,30 +30,36 @@ export class ModalService {
     private injector: EnvironmentInjector
   ) {}
 
-  open(contentOrComponent: TemplateRef<Element>, options?: ModalOptions): void;
+  open<R = unknown>(content: TemplateRef<unknown>, options?: ModalOptions): ModalRef<R>;
 
-  open<C>(contentOrComponent: Type<C>, options?: ModalOptions): void;
+  open<C, R = unknown>(
+    component: Type<C>,
+    options?: ModalOptions,
+    data?: unknown
+  ): ModalRef<R>;
 
-  open<C>(
-    contentOrComponent: TemplateRef<Element> | Type<C>,
-    options?: ModalOptions
-  ) {
+  open<C, R = unknown>(
+    contentOrComponent: TemplateRef<unknown> | Type<C>,
+    options?: ModalOptions,
+    data?: unknown
+  ): ModalRef<R> {
     if (this.modalComponent) this.destroy();
-    if (contentOrComponent instanceof TemplateRef) {
-      this.openWithTemplate(
-        this.vcr,
-        contentOrComponent as TemplateRef<Element>
-      );
-    } else {
-      this.openWithComponent(contentOrComponent);
-    }
+
     this.options = options;
+    this.previousFocus =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const modalRef = new ModalRef<R>(() => this.close());
+    this.activeRef = modalRef;
+
+    if (contentOrComponent instanceof TemplateRef) {
+      this.openWithTemplate(this.vcr, contentOrComponent);
+    } else {
+      this.openWithComponent(contentOrComponent, modalRef, data);
+    }
+    return modalRef;
   }
 
-  private openWithTemplate(
-    vcr: ViewContainerRef,
-    content: TemplateRef<Element>
-  ) {
+  private openWithTemplate(vcr: ViewContainerRef, content: TemplateRef<unknown>) {
     this.modalInBody = false;
     vcr.clear();
     const innerContent = vcr.createEmbeddedView(content);
@@ -60,10 +70,21 @@ export class ModalService {
     });
   }
 
-  private openWithComponent(component: Type<unknown>) {
+  private openWithComponent(
+    component: Type<unknown>,
+    modalRef: ModalRef<any>,
+    data: unknown
+  ) {
     this.modalInBody = true;
+    const elementInjector = Injector.create({
+      providers: [
+        { provide: MODAL_DATA, useValue: data },
+        { provide: ModalRef, useValue: modalRef },
+      ],
+    });
     this.contentComponent = createComponent(component, {
       environmentInjector: this.injector,
+      elementInjector,
     });
 
     this.modalComponent = createComponent(ModalComponent, {
@@ -97,5 +118,12 @@ export class ModalService {
       this.vcr.clear();
       this.modalComponent = undefined;
     }
+
+    const modalRef = this.activeRef;
+    this.activeRef = undefined;
+    modalRef?.notifyClosed();
+
+    if (this.previousFocus?.isConnected) this.previousFocus.focus();
+    this.previousFocus = null;
   }
 }

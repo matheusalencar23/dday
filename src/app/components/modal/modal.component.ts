@@ -29,7 +29,9 @@ export class ModalComponent implements AfterViewInit {
   private readonly overlayLeaveAnimation = 'fade-out 0.3s forwards';
   private isClosing = false;
 
-  constructor(private readonly modalService: ModalService) {}
+  constructor(private readonly modalService: ModalService) {
+    this.options = this.modalService.options;
+  }
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
@@ -67,7 +69,6 @@ export class ModalComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.options = this.modalService.options;
     this.addOptions();
     this.addEnterAnimations();
     this.modal.nativeElement.focus();

@@ -29,10 +29,18 @@
             </button>
           </div>
         </th>
+        <th *ngIf="actions" scope="col" class="actions-head">
+          {{ 'app.common.actions' | translate }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let columnData of tableContent">
+      <tr *ngIf="!tableContent.length">
+        <td class="empty" [attr.colspan]="tableConfig.columns.length + (actions ? 1 : 0)">
+          {{ 'app.common.empty' | translate }}
+        </td>
+      </tr>
+      <tr *ngFor="let columnData of tableContent; trackBy: trackRow">
         <td
           *ngFor="let columnHead of tableConfig.columns"
           [class.id]="columnHead.dataProperty === 'id'"
@@ -66,6 +74,26 @@
               </ng-container>
             </span>
           </div>
+        </td>
+        <td *ngIf="actions" class="actions">
+          <button
+            type="button"
+            class="row-action"
+            (click)="edit.emit(columnData)"
+            [attr.aria-label]="'app.common.edit-item' | translate : { name: rowLabel(columnData) }"
+            [attr.title]="'app.common.edit' | translate"
+          >
+            <ng-icon name="heroPencilSquare" size="18" aria-hidden="true"></ng-icon>
+          </button>
+          <button
+            type="button"
+            class="row-action danger"
+            (click)="remove.emit(columnData)"
+            [attr.aria-label]="'app.common.remove-item' | translate : { name: rowLabel(columnData) }"
+            [attr.title]="'app.common.remove' | translate"
+          >
+            <ng-icon name="heroTrash" size="18" aria-hidden="true"></ng-icon>
+          </button>
         </td>
       </tr>
     </tbody>

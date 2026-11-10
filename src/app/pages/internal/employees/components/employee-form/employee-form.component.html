@@ -1,0 +1,76 @@
+<form class="dd-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h2 class="dd-form__title">
+    {{ (employee ? 'app.employees.edit' : 'app.employees.add') | translate }}
+  </h2>
+
+  <fieldset [disabled]="saving">
+    <div class="dd-field">
+      <label for="employee-name">{{ 'app.employees.name' | translate }}</label>
+      <input
+        id="employee-name"
+        type="text"
+        formControlName="name"
+        autocomplete="off"
+        [attr.aria-invalid]="!!error('name')"
+        aria-describedby="employee-name-error"
+      />
+      <p class="dd-field__error" id="employee-name-error" *ngIf="error('name') as e">
+        {{ e.key | translate : e.params }}
+      </p>
+    </div>
+
+    <div class="dd-field">
+      <label for="employee-email">{{ 'app.employees.email' | translate }}</label>
+      <input
+        id="employee-email"
+        type="email"
+        formControlName="email"
+        autocomplete="off"
+        [attr.aria-invalid]="!!error('email')"
+        aria-describedby="employee-email-status"
+      />
+      <p class="dd-field__error" id="employee-email-status" *ngIf="error('email') as e; else emailHint">
+        {{ e.key | translate : e.params }}
+      </p>
+      <ng-template #emailHint>
+        <p class="dd-field__hint" id="employee-email-status" *ngIf="form.controls.email.pending">
+          {{ 'app.validation.checking' | translate }}
+        </p>
+      </ng-template>
+    </div>
+
+    <div class="dd-field">
+      <label for="employee-role">{{ 'app.employees.role' | translate }}</label>
+      <input
+        id="employee-role"
+        type="text"
+        formControlName="role"
+        autocomplete="off"
+        [attr.aria-invalid]="!!error('role')"
+        aria-describedby="employee-role-error"
+      />
+      <p class="dd-field__error" id="employee-role-error" *ngIf="error('role') as e">
+        {{ e.key | translate : e.params }}
+      </p>
+    </div>
+
+    <div class="dd-field">
+      <label for="employee-department">{{ 'app.employees.department' | translate }}</label>
+      <select id="employee-department" formControlName="departmentId">
+        <option [ngValue]="null">{{ 'app.employees.unassigned' | translate }}</option>
+        <option *ngFor="let department of departments$ | async" [ngValue]="department.id">
+          {{ department.name }}
+        </option>
+      </select>
+    </div>
+  </fieldset>
+
+  <div class="dd-form__actions">
+    <button type="button" class="dd-button" (click)="cancel()" [disabled]="saving">
+      {{ 'app.common.cancel' | translate }}
+    </button>
+    <button type="submit" class="dd-button dd-button--primary" [disabled]="saving" [attr.aria-busy]="saving">
+      {{ (saving ? 'app.common.saving' : 'app.common.save') | translate }}
+    </button>
+  </div>
+</form>

@@ -8,11 +8,16 @@ export interface TableViewFilter {
   desc: boolean;
 }
 
+export interface TableView<T> extends PaginatedResponse<T> {
+  /** Página efetivamente exibida (ajustada se a solicitada ficou fora do intervalo). */
+  page: number;
+}
+
 export function createTableView<T extends object>(
   source: T[],
   filter: TableViewFilter,
   searchableProperties: Array<keyof T>
-): PaginatedResponse<T> {
+): TableView<T> {
   const searchTerm = filter.searchTerm.trim().toLocaleLowerCase();
   let rows = searchTerm
     ? source.filter((row) =>
@@ -40,8 +45,10 @@ export function createTableView<T extends object>(
   }
 
   const total = rows.length;
-  const start = (filter.page - 1) * filter.itemsPerPage;
+  const lastPage = Math.max(1, Math.ceil(total / filter.itemsPerPage));
+  const page = Math.min(Math.max(1, filter.page), lastPage);
+  const start = (page - 1) * filter.itemsPerPage;
   rows = rows.slice(start, start + filter.itemsPerPage);
 
-  return { data: rows, total };
+  return { data: rows, total, page };
 }

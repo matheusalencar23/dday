@@ -4,7 +4,7 @@
     #modal
     role="dialog"
     aria-modal="true"
-    [attr.aria-label]="'app.common.dialog' | translate"
+    [attr.aria-label]="(options?.ariaLabel || 'app.common.dialog') | translate"
     tabindex="-1"
   >
     <ng-content></ng-content>

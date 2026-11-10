@@ -16,6 +16,19 @@ import { PaymentStatus } from '../payment/models/payment-status.enum';
 import { Department } from '../departments/models/department';
 import { Employee } from './models/employee';
 import { TABLE_EMPLOYEES_CONFIG } from './data-table-employees-config';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroPlus } from '@ng-icons/heroicons/outline';
+import { ModalService } from 'src/app/services/modal.service';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogData,
+} from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import {
+  EmployeeFormComponent,
+  EmployeeFormData,
+} from './components/employee-form/employee-form.component';
+
+const MODAL_WIDTH = 'min(32rem, calc(100vw - 2rem))';
 
 type EmployeeRow = Employee & {
   department: string;
@@ -33,12 +46,14 @@ type EmployeeRow = Employee & {
     FormsModule,
     InputSearchComponent,
     LoadingSpinnerComponent,
+    NgIconComponent,
     PageTitleComponent,
     PaginationComponent,
     SelectComponent,
     TableComponent,
     TranslateModule,
   ],
+  providers: [provideIcons({ heroPlus })],
 })
 export class EmployeesComponent {
   filter: TableViewFilter = {
@@ -71,7 +86,10 @@ export class EmployeesComponent {
       return createTableView(rows, filter, ['name', 'email', 'role', 'department']);
     }),
     delayWhen(() => timer(Math.random() * 1000)),
-    tap(() => (this.loading = false))
+    tap((view) => {
+      this.filter = { ...this.filter, page: view.page };
+      this.loading = false;
+    })
   );
 
   searchTerm = '';
@@ -84,7 +102,49 @@ export class EmployeesComponent {
     { value: 25, label: '25' },
   ];
 
-  constructor(private readonly studyData: StudyDataService) {}
+  constructor(
+    private readonly studyData: StudyDataService,
+    private readonly modalService: ModalService
+  ) {}
+
+  openForm(row?: EmployeeRow): void {
+    const data: EmployeeFormData = {
+      employee: row && {
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        role: row.role,
+        departmentId: row.departmentId,
+      },
+    };
+    this.modalService.open(
+      EmployeeFormComponent,
+      {
+        width: MODAL_WIDTH,
+        ariaLabel: row ? 'app.employees.edit' : 'app.employees.add',
+      },
+      data
+    );
+  }
+
+  confirmRemove(row: EmployeeRow): void {
+    const managedDepartments = this.studyData.getDepartmentsManagedBy(row.id);
+    const data: ConfirmDialogData = {
+      title: 'app.employees.remove-title',
+      message: 'app.employees.remove-message',
+      messageParams: { name: row.name },
+      note: managedDepartments.length ? 'app.employees.remove-manager-note' : undefined,
+      noteParams: {
+        departments: managedDepartments.map((department) => department.name).join(', '),
+      },
+      action: () => this.studyData.removeEmployee(row.id),
+    };
+    this.modalService.open(
+      ConfirmDialogComponent,
+      { width: MODAL_WIDTH, ariaLabel: 'app.employees.remove-title' },
+      data
+    );
+  }
 
   filterByTerm(term: string): void {
     this.searchTerm = term;

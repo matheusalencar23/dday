@@ -1,0 +1,141 @@
+// Estilos globais de botões e formulários, compartilhados pelos modais de cadastro.
+
+.dd-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: 2.625rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-1);
+  border-radius: 0.5rem;
+  background: var(--bg-1);
+  color: var(--text-1);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    background: var(--bg-2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-1);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    border-color: var(--primary-1);
+    background: var(--primary-1);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: var(--primary-2);
+    }
+  }
+
+  &--danger {
+    border-color: var(--danger-1);
+    background: var(--danger-1);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: var(--danger-2);
+    }
+  }
+}
+
+.dd-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 0;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  &__text {
+    color: var(--text-4);
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.dd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border-1);
+    border-radius: 0.5rem;
+    background: var(--bg-1);
+    color: var(--text-1);
+    font: inherit;
+    font-size: 0.9375rem;
+
+    &:focus {
+      outline: 2px solid var(--primary-1);
+      outline-offset: -1px;
+      border-color: transparent;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: var(--danger-1);
+    }
+
+    &:disabled {
+      background: var(--bg-2);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 5rem;
+  }
+
+  &__hint,
+  &__error {
+    font-size: 0.8125rem;
+  }
+
+  &__hint {
+    color: var(--text-2);
+  }
+
+  &__error {
+    color: var(--danger-2);
+  }
+}

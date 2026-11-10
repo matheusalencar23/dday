@@ -14,10 +14,24 @@ import { StudyDataService } from 'src/app/services/study-data.service';
 import { PaymentStatus } from '../payment/models/payment-status.enum';
 import { TableViewFilter, createTableView } from 'src/app/utils/table-view';
 import { TABLE_DEPARTMENTS_CONFIG } from './data-table-departments-config';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroPlus } from '@ng-icons/heroicons/outline';
+import { ModalService } from 'src/app/services/modal.service';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogData,
+} from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import {
+  DepartmentFormComponent,
+  DepartmentFormData,
+} from './components/department-form/department-form.component';
+
+const MODAL_WIDTH = 'min(32rem, calc(100vw - 2rem))';
 
 type DepartmentRow = {
   id: number;
   name: string;
+  managerId: number | null;
   managerName: string;
   description: string;
   employeeCount: number;
@@ -34,12 +48,14 @@ type DepartmentRow = {
     FormsModule,
     InputSearchComponent,
     LoadingSpinnerComponent,
+    NgIconComponent,
     PageTitleComponent,
     PaginationComponent,
     SelectComponent,
     TableComponent,
     TranslateModule,
   ],
+  providers: [provideIcons({ heroPlus })],
 })
 export class DepartmentsPageComponent {
   filter: TableViewFilter = {
@@ -83,7 +99,10 @@ export class DepartmentsPageComponent {
       return createTableView(rows, filter, ['name', 'managerName', 'description']);
     }),
     delayWhen(() => timer(Math.random() * 1000)),
-    tap(() => (this.loading = false))
+    tap((view) => {
+      this.filter = { ...this.filter, page: view.page };
+      this.loading = false;
+    })
   );
 
   searchTerm = '';
@@ -95,7 +114,44 @@ export class DepartmentsPageComponent {
     { value: 25, label: '25' },
   ];
 
-  constructor(private readonly studyData: StudyDataService) {}
+  constructor(
+    private readonly studyData: StudyDataService,
+    private readonly modalService: ModalService
+  ) {}
+
+  openForm(row?: DepartmentRow): void {
+    const data: DepartmentFormData = {
+      department: row && {
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        managerId: row.managerId,
+      },
+    };
+    this.modalService.open(
+      DepartmentFormComponent,
+      {
+        width: MODAL_WIDTH,
+        ariaLabel: row ? 'app.departments.edit' : 'app.departments.add',
+      },
+      data
+    );
+  }
+
+  confirmRemove(row: DepartmentRow): void {
+    const data: ConfirmDialogData = {
+      title: 'app.departments.remove-title',
+      message: 'app.departments.remove-message',
+      messageParams: { name: row.name },
+      note: row.employeeCount ? 'app.departments.delete-note' : undefined,
+      action: () => this.studyData.removeDepartment(row.id),
+    };
+    this.modalService.open(
+      ConfirmDialogComponent,
+      { width: MODAL_WIDTH, ariaLabel: 'app.departments.remove-title' },
+      data
+    );
+  }
 
   filterByTerm(term: string): void {
     this.searchTerm = term;

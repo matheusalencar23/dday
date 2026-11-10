@@ -8,12 +8,18 @@
     [(ngModel)]="searchTerm"
     (ngModelChange)="filterByTerm($event)"
   />
-  <dd-select
-    [items]="itemsPerPageOptions"
-    [(ngModel)]="filter.itemsPerPage"
-    (ngModelChange)="showEmployees()"
-    [ariaLabel]="'app.payments.items-per-page' | translate"
-  />
+  <div class="filter-actions">
+    <dd-select
+      [items]="itemsPerPageOptions"
+      [(ngModel)]="filter.itemsPerPage"
+      (ngModelChange)="showEmployees()"
+      [ariaLabel]="'app.payments.items-per-page' | translate"
+    />
+    <button type="button" class="dd-button dd-button--primary" (click)="openForm()">
+      <ng-icon name="heroPlus" size="18" aria-hidden="true"></ng-icon>
+      {{ 'app.employees.add' | translate }}
+    </button>
+  </div>
 </div>
 
 <dd-loading-spinner *ngIf="loading" />
@@ -25,6 +31,9 @@
       (orderBy)="order($event)"
       [dataSortProperty]="filter.sortBy"
       [desc]="filter.desc"
+      [actions]="true"
+      (edit)="openForm($event)"
+      (remove)="confirmRemove($event)"
     />
     <dd-pagination
       [page]="filter.page"

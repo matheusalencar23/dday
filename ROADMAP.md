@@ -13,22 +13,22 @@ Cada item indica **o que demonstra** para quem avalia o código. A ordem das fas
 
 Itens que corrigem divergências entre o que o projeto promete e o que entrega. Um recrutador que abrir o README e depois a aplicação vai notar.
 
-### 0.1 Interface de CRUD para funcionários e departamentos
-O README anuncia cadastro, edição e remoção, e o `StudyDataService` já tem `saveEmployee`, `removeEmployee`, `saveDepartment` e `removeDepartment`; as chaves i18n (`app.employees.add`, `app.departments.edit` etc.) também existem. Porém **nenhuma tela chama esses métodos**: as tabelas não têm botões de ação nem formulários.
+### 0.1 Interface de CRUD para funcionários e departamentos — ✅ concluído
+O README anunciava cadastro, edição e remoção, mas nenhuma tela chamava os métodos do `StudyDataService`.
 
-- Botão "Adicionar" e coluna de ações (editar/remover) no `dd-table`, configurável pelo `DataTableType`.
-- Formulário em modal com **reactive forms tipados**, validações (obrigatório, e-mail válido, e-mail único) e mensagens traduzidas.
-- Seleção de departamento no funcionário e de gerente no departamento.
-- Diálogo de confirmação antes de remover.
+Entregue:
+- Botão "Adicionar" e coluna de ações (editar/remover) no `dd-table` (`[actions]`, `(edit)`, `(remove)`), fixa à direita durante a rolagem horizontal.
+- Formulários em modal com **reactive forms tipados** (`NonNullableFormBuilder`), validações síncronas e **assíncronas** (e-mail e nome de departamento únicos, simulando checagem no servidor) e mensagens traduzidas.
+- `ModalService.open()` agora devolve um `ModalRef` (`afterClosed$`) e injeta dados via `MODAL_DATA`; o foco volta ao elemento de origem ao fechar.
+- Diálogo de confirmação reutilizável (`dd-confirm-dialog`) que executa a operação e só fecha quando ela termina.
+- Operações de CRUD retornam `Observable` com latência simulada (`simulateRequest`), com estados "Salvando..." / "Removendo...".
+- Regras de cascata: remover departamento desassocia funcionários; remover funcionário deixa sem responsável os departamentos que ele gerenciava.
+- Estado vazio na tabela e ajuste automático da página quando o último item de uma página é removido.
+- Teste e2e cobrindo o fluxo (`cypress/e2e/crud.cy.ts`).
 
-**Demonstra:** formulários reativos, validadores customizados (inclusive assíncronos, simulando checagem no "servidor"), composição de componentes.
-
-### 0.2 Consistência dos dados mock
-- Os departamentos Marketing e Sales apontam para gerentes (`managerId` 691 e 751) que não existem em `EMPLOYEES`, então aparecem como "—".
-- Vários pagamentos têm `payrollDate` anterior à data da solicitação.
-- Cargos (`role`) não são traduzidos para pt-BR.
-
-**Demonstra:** cuidado com detalhes, algo que aparece na primeira impressão.
+### 0.2 Consistência dos dados mock — ✅ concluído
+- 8 dos 40 pagamentos base tinham `payrollDate` anterior à data da solicitação; foram ajustados para o dia 15 do mês seguinte, mesma regra dos pagamentos gerados.
+- Os cargos (`role`) continuam sem tradução: são texto livre digitado no cadastro, então não faz sentido traduzi-los.
 
 ### 0.3 Elementos decorativos sem função
 A busca global do header, o sino de notificações e o ícone de informações são apenas visuais. Ou ganham função (ver 2.4 e 2.5) ou saem da tela.
@@ -60,7 +60,7 @@ Salvar o estado em `localStorage` (já previsto no README) com um botão "Restau
 **Demonstra:** UX madura, serviços globais, acessibilidade.
 
 ### 1.4 Testes e CI
-Hoje existe apenas um teste de componente e um e2e de fumaça.
+Hoje existe apenas um teste de componente (que falha: o `app.component.spec.ts` não fornece o `TranslateService`), um e2e de fumaça e o e2e de CRUD.
 
 - Testes unitários de `StudyDataService` (CRUD, remoção em cascata, cálculo de liquidez), `createTableView` e do interceptor fake.
 - Testes de componente para formulários (validações).
@@ -143,7 +143,8 @@ Registro das alterações feitas na sessão (quem, o quê, quando), exibido em u
 
 | Ordem | Item | Motivo |
 | --- | --- | --- |
-| 1 | 0.1 CRUD na interface | O README já promete; hoje é a maior lacuna |
+| ✅ | 0.1 CRUD na interface e 0.2 dados mock | Concluídos |
+| 1 | 0.3 Elementos decorativos | Rápido; evita botões que não fazem nada |
 | 2 | 1.1 Backend fake via interceptor | Base para todos os itens seguintes e ótimo assunto de entrevista |
 | 3 | 1.4 Testes e CI | Sinal de qualidade visível logo no repositório |
 | 4 | 2.1 Fluxo de aprovação | Funcionalidade de negócio mais impressionante |
