@@ -1,9 +1,13 @@
 name: CI
 
+# Fluxo: o trabalho acontece na develop e chega à master só por pull request
+# (push direto na master é bloqueado pelo ruleset em .github/rulesets/).
+# A master também roda após o merge, para o badge refletir o estado dela.
 on:
   push:
-    branches: [master]
+    branches: [develop, master]
   pull_request:
+    branches: [master]
 
 # Cancela execuções antigas do mesmo branch quando chega um novo push.
 concurrency:
