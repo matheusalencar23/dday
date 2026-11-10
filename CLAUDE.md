@@ -29,6 +29,10 @@ O `ROADMAP.md` lista as próximas funcionalidades e o que já foi concluído; ma
 
 O build de produção aplica os budgets definidos em `angular.json`: estilos por componente geram aviso a partir de 2kb e **falham a partir de 4kb**; o bundle inicial falha a partir de 1mb.
 
+## Fluxo de branches
+
+O trabalho acontece na branch `develop`; a `master` só recebe mudanças por pull request vindo da `develop`, e o merge exige o CI verde. **Nunca faça commit nem push direto na `master`.** O bloqueio é feito pelo ruleset versionado em `.github/rulesets/protect-master.json` (importado nas configurações do repositório no GitHub). Se renomear um job do CI, atualize os `required_status_checks` desse arquivo e reimporte o ruleset.
+
 ## Arquitetura
 
 - **Bootstrap** (`src/main.ts`): `bootstrapApplication` com router, animations, HttpClient e ngx-translate (carrega `src/assets/i18n/{en,pt}.json` via HTTP). O locale `pt-BR` é registrado para os pipes.
