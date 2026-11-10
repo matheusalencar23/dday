@@ -15,10 +15,7 @@ import { DefaultOption } from 'src/app/components/select/models/options';
 import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 import { PaginatedResponse } from 'src/app/models/response';
 import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
-import {
-  PAYMENT_SERVICE_TOKEN,
-  PaymentService,
-} from './models/payment-service';
+import { PAYMENT_SERVICE_TOKEN, PaymentService } from './models/payment-service';
 import { PaymentFilter } from './models/payment-filter';
 import { PaymentListRow } from './models/payment';
 
@@ -68,9 +65,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     { value: 25, label: '25' },
   ];
 
-  constructor(
-    @Inject(PAYMENT_SERVICE_TOKEN) private paymentService: PaymentService
-  ) {}
+  constructor(@Inject(PAYMENT_SERVICE_TOKEN) private paymentService: PaymentService) {}
 
   ngOnInit(): void {
     this.searchTermChanges

@@ -19,7 +19,10 @@ describe('Backend simulado', () => {
     // Math.random = 0 faz toda requisição cair nos 30% de falha (inclusive a nova tentativa automática)
     cy.window().then((window) => cy.stub(window.Math, 'random').returns(0).as('random'));
     cy.get('.filter dd-input-search input').type('Ana');
-    cy.get('dd-error-state', { timeout: 8000 }).should('contain', 'Não foi possível carregar os dados');
+    cy.get('dd-error-state', { timeout: 8000 }).should(
+      'contain',
+      'Não foi possível carregar os dados',
+    );
 
     cy.get('@random').invoke('restore');
     toggleFailures(false);

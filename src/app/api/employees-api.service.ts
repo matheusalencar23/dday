@@ -1,11 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
-import {
-  Employee,
-  EmployeeInput,
-  EmployeeRow,
-} from '../pages/internal/employees/models/employee';
+import { Employee, EmployeeInput, EmployeeRow } from '../pages/internal/employees/models/employee';
 import { TableView, TableViewFilter } from '../utils/table-view';
 import { API_PREFIX, Availability, Option } from './api.models';
 import { DataChangesService } from './data-changes.service';
@@ -17,7 +13,7 @@ const URL = `${API_PREFIX}/employees`;
 export class EmployeesApiService {
   constructor(
     private readonly http: HttpClient,
-    private readonly changes: DataChangesService
+    private readonly changes: DataChangesService,
   ) {}
 
   list(filter: TableViewFilter): Observable<TableView<EmployeeRow>> {
@@ -46,8 +42,6 @@ export class EmployeesApiService {
   }
 
   remove(id: number): Observable<void> {
-    return this.http
-      .delete<void>(`${URL}/${id}`)
-      .pipe(tap(() => this.changes.notify('employees')));
+    return this.http.delete<void>(`${URL}/${id}`).pipe(tap(() => this.changes.notify('employees')));
   }
 }

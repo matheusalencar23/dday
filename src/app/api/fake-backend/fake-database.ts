@@ -53,13 +53,13 @@ export class FakeDatabase {
 
   isEmailTaken(email: string, ignoreId?: number): boolean {
     return this.employees.some(
-      (employee) => employee.id !== ignoreId && normalize(employee.email) === normalize(email)
+      (employee) => employee.id !== ignoreId && normalize(employee.email) === normalize(email),
     );
   }
 
   isDepartmentNameTaken(name: string, ignoreId?: number): boolean {
     return this.departments.some(
-      (department) => department.id !== ignoreId && normalize(department.name) === normalize(name)
+      (department) => department.id !== ignoreId && normalize(department.name) === normalize(name),
     );
   }
 
@@ -68,7 +68,10 @@ export class FakeDatabase {
   }
 
   liquidity(): { pendingAmount: number; availableLiquidity: number; liquidityPercent: number } {
-    const pendingAmount = this.pendingPayments().reduce((total, payment) => total + payment.amount, 0);
+    const pendingAmount = this.pendingPayments().reduce(
+      (total, payment) => total + payment.amount,
+      0,
+    );
     const availableLiquidity = Math.max(0, OPENING_LIQUIDITY - pendingAmount);
     return {
       pendingAmount,
@@ -115,7 +118,7 @@ export class FakeDatabase {
       const members = new Set(
         this.employees
           .filter((employee) => employee.departmentId === department.id)
-          .map((employee) => employee.id)
+          .map((employee) => employee.id),
       );
       const payments = this.payments.filter((payment) => members.has(payment.employeeId));
       return {
@@ -146,7 +149,7 @@ export class FakeDatabase {
   deleteEmployee(id: number): void {
     this.employees = this.employees.filter((employee) => employee.id !== id);
     this.departments = this.departments.map((department) =>
-      department.managerId === id ? { ...department, managerId: null } : department
+      department.managerId === id ? { ...department, managerId: null } : department,
     );
   }
 
@@ -166,7 +169,7 @@ export class FakeDatabase {
   deleteDepartment(id: number): void {
     this.departments = this.departments.filter((department) => department.id !== id);
     this.employees = this.employees.map((employee) =>
-      employee.departmentId === id ? { ...employee, departmentId: null } : employee
+      employee.departmentId === id ? { ...employee, departmentId: null } : employee,
     );
   }
 }

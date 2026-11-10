@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { catchError, of } from 'rxjs';
 import { DepartmentsApiService } from 'src/app/api/departments-api.service';
@@ -52,7 +48,7 @@ export class DepartmentFormComponent {
         asyncValidators: [
           uniqueValueValidator(
             (name) => this.departmentsApi.isNameAvailable(name, this.department?.id),
-            'departmentTaken'
+            'departmentTaken',
           ),
         ],
       },
@@ -88,7 +84,7 @@ export class DepartmentFormComponent {
             description: value.description.trim(),
             managerId: value.managerId,
           },
-          this.department?.id
+          this.department?.id,
         )
         .subscribe({
           next: (saved) => this.modalRef.close(saved),

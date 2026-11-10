@@ -16,7 +16,10 @@ export const PAYMENT_ROUTES: Route[] = [
         ? db.getPayments().filter((payment) => payment.status === status)
         : db.getPayments();
       return ok(
-        createTableView(db.paymentRows(payments), listFilter(query), ['employeeName', 'departmentName'])
+        createTableView(db.paymentRows(payments), listFilter(query), [
+          'employeeName',
+          'departmentName',
+        ]),
       );
     },
   },

@@ -3,14 +3,16 @@ import { AsyncValidatorFn, FormControl, FormGroup, Validators } from '@angular/f
 import { map, timer } from 'rxjs';
 import { whenValidated } from './when-validated';
 
-const slowValidator = (valid: boolean): AsyncValidatorFn => () =>
-  timer(100).pipe(map(() => (valid ? null : { taken: true })));
+const slowValidator =
+  (valid: boolean): AsyncValidatorFn =>
+  () =>
+    timer(100).pipe(map(() => (valid ? null : { taken: true })));
 
 describe('whenValidated', () => {
   it('responde imediatamente quando não há validação pendente', () => {
     const results: boolean[] = [];
     whenValidated(new FormGroup({ name: new FormControl('ok') })).subscribe((valid) =>
-      results.push(valid)
+      results.push(valid),
     );
     expect(results).toEqual([true]);
   });

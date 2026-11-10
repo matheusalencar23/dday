@@ -10,35 +10,28 @@ export const InternalRoutes: Routes = [
       {
         path: DefaultRoutes.DASHBOARD,
         loadComponent: () =>
-          import('./dashboard/dashboard-page.component').then(
-            (c) => c.DashboardPageComponent
-          ),
+          import('./dashboard/dashboard-page.component').then((c) => c.DashboardPageComponent),
       },
       {
         path: DefaultRoutes.DEPARTMENTS,
         loadComponent: () =>
           import('./departments/departments-page.component').then(
-            (c) => c.DepartmentsPageComponent
+            (c) => c.DepartmentsPageComponent,
           ),
       },
       {
         path: DefaultRoutes.PAYMENT,
-        loadComponent: () =>
-          import('./payment/payment.component').then((c) => c.PaymentComponent),
+        loadComponent: () => import('./payment/payment.component').then((c) => c.PaymentComponent),
       },
       {
         path: DefaultRoutes.EMPLOYEES,
         loadComponent: () =>
-          import('./employees/employees.component').then(
-            (m) => m.EmployeesComponent
-          ),
+          import('./employees/employees.component').then((m) => m.EmployeesComponent),
       },
       {
         path: DefaultRoutes.LIQUIDITY,
         loadComponent: () =>
-          import('./liquidity/liquidity.component').then(
-            (m) => m.LiquidityComponent
-          ),
+          import('./liquidity/liquidity.component').then((m) => m.LiquidityComponent),
       },
       {
         path: '',

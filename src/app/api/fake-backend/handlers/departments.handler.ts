@@ -35,7 +35,13 @@ export const DEPARTMENT_ROUTES: Route[] = [
     method: 'GET',
     pattern: /^\/api\/departments$/,
     handler: ({ db, query }) =>
-      ok(createTableView(db.departmentRows(), listFilter(query), ['name', 'managerName', 'description'])),
+      ok(
+        createTableView(db.departmentRows(), listFilter(query), [
+          'name',
+          'managerName',
+          'description',
+        ]),
+      ),
   },
   {
     method: 'GET',
@@ -45,7 +51,7 @@ export const DEPARTMENT_ROUTES: Route[] = [
         db
           .getDepartments()
           .map(({ id, name }) => ({ id, name }))
-          .sort((a, b) => a.name.localeCompare(b.name))
+          .sort((a, b) => a.name.localeCompare(b.name)),
       ),
   },
   {

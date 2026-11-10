@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { catchError, of } from 'rxjs';
 import { DepartmentsApiService } from 'src/app/api/departments-api.service';
@@ -53,7 +49,7 @@ export class EmployeeFormComponent {
         asyncValidators: [
           uniqueValueValidator(
             (email) => this.employeesApi.isEmailAvailable(email, this.employee?.id),
-            'emailTaken'
+            'emailTaken',
           ),
         ],
       },
@@ -90,7 +86,7 @@ export class EmployeeFormComponent {
             role: value.role.trim(),
             departmentId: value.departmentId,
           },
-          this.employee?.id
+          this.employee?.id,
         )
         .subscribe({
           next: (saved) => this.modalRef.close(saved),

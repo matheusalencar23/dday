@@ -1,16 +1,9 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "dist/**",
-    "coverage/**",
-    ".angular/**"
-  ],
+  "ignorePatterns": ["projects/**/*", "dist/**", "coverage/**", ".angular/**"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -38,19 +31,12 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "prettier"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended", "prettier"],
       "rules": {}
     },
     {
-      "files": [
-        "*.spec.ts"
-      ],
+      "files": ["*.spec.ts"],
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off"
       }

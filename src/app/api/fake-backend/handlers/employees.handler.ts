@@ -43,7 +43,14 @@ export const EMPLOYEE_ROUTES: Route[] = [
     method: 'GET',
     pattern: /^\/api\/employees$/,
     handler: ({ db, query }) =>
-      ok(createTableView(db.employeeRows(), listFilter(query), ['name', 'email', 'role', 'department'])),
+      ok(
+        createTableView(db.employeeRows(), listFilter(query), [
+          'name',
+          'email',
+          'role',
+          'department',
+        ]),
+      ),
   },
   {
     method: 'GET',
@@ -53,7 +60,7 @@ export const EMPLOYEE_ROUTES: Route[] = [
         db
           .getEmployees()
           .map(({ id, name }) => ({ id, name }))
-          .sort((a, b) => a.name.localeCompare(b.name))
+          .sort((a, b) => a.name.localeCompare(b.name)),
       ),
   },
   {

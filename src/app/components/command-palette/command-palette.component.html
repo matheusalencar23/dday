@@ -55,7 +55,7 @@
 <p class="empty" role="status">
   <span *ngIf="!loading && failed">{{ 'app.search.error' | translate }}</span>
   <span *ngIf="!loading && !failed && !results.length">
-    {{ 'app.search.no-results' | translate : { term: term } }}
+    {{ 'app.search.no-results' | translate: { term: term } }}
   </span>
 </p>
 

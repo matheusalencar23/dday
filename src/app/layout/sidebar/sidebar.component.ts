@@ -21,13 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    LogoComponent,
-    NgIconComponent,
-    RouterModule,
-    TranslateModule,
-  ],
+  imports: [CommonModule, LogoComponent, NgIconComponent, RouterModule, TranslateModule],
   providers: [
     provideIcons({
       heroXMarkSolid,
@@ -40,10 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   animations: [
     trigger('overlay', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('250ms', style({ opacity: 0.5 })),
-      ]),
+      transition(':enter', [style({ opacity: 0 }), animate('250ms', style({ opacity: 0.5 }))]),
       transition(':leave', [animate('500ms', style({ opacity: 0 }))]),
     ]),
   ],

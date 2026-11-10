@@ -28,7 +28,7 @@ export function toDashboardView(data: DashboardData, language: string): Dashboar
     ],
     liquidityPercent: data.liquidityPercent,
     monthlyLabels: Array.from({ length: 12 }, (_, month) =>
-      new Date(2024, month, 1).toLocaleDateString(locale, { month: 'short' })
+      new Date(2024, month, 1).toLocaleDateString(locale, { month: 'short' }),
     ),
     monthlyPaymentSeries: data.monthly.map(({ year, values }) => ({
       name: String(year),

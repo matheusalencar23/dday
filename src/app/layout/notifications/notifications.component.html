@@ -6,7 +6,7 @@
     aria-haspopup="true"
     aria-controls="notifications-panel"
     [attr.aria-expanded]="isOpen"
-    [attr.aria-label]="'app.notifications.open' | translate : { count: vm.unread }"
+    [attr.aria-label]="'app.notifications.open' | translate: { count: vm.unread }"
     (click)="toggle()"
   >
     <ng-icon name="heroBell" size="22" aria-hidden="true"></ng-icon>
@@ -30,7 +30,7 @@
           <span class="dot" aria-hidden="true"></span>
           <span class="text">
             <strong>{{ notification.titleKey | translate }}</strong>
-            <span>{{ notification.descriptionKey | translate : notification.params }}</span>
+            <span>{{ notification.descriptionKey | translate: notification.params }}</span>
           </span>
           <span class="count" *ngIf="notification.count">{{ notification.count }}</span>
         </a>

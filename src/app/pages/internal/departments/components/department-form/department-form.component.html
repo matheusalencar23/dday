@@ -15,8 +15,12 @@
         [attr.aria-invalid]="!!error('name')"
         aria-describedby="department-name-status"
       />
-      <p class="dd-field__error" id="department-name-status" *ngIf="error('name') as e; else nameHint">
-        {{ e.key | translate : e.params }}
+      <p
+        class="dd-field__error"
+        id="department-name-status"
+        *ngIf="error('name') as e; else nameHint"
+      >
+        {{ e.key | translate: e.params }}
       </p>
       <ng-template #nameHint>
         <p class="dd-field__hint" id="department-name-status" *ngIf="form.controls.name.pending">
@@ -34,8 +38,12 @@
         [attr.aria-invalid]="!!error('description')"
         aria-describedby="department-description-error"
       ></textarea>
-      <p class="dd-field__error" id="department-description-error" *ngIf="error('description') as e">
-        {{ e.key | translate : e.params }}
+      <p
+        class="dd-field__error"
+        id="department-description-error"
+        *ngIf="error('description') as e"
+      >
+        {{ e.key | translate: e.params }}
       </p>
     </div>
 
@@ -56,7 +64,12 @@
     <button type="button" class="dd-button" (click)="cancel()" [disabled]="saving">
       {{ 'app.common.cancel' | translate }}
     </button>
-    <button type="submit" class="dd-button dd-button--primary" [disabled]="saving" [attr.aria-busy]="saving">
+    <button
+      type="submit"
+      class="dd-button dd-button--primary"
+      [disabled]="saving"
+      [attr.aria-busy]="saving"
+    >
       {{ (saving ? 'app.common.saving' : 'app.common.save') | translate }}
     </button>
   </div>

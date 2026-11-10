@@ -24,7 +24,7 @@ export class PaymentsApiService implements PaymentService {
       .get<PaginatedResponse<PaymentListRow>>(`${API_PREFIX}/payments`, { params })
       .pipe(
         retryTransient(),
-        map((response) => ({ ...response, data: response.data.map(parsePaymentRow) }))
+        map((response) => ({ ...response, data: response.data.map(parsePaymentRow) })),
       );
   }
 }

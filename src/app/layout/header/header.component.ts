@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import {
-  heroInformationCircle,
-  heroLanguage,
-} from '@ng-icons/heroicons/outline';
+import { heroInformationCircle, heroLanguage } from '@ng-icons/heroicons/outline';
 import { heroBars3Solid, heroMagnifyingGlassSolid } from '@ng-icons/heroicons/solid';
 import { ModalService } from 'src/app/services/modal.service';
 import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';

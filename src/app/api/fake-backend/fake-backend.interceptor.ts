@@ -41,28 +41,32 @@ export const fakeBackendInterceptor: HttpInterceptorFn = (req, next) => {
     tap({
       next: (event) => log(req, event instanceof HttpResponse ? event.status : 0, startedAt),
       error: (error: HttpErrorResponse) => log(req, error.status, startedAt),
-    })
+    }),
   );
 };
 
 function handle(
   req: HttpRequest<unknown>,
   db: FakeDatabase,
-  config: FakeBackendConfig
+  config: FakeBackendConfig,
 ): Observable<HttpEvent<unknown>> {
   if (config.shouldFail()) {
     return throwError(() =>
-      apiError(503, { code: 'unavailable', message: 'Serviço temporariamente indisponível.' }, req.url)
+      apiError(
+        503,
+        { code: 'unavailable', message: 'Serviço temporariamente indisponível.' },
+        req.url,
+      ),
     );
   }
 
   const url = new URL(req.urlWithParams, 'http://fake-backend');
   const route = ROUTES.find(
-    (candidate) => candidate.method === req.method && candidate.pattern.test(url.pathname)
+    (candidate) => candidate.method === req.method && candidate.pattern.test(url.pathname),
   );
   if (!route) {
     return throwError(() =>
-      apiError(404, { code: 'routeNotFound', message: `${req.method} ${url.pathname}` }, req.url)
+      apiError(404, { code: 'routeNotFound', message: `${req.method} ${url.pathname}` }, req.url),
     );
   }
 
@@ -77,9 +81,7 @@ function handle(
     if (error instanceof HttpErrorResponse) {
       return throwError(() => error);
     }
-    return throwError(() =>
-      apiError(500, { code: 'internal', message: String(error) }, req.url)
-    );
+    return throwError(() => apiError(500, { code: 'internal', message: String(error) }, req.url));
   }
 }
 

@@ -17,7 +17,7 @@ const URL = `${API_PREFIX}/departments`;
 export class DepartmentsApiService {
   constructor(
     private readonly http: HttpClient,
-    private readonly changes: DataChangesService
+    private readonly changes: DataChangesService,
   ) {}
 
   list(filter: TableViewFilter): Observable<TableView<DepartmentRow>> {

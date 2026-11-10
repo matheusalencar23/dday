@@ -5,10 +5,7 @@ import {
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
-import {
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { EmployeeRow } from 'src/app/pages/internal/employees/models/employee';
@@ -73,7 +70,7 @@ describe('fakeBackendInterceptor', () => {
       http.get<TableView<EmployeeRow>>('/api/employees', {
         observe: 'response',
         params: { search: 'developer', sortBy: 'name', order: 'desc', page: 1, pageSize: 2 },
-      })
+      }),
     );
 
     expect(response?.status).toBe(200);
@@ -89,7 +86,7 @@ describe('fakeBackendInterceptor', () => {
       http.get<TableView<PaymentListRow>>('/api/payments', {
         observe: 'response',
         params: { pageSize: 1 },
-      })
+      }),
     );
 
     const date = response!.body!.data[0].date as unknown;
@@ -99,7 +96,7 @@ describe('fakeBackendInterceptor', () => {
 
   it('não expõe referências do banco: alterar a resposta não altera os dados', fakeAsync(() => {
     const { response } = run(
-      http.get<TableView<EmployeeRow>>('/api/employees', { observe: 'response' })
+      http.get<TableView<EmployeeRow>>('/api/employees', { observe: 'response' }),
     );
     const first = response!.body!.data[0];
     first.name = 'Alterado';
@@ -109,23 +106,31 @@ describe('fakeBackendInterceptor', () => {
 
   it('cria um funcionário (201) com e-mail normalizado', fakeAsync(() => {
     const { response } = run(
-      http.post('/api/employees', { ...validEmployee, email: ' NOVA.Pessoa@Example.test ' }, {
-        observe: 'response',
-      })
+      http.post(
+        '/api/employees',
+        { ...validEmployee, email: ' NOVA.Pessoa@Example.test ' },
+        {
+          observe: 'response',
+        },
+      ),
     );
 
     expect(response?.status).toBe(201);
     expect(response?.body).toEqual(
-      jasmine.objectContaining({ email: 'nova.pessoa@example.test', name: 'Nova Pessoa' })
+      jasmine.objectContaining({ email: 'nova.pessoa@example.test', name: 'Nova Pessoa' }),
     );
     expect(db.isEmailTaken('nova.pessoa@example.test')).toBeTrue();
   }));
 
   it('responde 409 com o campo quando o e-mail já existe', fakeAsync(() => {
     const { error } = run(
-      http.post('/api/employees', { ...validEmployee, email: 'ana.costa@example.test' }, {
-        observe: 'response',
-      })
+      http.post(
+        '/api/employees',
+        { ...validEmployee, email: 'ana.costa@example.test' },
+        {
+          observe: 'response',
+        },
+      ),
     );
 
     expect(error?.status).toBe(409);
@@ -134,19 +139,23 @@ describe('fakeBackendInterceptor', () => {
 
   it('responde 422 para dados inválidos', fakeAsync(() => {
     const missingName = run(
-      http.post('/api/employees', { ...validEmployee, name: '   ' }, { observe: 'response' })
+      http.post('/api/employees', { ...validEmployee, name: '   ' }, { observe: 'response' }),
     );
     expect(missingName.error?.status).toBe(422);
     expect(missingName.error?.error).toEqual(
-      jasmine.objectContaining({ code: 'required', field: 'name' })
+      jasmine.objectContaining({ code: 'required', field: 'name' }),
     );
 
     const unknownDepartment = run(
-      http.post('/api/employees', { ...validEmployee, departmentId: 99999 }, { observe: 'response' })
+      http.post(
+        '/api/employees',
+        { ...validEmployee, departmentId: 99999 },
+        { observe: 'response' },
+      ),
     );
     expect(unknownDepartment.error?.status).toBe(422);
     expect(unknownDepartment.error?.error).toEqual(
-      jasmine.objectContaining({ field: 'departmentId' })
+      jasmine.objectContaining({ field: 'departmentId' }),
     );
   }));
 
@@ -168,13 +177,13 @@ describe('fakeBackendInterceptor', () => {
       http.get('/api/employees/email-availability', {
         observe: 'response',
         params: { email: 'ana.costa@example.test' },
-      })
+      }),
     );
     const own = run(
       http.get('/api/employees/email-availability', {
         observe: 'response',
         params: { email: 'ana.costa@example.test', ignoreId: 316 },
-      })
+      }),
     );
 
     expect(taken.response?.body).toEqual({ available: false });

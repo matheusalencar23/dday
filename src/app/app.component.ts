@@ -1,10 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalService } from './services/modal.service';
 import { LanguageService } from './services/language.service';
@@ -22,7 +17,7 @@ export class AppComponent implements AfterViewInit {
 
   constructor(
     private modalService: ModalService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
   ) {}
 
   ngAfterViewInit(): void {

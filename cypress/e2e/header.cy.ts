@@ -29,9 +29,11 @@ describe('Header', () => {
       cy.focused().type('tech');
       cy.contains('[role="option"]', 'Technology').should('exist');
       cy.focused().type('{downarrow}');
-      cy.get('[role="option"][aria-selected="true"]').invoke('attr', 'id').then((id) => {
-        cy.focused().should('have.attr', 'aria-activedescendant', id);
-      });
+      cy.get('[role="option"][aria-selected="true"]')
+        .invoke('attr', 'id')
+        .then((id) => {
+          cy.focused().should('have.attr', 'aria-activedescendant', id);
+        });
 
       cy.focused().clear().type('xyzxyz');
       cy.contains('Nenhum resultado para "xyzxyz"').should('exist');

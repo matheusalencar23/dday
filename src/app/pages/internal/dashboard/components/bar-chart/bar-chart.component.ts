@@ -19,12 +19,7 @@ export class BarChartComponent implements OnChanges {
   @Input() values: number[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['color'] ||
-      changes['title'] ||
-      changes['labels'] ||
-      changes['values']
-    ) {
+    if (changes['color'] || changes['title'] || changes['labels'] || changes['values']) {
       this.handleOptions();
     }
   }

@@ -115,7 +115,7 @@
       border-color: transparent;
     }
 
-    &[aria-invalid="true"] {
+    &[aria-invalid='true'] {
       border-color: var(--danger-1);
     }
 

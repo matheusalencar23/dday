@@ -1,15 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  HostBinding,
-  Input,
-  forwardRef,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { Component, HostBinding, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroMagnifyingGlassSolid } from '@ng-icons/heroicons/solid';
 

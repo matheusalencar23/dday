@@ -73,10 +73,8 @@ export class CommandPaletteComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         tap(() => (this.loading = true)),
         // switchMap descarta respostas de buscas antigas que chegarem atrasadas
-        switchMap((term) =>
-          this.searchService.search(term).pipe(catchError(() => of(null)))
-        ),
-        takeUntil(this.destroy$)
+        switchMap((term) => this.searchService.search(term).pipe(catchError(() => of(null)))),
+        takeUntil(this.destroy$),
       )
       .subscribe((groups) => {
         this.failed = groups === null;

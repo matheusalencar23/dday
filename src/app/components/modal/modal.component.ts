@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalOptions } from 'src/app/models/modal-options';
 import { ModalService } from 'src/app/services/modal.service';
@@ -44,8 +38,8 @@ export class ModalComponent implements AfterViewInit {
 
     const focusable = Array.from(
       this.modal.nativeElement.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      )
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
     );
     if (focusable.length === 0) {
       event.preventDefault();
@@ -71,8 +65,7 @@ export class ModalComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.addOptions();
     this.addEnterAnimations();
-    const autofocusTarget =
-      this.modal.nativeElement.querySelector<HTMLElement>('[data-autofocus]');
+    const autofocusTarget = this.modal.nativeElement.querySelector<HTMLElement>('[data-autofocus]');
     (autofocusTarget ?? this.modal.nativeElement).focus();
   }
 
@@ -98,10 +91,7 @@ export class ModalComponent implements AfterViewInit {
     this.modal.nativeElement.style.animation = this.modalLeaveAnimation;
     this.overlay.nativeElement.style.animation = this.overlayLeaveAnimation;
 
-    zip(
-      this.modalAnimationEnd.pipe(take(1)),
-      this.overlayAnimationEnd.pipe(take(1))
-    )
+    zip(this.modalAnimationEnd.pipe(take(1)), this.overlayAnimationEnd.pipe(take(1)))
       .pipe(take(1))
       .subscribe(() => this.modalService.destroy());
   }

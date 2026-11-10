@@ -19,6 +19,6 @@ export function whenValidated(form: FormGroup): Observable<boolean> {
     startWith(form.status),
     filter((status) => status !== 'PENDING'),
     take(1),
-    map((status) => status === 'VALID')
+    map((status) => status === 'VALID'),
   );
 }

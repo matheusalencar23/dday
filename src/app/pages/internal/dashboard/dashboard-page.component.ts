@@ -42,26 +42,26 @@ export class DashboardPageComponent {
 
   private readonly data$ = merge(this.changes.changes$, this.retries).pipe(
     startWith(null),
-    switchMap(() => this.api.dashboard().pipe(toLoadState()))
+    switchMap(() => this.api.dashboard().pipe(toLoadState())),
   );
 
   private readonly language$ = this.translate.onLangChange.pipe(
     map((event) => event.lang),
-    startWith(this.translate.currentLang ?? 'en')
+    startWith(this.translate.currentLang ?? 'en'),
   );
 
   readonly state$ = combineLatest([this.data$, this.language$]).pipe(
     map(([state, language]): LoadState<DashboardView> =>
       state.status === 'success'
         ? { status: 'success', data: toDashboardView(state.data, language) }
-        : state
-    )
+        : state,
+    ),
   );
 
   constructor(
     private readonly api: ReportsApiService,
     private readonly changes: DataChangesService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
   ) {}
 
   retry(): void {

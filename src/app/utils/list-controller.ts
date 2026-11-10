@@ -33,7 +33,7 @@ export class ListController<T> {
   constructor(
     fetch: (filter: TableViewFilter) => Observable<TableView<T>>,
     refresh$: Observable<unknown>,
-    initial: Partial<TableViewFilter> = {}
+    initial: Partial<TableViewFilter> = {},
   ) {
     this.filterChanges = new BehaviorSubject({ ...DEFAULT_FILTER, ...initial });
     const reloads = merge(refresh$, this.retries).pipe(startWith(null));
@@ -46,7 +46,7 @@ export class ListController<T> {
         if (state.status === 'success' && state.data.page !== this.filter.page) {
           this.filterChanges.value.page = state.data.page;
         }
-      })
+      }),
     );
   }
 

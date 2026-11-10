@@ -64,11 +64,11 @@ export class NotificationService {
     // Se uma atualização falhar, o painel mantém a última lista recebida.
     switchMap(() => this.api.notifications().pipe(catchError(() => EMPTY))),
     map((notifications) =>
-      notifications.map((notification) => ({ ...notification, ...PRESENTATION[notification.id] }))
+      notifications.map((notification) => ({ ...notification, ...PRESENTATION[notification.id] })),
     ),
     // Começa vazio para o sino aparecer antes da primeira resposta (ou se ela falhar).
     startWith([] as AppNotification[]),
-    shareReplay({ bufferSize: 1, refCount: false })
+    shareReplay({ bufferSize: 1, refCount: false }),
   );
 
   readonly unreadCount$: Observable<number> = combineLatest([
@@ -77,13 +77,13 @@ export class NotificationService {
   ]).pipe(
     map(
       ([notifications, read]) =>
-        notifications.filter((notification) => !read.has(signature(notification))).length
-    )
+        notifications.filter((notification) => !read.has(signature(notification))).length,
+    ),
   );
 
   constructor(
     private readonly api: ReportsApiService,
-    private readonly changes: DataChangesService
+    private readonly changes: DataChangesService,
   ) {}
 
   markAllAsRead(): void {

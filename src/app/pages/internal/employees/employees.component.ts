@@ -69,14 +69,14 @@ export class EmployeesComponent implements OnDestroy {
     private readonly changes: DataChangesService,
     private readonly modalService: ModalService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
   ) {
     // A URL (?search=) é a fonte da busca: permite links diretos, como os da busca global.
     this.route.queryParamMap
       .pipe(
         map((params) => params.get('search') ?? ''),
         distinctUntilChanged(),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((term) => {
         this.searchTerm = term;
@@ -111,7 +111,7 @@ export class EmployeesComponent implements OnDestroy {
     this.modalService.open(
       EmployeeFormComponent,
       { width: MODAL_WIDTH, ariaLabel: row ? 'app.employees.edit' : 'app.employees.add' },
-      data
+      data,
     );
   }
 
@@ -127,7 +127,7 @@ export class EmployeesComponent implements OnDestroy {
     this.modalService.open(
       ConfirmDialogComponent,
       { width: MODAL_WIDTH, ariaLabel: 'app.employees.remove-title' },
-      data
+      data,
     );
   }
 }

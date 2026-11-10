@@ -37,7 +37,13 @@ describe('createTableView', () => {
 
   it('ordena textos com comparação natural e sem diferenciar maiúsculas', () => {
     const view = createTableView(ROWS, filter({ sortBy: 'name' }), ['name']);
-    expect(view.data.map((row) => row.name)).toEqual(['ana', 'Bruno', 'Carla', 'Item 9', 'Item 10']);
+    expect(view.data.map((row) => row.name)).toEqual([
+      'ana',
+      'Bruno',
+      'Carla',
+      'Item 9',
+      'Item 10',
+    ]);
   });
 
   it('ordena datas cronologicamente, inclusive em ordem decrescente', () => {
@@ -46,14 +52,18 @@ describe('createTableView', () => {
   });
 
   it('pagina e informa o total antes da paginação', () => {
-    const view = createTableView(ROWS, filter({ sortBy: 'id', page: 2, itemsPerPage: 2 }), ['name']);
+    const view = createTableView(ROWS, filter({ sortBy: 'id', page: 2, itemsPerPage: 2 }), [
+      'name',
+    ]);
     expect(view.data.map((row) => row.id)).toEqual([3, 4]);
     expect(view.total).toBe(5);
     expect(view.page).toBe(2);
   });
 
   it('ajusta para a última página quando a solicitada não existe mais', () => {
-    const view = createTableView(ROWS, filter({ sortBy: 'id', page: 9, itemsPerPage: 2 }), ['name']);
+    const view = createTableView(ROWS, filter({ sortBy: 'id', page: 9, itemsPerPage: 2 }), [
+      'name',
+    ]);
     expect(view.page).toBe(3);
     expect(view.data.map((row) => row.id)).toEqual([10]);
   });

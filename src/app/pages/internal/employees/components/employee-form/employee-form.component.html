@@ -16,7 +16,7 @@
         aria-describedby="employee-name-error"
       />
       <p class="dd-field__error" id="employee-name-error" *ngIf="error('name') as e">
-        {{ e.key | translate : e.params }}
+        {{ e.key | translate: e.params }}
       </p>
     </div>
 
@@ -30,8 +30,12 @@
         [attr.aria-invalid]="!!error('email')"
         aria-describedby="employee-email-status"
       />
-      <p class="dd-field__error" id="employee-email-status" *ngIf="error('email') as e; else emailHint">
-        {{ e.key | translate : e.params }}
+      <p
+        class="dd-field__error"
+        id="employee-email-status"
+        *ngIf="error('email') as e; else emailHint"
+      >
+        {{ e.key | translate: e.params }}
       </p>
       <ng-template #emailHint>
         <p class="dd-field__hint" id="employee-email-status" *ngIf="form.controls.email.pending">
@@ -51,7 +55,7 @@
         aria-describedby="employee-role-error"
       />
       <p class="dd-field__error" id="employee-role-error" *ngIf="error('role') as e">
-        {{ e.key | translate : e.params }}
+        {{ e.key | translate: e.params }}
       </p>
     </div>
 
@@ -72,7 +76,12 @@
     <button type="button" class="dd-button" (click)="cancel()" [disabled]="saving">
       {{ 'app.common.cancel' | translate }}
     </button>
-    <button type="submit" class="dd-button dd-button--primary" [disabled]="saving" [attr.aria-busy]="saving">
+    <button
+      type="submit"
+      class="dd-button dd-button--primary"
+      [disabled]="saving"
+      [attr.aria-busy]="saving"
+    >
       {{ (saving ? 'app.common.saving' : 'app.common.save') | translate }}
     </button>
   </div>

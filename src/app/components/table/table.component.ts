@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTableType, TableRow } from './models/data-table-type';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -18,9 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [CommonModule, NgIconComponent, TranslateModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  providers: [
-    provideIcons({ tablerCaretUp, tablerCaretDown, heroPencilSquare, heroTrash }),
-  ],
+  providers: [provideIcons({ tablerCaretUp, tablerCaretDown, heroPencilSquare, heroTrash })],
 })
 export class TableComponent {
   private readonly colors = [
@@ -68,7 +61,7 @@ export class TableComponent {
     const key = String(id);
     const hash = Array.from(key).reduce(
       (value, character) => (value * 31 + character.charCodeAt(0)) >>> 0,
-      0
+      0,
     );
     const color = this.colors[hash % this.colors.length];
 
@@ -79,8 +72,7 @@ export class TableComponent {
   }
 
   getColorIcon(property: string, order: boolean): string {
-    if (property === this.dataSortProperty && order === this.desc)
-      return 'var(--text-1)';
+    if (property === this.dataSortProperty && order === this.desc) return 'var(--text-1)';
 
     return '';
   }

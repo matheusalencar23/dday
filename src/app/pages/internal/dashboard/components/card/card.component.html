@@ -1,8 +1,8 @@
 <div class="card">
-  <h4>{{ data && data.title ? (data.title | translate) : "" }}</h4>
+  <h4>{{ data && data.title ? (data.title | translate) : '' }}</h4>
   <span class="value">{{
     data?.isCurrency
-      ? (data?.value | currency : currencyCode : 'symbol' : undefined : locale)
+      ? (data?.value | currency: currencyCode : 'symbol' : undefined : locale)
       : data?.value
   }}</span>
 </div>

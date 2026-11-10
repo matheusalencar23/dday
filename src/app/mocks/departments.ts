@@ -6,7 +6,22 @@ export const DEPARTMENTS: Department[] = [
   { id: 103, name: 'People', managerId: 657, description: 'People operations and support' },
   { id: 218, name: 'Operations', managerId: 443, description: 'Daily business operations' },
   { id: 336, name: 'Marketing', managerId: 691, description: 'Brand, content and market research' },
-  { id: 451, name: 'Technology', managerId: 170, description: 'Engineering, infrastructure and security' },
-  { id: 572, name: 'Sales', managerId: 751, description: 'Customer acquisition and account management' },
-  { id: 689, name: 'Legal', managerId: 878, description: 'Contracts, compliance and legal support' },
+  {
+    id: 451,
+    name: 'Technology',
+    managerId: 170,
+    description: 'Engineering, infrastructure and security',
+  },
+  {
+    id: 572,
+    name: 'Sales',
+    managerId: 751,
+    description: 'Customer acquisition and account management',
+  },
+  {
+    id: 689,
+    name: 'Legal',
+    managerId: 878,
+    description: 'Contracts, compliance and legal support',
+  },
 ];

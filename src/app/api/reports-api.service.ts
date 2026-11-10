@@ -23,7 +23,7 @@ export class ReportsApiService {
   liquidity(): Observable<LiquidityData> {
     return this.http.get<LiquidityData>(`${API_PREFIX}/liquidity`).pipe(
       retryTransient(),
-      map((data) => ({ ...data, pendingPayments: data.pendingPayments.map(parsePaymentRow) }))
+      map((data) => ({ ...data, pendingPayments: data.pendingPayments.map(parsePaymentRow) })),
     );
   }
 

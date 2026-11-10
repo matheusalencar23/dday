@@ -28,7 +28,7 @@ describe('ListController', () => {
     create(fetch);
 
     expect(fetch).toHaveBeenCalledOnceWith(
-      jasmine.objectContaining({ page: 1, itemsPerPage: 5, searchTerm: '', sortBy: '' })
+      jasmine.objectContaining({ page: 1, itemsPerPage: 5, searchTerm: '', sortBy: '' }),
     );
     expect(states.map((state) => state.status)).toEqual(['loading', 'success']);
   });
@@ -52,7 +52,9 @@ describe('ListController', () => {
     controller.update({ page: 3 });
 
     controller.order('name');
-    expect(controller.filter).toEqual(jasmine.objectContaining({ sortBy: 'name', desc: false, page: 1 }));
+    expect(controller.filter).toEqual(
+      jasmine.objectContaining({ sortBy: 'name', desc: false, page: 1 }),
+    );
     controller.order('name');
     expect(controller.filter.desc).toBeTrue();
     controller.order('email');

@@ -36,7 +36,7 @@ export class MonthlyPaymentAmountChartComponent implements OnChanges {
       legend: {
         data: this.series.map((item) => item.name),
         selected: Object.fromEntries(
-          this.series.map((item, index) => [item.name, index >= this.series.length - 2])
+          this.series.map((item, index) => [item.name, index >= this.series.length - 2]),
         ),
         orient: 'horizontal',
         left: 'right',
@@ -47,7 +47,7 @@ export class MonthlyPaymentAmountChartComponent implements OnChanges {
       series: this.series.map((item, index) => {
         const color = this.colors[index % this.colors.length];
         const [red, green, blue] = (color.match(/[\da-f]{2}/gi) ?? []).map((value) =>
-          parseInt(value, 16)
+          parseInt(value, 16),
         );
 
         return {

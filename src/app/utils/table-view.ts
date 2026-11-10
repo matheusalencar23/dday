@@ -16,14 +16,16 @@ export interface TableView<T> extends PaginatedResponse<T> {
 export function createTableView<T extends object>(
   source: T[],
   filter: TableViewFilter,
-  searchableProperties: Array<keyof T>
+  searchableProperties: Array<keyof T>,
 ): TableView<T> {
   const searchTerm = filter.searchTerm.trim().toLocaleLowerCase();
   let rows = searchTerm
     ? source.filter((row) =>
         searchableProperties.some((property) =>
-          String(row[property] ?? '').toLocaleLowerCase().includes(searchTerm)
-        )
+          String(row[property] ?? '')
+            .toLocaleLowerCase()
+            .includes(searchTerm),
+        ),
       )
     : [...source];
 

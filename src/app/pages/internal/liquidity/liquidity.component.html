@@ -7,24 +7,43 @@
     <article class="balance-card">
       <div>
         <h2>{{ 'app.liquidity.available' | translate }}</h2>
-        <p class="balance">{{ state.data.availableLiquidity | currency : currencyCode : 'symbol' : undefined : locale }}</p>
+        <p class="balance">
+          {{
+            state.data.availableLiquidity | currency: currencyCode : 'symbol' : undefined : locale
+          }}
+        </p>
         <p class="caption">
-          {{ 'app.liquidity.of-opening-balance' | translate : { amount: (state.data.openingLiquidity | currency : currencyCode : 'symbol' : undefined : locale) } }}
+          {{
+            'app.liquidity.of-opening-balance'
+              | translate
+                : {
+                    amount:
+                      (state.data.openingLiquidity
+                      | currency: currencyCode : 'symbol' : undefined : locale),
+                  }
+          }}
         </p>
       </div>
-      <div class="meter" role="meter"
+      <div
+        class="meter"
+        role="meter"
         [attr.aria-valuenow]="state.data.liquidityPercent"
         aria-valuemin="0"
         aria-valuemax="100"
-        [attr.aria-label]="'app.liquidity.available' | translate">
+        [attr.aria-label]="'app.liquidity.available' | translate"
+      >
         <div class="meter-value" [style.width.%]="state.data.liquidityPercent"></div>
       </div>
-      <p class="percent">{{ state.data.liquidityPercent }}% {{ 'app.liquidity.remaining' | translate }}</p>
+      <p class="percent">
+        {{ state.data.liquidityPercent }}% {{ 'app.liquidity.remaining' | translate }}
+      </p>
     </article>
 
     <article class="pending-card">
       <h2>{{ 'app.liquidity.pending-title' | translate }}</h2>
-      <p class="balance">{{ state.data.pendingAmount | currency : currencyCode : 'symbol' : undefined : locale }}</p>
+      <p class="balance">
+        {{ state.data.pendingAmount | currency: currencyCode : 'symbol' : undefined : locale }}
+      </p>
       <p class="caption">{{ 'app.liquidity.pending-description' | translate }}</p>
     </article>
 
@@ -44,7 +63,7 @@
             <tr *ngFor="let payment of state.data.pendingPayments; trackBy: trackPayment">
               <td>{{ payment.employeeName }}</td>
               <td>{{ payment.departmentName }}</td>
-              <td>{{ payment.amount | currency : currencyCode : 'symbol' : undefined : locale }}</td>
+              <td>{{ payment.amount | currency: currencyCode : 'symbol' : undefined : locale }}</td>
               <td>{{ formatDate(payment.date) }}</td>
             </tr>
             <tr *ngIf="state.data.pendingPayments.length === 0">

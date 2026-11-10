@@ -28,21 +28,17 @@ export class ModalService {
 
   constructor(
     private appRef: ApplicationRef,
-    private injector: EnvironmentInjector
+    private injector: EnvironmentInjector,
   ) {}
 
   open<R = unknown>(content: TemplateRef<unknown>, options?: ModalOptions): ModalRef<R>;
 
-  open<C, R = unknown>(
-    component: Type<C>,
-    options?: ModalOptions,
-    data?: unknown
-  ): ModalRef<R>;
+  open<C, R = unknown>(component: Type<C>, options?: ModalOptions, data?: unknown): ModalRef<R>;
 
   open<C, R = unknown>(
     contentOrComponent: TemplateRef<unknown> | Type<C>,
     options?: ModalOptions,
-    data?: unknown
+    data?: unknown,
   ): ModalRef<R> {
     if (this.modalComponent) this.destroy();
 
@@ -71,11 +67,7 @@ export class ModalService {
     });
   }
 
-  private openWithComponent<R>(
-    component: Type<unknown>,
-    modalRef: ModalRef<R>,
-    data: unknown
-  ) {
+  private openWithComponent<R>(component: Type<unknown>, modalRef: ModalRef<R>, data: unknown) {
     this.modalInBody = true;
     const elementInjector = Injector.create({
       providers: [

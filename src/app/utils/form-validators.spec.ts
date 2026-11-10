@@ -92,7 +92,7 @@ describe('applyServerError', () => {
     const group = form();
     const message = applyServerError(
       group,
-      httpError(409, { code: 'emailTaken', message: 'Em uso', field: 'email' })
+      httpError(409, { code: 'emailTaken', message: 'Em uso', field: 'email' }),
     );
 
     expect(message).toBeNull();
@@ -102,14 +102,14 @@ describe('applyServerError', () => {
 
   it('devolve mensagem de "não encontrado" para 404', () => {
     expect(applyServerError(form(), httpError(404, { code: 'notFound', message: '' }))).toBe(
-      'app.common.not-found'
+      'app.common.not-found',
     );
   });
 
   it('devolve mensagem geral para erros sem campo conhecido', () => {
     expect(applyServerError(form(), httpError(503, null))).toBe('app.common.request-error');
     expect(
-      applyServerError(form(), httpError(422, { code: 'invalid', message: '', field: 'outro' }))
+      applyServerError(form(), httpError(422, { code: 'invalid', message: '', field: 'outro' })),
     ).toBe('app.common.request-error');
   });
 });

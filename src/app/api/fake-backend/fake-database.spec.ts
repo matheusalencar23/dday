@@ -67,7 +67,7 @@ describe('FakeDatabase', () => {
     expect(liquidity.pendingAmount).toBe(pending);
     expect(liquidity.availableLiquidity).toBe(Math.max(0, OPENING_LIQUIDITY - pending));
     expect(liquidity.liquidityPercent).toBe(
-      Math.round((liquidity.availableLiquidity / OPENING_LIQUIDITY) * 100)
+      Math.round((liquidity.availableLiquidity / OPENING_LIQUIDITY) * 100),
     );
   });
 
@@ -81,7 +81,7 @@ describe('FakeDatabase', () => {
     const legal = db.departmentRows().find((row) => row.id === LEGAL_ID);
     expect(legal?.managerName).toBe('Tiago Moreira');
     expect(legal?.employeeCount).toBe(
-      db.getEmployees().filter((employee) => employee.departmentId === LEGAL_ID).length
+      db.getEmployees().filter((employee) => employee.departmentId === LEGAL_ID).length,
     );
   });
 

@@ -28,13 +28,13 @@ export class LiquidityComponent {
 
   readonly state$ = merge(this.changes.changes$, this.retries).pipe(
     startWith(null),
-    switchMap(() => this.api.liquidity().pipe(toLoadState()))
+    switchMap(() => this.api.liquidity().pipe(toLoadState())),
   );
 
   constructor(
     private readonly api: ReportsApiService,
     private readonly changes: DataChangesService,
-    private readonly translateService: TranslateService
+    private readonly translateService: TranslateService,
   ) {}
 
   retry(): void {

@@ -61,7 +61,8 @@ type Body = Record<string, unknown>;
 
 export function body(context: RequestContext): Body {
   const value = context.req.body;
-  if (!value || typeof value !== 'object') fail(400, 'invalidBody', 'Corpo da requisição inválido.');
+  if (!value || typeof value !== 'object')
+    fail(400, 'invalidBody', 'Corpo da requisição inválido.');
   return value as Body;
 }
 

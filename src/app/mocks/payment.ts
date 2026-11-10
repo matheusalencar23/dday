@@ -340,9 +340,14 @@ const MONTHLY_REQUESTS = Array.from({ length: 60 }, (_, index) => {
       amount: 1800 + ((requestNumber * 791) % 4201),
       date,
       payrollDate: new Date(year, month + 1, 15),
-      status: year < 2023
-        ? [PaymentStatus.COMPLETED, PaymentStatus.ERROR, PaymentStatus.COMPLETED][requestNumber % 3]
-        : [PaymentStatus.COMPLETED, PaymentStatus.PENDING, PaymentStatus.ERROR][requestNumber % 3],
+      status:
+        year < 2023
+          ? [PaymentStatus.COMPLETED, PaymentStatus.ERROR, PaymentStatus.COMPLETED][
+              requestNumber % 3
+            ]
+          : [PaymentStatus.COMPLETED, PaymentStatus.PENDING, PaymentStatus.ERROR][
+              requestNumber % 3
+            ],
     };
   });
 }).flat();

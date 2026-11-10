@@ -13,7 +13,7 @@ const DEBOUNCE_MS = 300;
  */
 export function uniqueValueValidator(
   isAvailable: (value: string) => Observable<boolean>,
-  errorKey: string
+  errorKey: string,
 ): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     const value = String(control.value ?? '').trim();
@@ -22,7 +22,7 @@ export function uniqueValueValidator(
     return timer(DEBOUNCE_MS).pipe(
       switchMap(() => isAvailable(value)),
       map((available) => (available ? null : { [errorKey]: true })),
-      catchError(() => of(null))
+      catchError(() => of(null)),
     );
   };
 }
