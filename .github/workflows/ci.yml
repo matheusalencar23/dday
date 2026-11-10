@@ -13,11 +13,12 @@ concurrency:
 jobs:
   unit-and-build:
     name: Lint, testes unitários e build
-    runs-on: ubuntu-latest
+    # Versão fixa: o ubuntu-latest está migrando para o Ubuntu 26.
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -38,7 +39,7 @@ jobs:
 
       - name: Publicar relatório de cobertura
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage/
@@ -46,26 +47,30 @@ jobs:
 
   e2e:
     name: Testes e2e (Cypress)
-    runs-on: ubuntu-latest
+    # Versão fixa: o ubuntu-latest está migrando para o Ubuntu 26.
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
 
       # Instala as dependências (com cache do binário do Cypress), sobe o
       # servidor de desenvolvimento e roda os testes quando ele responder.
-      - uses: cypress-io/github-action@v6
+      # Usa 127.0.0.1 em vez de localhost: no runner, localhost também resolve
+      # para ::1 (IPv6), onde o ng serve não escuta.
+      - uses: cypress-io/github-action@v7
         with:
-          start: npm start
-          wait-on: http://localhost:4200
+          start: npm start -- --host 127.0.0.1
+          wait-on: http://127.0.0.1:4200
           wait-on-timeout: 180
+          config: baseUrl=http://127.0.0.1:4200
 
       - name: Publicar screenshots das falhas
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-screenshots
           path: cypress/screenshots
