@@ -11,8 +11,8 @@
   <div class="filter-actions">
     <dd-select
       [items]="itemsPerPageOptions"
-      [(ngModel)]="filter.itemsPerPage"
-      (ngModelChange)="showEmployees()"
+      [(ngModel)]="list.filter.itemsPerPage"
+      (ngModelChange)="list.update({ page: 1 })"
       [ariaLabel]="'app.payments.items-per-page' | translate"
     />
     <button type="button" class="dd-button dd-button--primary" (click)="openForm()">
@@ -22,24 +22,25 @@
   </div>
 </div>
 
-<dd-loading-spinner *ngIf="loading" />
-<ng-container *ngIf="employees$ | async as employees">
-  <ng-container *ngIf="!loading">
+<ng-container *ngIf="list.state$ | async as state">
+  <dd-loading-spinner *ngIf="state.status === 'loading'" />
+  <dd-error-state *ngIf="state.status === 'error'" (retry)="list.retry()" />
+  <ng-container *ngIf="state.status === 'success'">
     <dd-table
       [tableConfig]="tableConfig"
-      [tableContent]="employees.data"
-      (orderBy)="order($event)"
-      [dataSortProperty]="filter.sortBy"
-      [desc]="filter.desc"
+      [tableContent]="state.data.data"
+      (orderBy)="list.order($event)"
+      [dataSortProperty]="list.filter.sortBy"
+      [desc]="list.filter.desc"
       [actions]="true"
       (edit)="openForm($event)"
       (remove)="confirmRemove($event)"
     />
     <dd-pagination
-      [page]="filter.page"
-      [itemsPerPage]="filter.itemsPerPage"
-      [total]="employees.total"
-      (pageEvent)="pagination($event)"
+      [page]="list.filter.page"
+      [itemsPerPage]="list.filter.itemsPerPage"
+      [total]="state.data.total"
+      (pageEvent)="list.update({ page: $event.page })"
     />
   </ng-container>
 </ng-container>

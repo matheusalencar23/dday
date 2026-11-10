@@ -1,31 +1,45 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { Subject, merge, startWith, switchMap } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DataChangesService } from 'src/app/api/data-changes.service';
+import { ReportsApiService } from 'src/app/api/reports-api.service';
+import { ErrorStateComponent } from 'src/app/components/error-state/error-state.component';
+import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
 import { PageTitleComponent } from 'src/app/components/page-title/page-title.component';
-import { StudyDataService } from 'src/app/services/study-data.service';
+import { toLoadState } from 'src/app/utils/load-state';
 import { PaymentListRow } from '../payment/models/payment';
-import { PaymentStatus } from '../payment/models/payment-status.enum';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-liquidity',
   templateUrl: './liquidity.component.html',
   styleUrls: ['./liquidity.component.scss'],
   standalone: true,
-  imports: [CommonModule, PageTitleComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    ErrorStateComponent,
+    LoadingSpinnerComponent,
+    PageTitleComponent,
+    TranslateModule,
+  ],
 })
 export class LiquidityComponent {
-  readonly dashboard$ = this.studyData.dashboard$;
-  readonly openingLiquidity = this.studyData.openingLiquidity;
-  readonly pendingPayments$ = this.studyData.paymentRows$.pipe(
-    map((payments) => payments.filter((payment) => payment.status === PaymentStatus.PENDING))
+  private readonly retries = new Subject<void>();
+
+  readonly state$ = merge(this.changes.changes$, this.retries).pipe(
+    startWith(null),
+    switchMap(() => this.api.liquidity().pipe(toLoadState()))
   );
 
   constructor(
-    private readonly studyData: StudyDataService,
+    private readonly api: ReportsApiService,
+    private readonly changes: DataChangesService,
     private readonly translateService: TranslateService
   ) {}
+
+  retry(): void {
+    this.retries.next();
+  }
 
   get currencyCode(): string {
     return this.translateService.currentLang === 'pt' ? 'BRL' : 'USD';

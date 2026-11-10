@@ -1,31 +1,37 @@
 <dd-page-title> {{ "app.dashboard.title" | translate }} </dd-page-title>
-<section *ngIf="dashboard$ | async as dashboard">
-  <div class="cards">
-    <div *ngFor="let cardData of dashboard.cards">
-      <dd-card [data]="cardData"></dd-card>
-    </div>
-  </div>
 
-  <div class="charts">
-    <dd-monthly-payment-amount-chart
-      [labels]="dashboard.monthlyLabels"
-      [series]="dashboard.monthlyPaymentSeries"
-      [title]="'app.dashboard.payment-amount-trend' | translate"
-    ></dd-monthly-payment-amount-chart>
-    <dd-bar-chart
-      [labels]="dashboard.yearlyLabels"
-      [values]="dashboard.yearlyAmountTotals"
-      [title]="'app.dashboard.yearly-amount' | translate"
-      color="#F6C77D"
-    ></dd-bar-chart>
-    <dd-bar-chart
-      [labels]="dashboard.yearlyLabels"
-      [values]="dashboard.yearlyRequestCounts"
-      [title]="'app.dashboard.yearly-requests' | translate"
-    ></dd-bar-chart>
-    <dd-available-liquidity-chart
-      [value]="dashboard.liquidityPercent"
-      [title]="'app.dashboard.liquidity' | translate"
-    ></dd-available-liquidity-chart>
-  </div>
-</section>
+<ng-container *ngIf="state$ | async as state">
+  <dd-loading-spinner *ngIf="state.status === 'loading'" />
+  <dd-error-state *ngIf="state.status === 'error'" (retry)="retry()" />
+
+  <section *ngIf="state.status === 'success'">
+    <div class="cards">
+      <div *ngFor="let cardData of state.data.cards">
+        <dd-card [data]="cardData"></dd-card>
+      </div>
+    </div>
+
+    <div class="charts">
+      <dd-monthly-payment-amount-chart
+        [labels]="state.data.monthlyLabels"
+        [series]="state.data.monthlyPaymentSeries"
+        [title]="'app.dashboard.payment-amount-trend' | translate"
+      ></dd-monthly-payment-amount-chart>
+      <dd-bar-chart
+        [labels]="state.data.yearlyLabels"
+        [values]="state.data.yearlyAmountTotals"
+        [title]="'app.dashboard.yearly-amount' | translate"
+        color="#F6C77D"
+      ></dd-bar-chart>
+      <dd-bar-chart
+        [labels]="state.data.yearlyLabels"
+        [values]="state.data.yearlyRequestCounts"
+        [title]="'app.dashboard.yearly-requests' | translate"
+      ></dd-bar-chart>
+      <dd-available-liquidity-chart
+        [value]="state.data.liquidityPercent"
+        [title]="'app.dashboard.liquidity' | translate"
+      ></dd-available-liquidity-chart>
+    </div>
+  </section>
+</ng-container>

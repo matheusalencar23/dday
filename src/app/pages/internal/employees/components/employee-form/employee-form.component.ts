@@ -6,10 +6,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { map } from 'rxjs';
+import { catchError, of } from 'rxjs';
+import { DepartmentsApiService } from 'src/app/api/departments-api.service';
+import { EmployeesApiService } from 'src/app/api/employees-api.service';
 import { MODAL_DATA, ModalRef } from 'src/app/models/modal-ref';
-import { StudyDataService } from 'src/app/services/study-data.service';
-import { controlError, uniqueValueValidator } from 'src/app/utils/form-validators';
+import {
+  applyServerError,
+  controlError,
+  uniqueValueValidator,
+} from 'src/app/utils/form-validators';
 import { whenValidated } from 'src/app/utils/when-validated';
 import { Employee } from '../../models/employee';
 
@@ -28,14 +33,16 @@ type EmployeeField = 'name' | 'email' | 'role' | 'departmentId';
 export class EmployeeFormComponent {
   private readonly data = inject<EmployeeFormData | null>(MODAL_DATA, { optional: true });
   private readonly modalRef = inject<ModalRef<Employee>>(ModalRef);
-  private readonly studyData = inject(StudyDataService);
+  private readonly employeesApi = inject(EmployeesApiService);
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
   readonly employee = this.data?.employee;
-  readonly departments$ = this.studyData.departments$.pipe(
-    map((departments) => [...departments].sort((a, b) => a.name.localeCompare(b.name)))
-  );
+  // Se as opções falharem, o select mantém apenas "Sem departamento".
+  readonly departments$ = inject(DepartmentsApiService)
+    .options()
+    .pipe(catchError(() => of([])));
   saving = false;
+  submitError: string | null = null;
 
   readonly form = this.formBuilder.group({
     name: ['', [Validators.required, Validators.maxLength(80)]],
@@ -45,7 +52,7 @@ export class EmployeeFormComponent {
         validators: [Validators.required, Validators.email],
         asyncValidators: [
           uniqueValueValidator(
-            (email) => this.studyData.isEmailTaken(email, this.employee?.id),
+            (email) => this.employeesApi.isEmailAvailable(email, this.employee?.id),
             'emailTaken'
           ),
         ],
@@ -69,22 +76,28 @@ export class EmployeeFormComponent {
   submit(): void {
     if (this.saving) return;
     this.form.markAllAsTouched();
+    this.submitError = null;
 
     whenValidated(this.form).subscribe((valid) => {
       if (!valid) return;
       this.saving = true;
       const value = this.form.getRawValue();
-      this.studyData
-        .saveEmployee({
-          ...value,
-          id: this.employee?.id,
-          name: value.name.trim(),
-          email: value.email.trim().toLocaleLowerCase(),
-          role: value.role.trim(),
-        })
+      this.employeesApi
+        .save(
+          {
+            name: value.name.trim(),
+            email: value.email.trim().toLocaleLowerCase(),
+            role: value.role.trim(),
+            departmentId: value.departmentId,
+          },
+          this.employee?.id
+        )
         .subscribe({
           next: (saved) => this.modalRef.close(saved),
-          error: () => (this.saving = false),
+          error: (error: unknown) => {
+            this.saving = false;
+            this.submitError = applyServerError(this.form, error);
+          },
         });
     });
   }

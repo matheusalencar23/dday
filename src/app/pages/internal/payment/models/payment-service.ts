@@ -9,5 +9,5 @@ export const PAYMENT_SERVICE_TOKEN = new InjectionToken<PaymentService>(
 );
 
 export interface PaymentService {
-  getPayments(filter: PaymentFilter | null): Observable<PaginatedResponse<PaymentListRow>>;
+  getPayments(filter: PaymentFilter): Observable<PaginatedResponse<PaymentListRow>>;
 }

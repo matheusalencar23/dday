@@ -13,7 +13,9 @@ import { tablerPigMoney } from '@ng-icons/tabler-icons';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Subject,
+  catchError,
   debounceTime,
+  of,
   distinctUntilChanged,
   startWith,
   switchMap,
@@ -58,6 +60,7 @@ export class CommandPaletteComponent implements OnInit, OnDestroy {
 
   term = '';
   loading = false;
+  failed = false;
   groups: IndexedGroup[] = [];
   results: IndexedResult[] = [];
   activeIndex = 0;
@@ -70,10 +73,15 @@ export class CommandPaletteComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         tap(() => (this.loading = true)),
         // switchMap descarta respostas de buscas antigas que chegarem atrasadas
-        switchMap((term) => this.searchService.search(term)),
+        switchMap((term) =>
+          this.searchService.search(term).pipe(catchError(() => of(null)))
+        ),
         takeUntil(this.destroy$)
       )
-      .subscribe((groups) => this.showResults(groups));
+      .subscribe((groups) => {
+        this.failed = groups === null;
+        this.showResults(groups ?? []);
+      });
   }
 
   ngOnDestroy(): void {

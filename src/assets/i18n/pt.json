@@ -30,7 +30,11 @@
       "edit-item": "Editar {{name}}",
       "remove-item": "Remover {{name}}",
       "saving": "Salvando...",
-      "removing": "Removendo..."
+      "removing": "Removendo...",
+      "retry": "Tentar novamente",
+      "load-error": "Não foi possível carregar os dados.",
+      "request-error": "Não foi possível concluir a operação. Tente novamente.",
+      "not-found": "O registro não existe mais. Ele pode ter sido removido."
     },
     "menu": {
       "dashboard": "Painel de controle",
@@ -122,7 +126,8 @@
       "maxlength": "Use no máximo {{requiredLength}} caracteres.",
       "emailTaken": "Este e-mail já está em uso por outro funcionário.",
       "departmentTaken": "Já existe um departamento com esse nome.",
-      "checking": "Verificando disponibilidade..."
+      "checking": "Verificando disponibilidade...",
+      "invalid": "Valor inválido."
     },
     "search": {
       "label": "Busca global",
@@ -134,7 +139,8 @@
       "departments": "Departamentos",
       "hint-navigate": "navegar",
       "hint-open": "abrir",
-      "hint-close": "fechar"
+      "hint-close": "fechar",
+      "error": "Não foi possível buscar agora. Tente novamente."
     },
     "notifications": {
       "title": "Notificações",
@@ -170,11 +176,14 @@
         "forms": "Formulários reativos tipados com validação assíncrona",
         "i18n": "Interface em português e inglês com ngx-translate",
         "a11y": "Navegação por teclado, foco gerenciado e atributos ARIA",
-        "tests": "Testes e2e com Cypress"
+        "tests": "Testes e2e com Cypress",
+        "backend": "Backend simulado com HttpInterceptor: rotas REST, latência, códigos HTTP e falhas"
       },
-      "data-notice": "Não há servidor: os dados são fictícios e as requisições são simuladas com atraso. As alterações ficam em memória e são desfeitas ao recarregar a página.",
+      "data-notice": "Não há servidor: um HttpInterceptor responde às chamadas para /api com dados fictícios em memória e latência simulada. As alterações são desfeitas ao recarregar a página.",
       "repository": "Ver no GitHub",
-      "close": "Fechar"
+      "close": "Fechar",
+      "simulate-failures": "Simular instabilidade de rede",
+      "simulate-failures-hint": "30% das requisições passam a falhar, para ver os estados de erro e a nova tentativa automática."
     }
   }
 }

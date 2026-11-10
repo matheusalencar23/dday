@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -26,13 +27,21 @@ export class ConfirmDialogComponent {
   readonly data = inject<ConfirmDialogData>(MODAL_DATA);
   private readonly modalRef = inject<ModalRef<boolean>>(ModalRef);
   busy = false;
+  errorKey: string | null = null;
 
   confirm(): void {
     if (this.busy) return;
     this.busy = true;
+    this.errorKey = null;
     this.data.action().subscribe({
       complete: () => this.modalRef.close(true),
-      error: () => (this.busy = false),
+      error: (error: unknown) => {
+        this.busy = false;
+        this.errorKey =
+          error instanceof HttpErrorResponse && error.status === 404
+            ? 'app.common.not-found'
+            : 'app.common.request-error';
+      },
     });
   }
 

@@ -25,3 +25,12 @@ body {
   --danger-1: #eb5757;
   --danger-2: #d14343;
 }
+
+// Mensagem de erro geral em formulários e diálogos.
+.dd-alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #ffdbdb;
+  color: var(--danger-2);
+  font-size: 0.875rem;
+}

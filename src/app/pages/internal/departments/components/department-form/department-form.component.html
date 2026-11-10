@@ -50,6 +50,8 @@
     </div>
   </fieldset>
 
+  <p class="dd-alert" role="alert" *ngIf="submitError">{{ submitError | translate }}</p>
+
   <div class="dd-form__actions">
     <button type="button" class="dd-button" (click)="cancel()" [disabled]="saving">
       {{ 'app.common.cancel' | translate }}

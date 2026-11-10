@@ -30,7 +30,11 @@
       "edit-item": "Edit {{name}}",
       "remove-item": "Remove {{name}}",
       "saving": "Saving...",
-      "removing": "Removing..."
+      "removing": "Removing...",
+      "retry": "Try again",
+      "load-error": "Could not load the data.",
+      "request-error": "Could not complete the operation. Please try again.",
+      "not-found": "This record no longer exists. It may have been removed."
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -122,7 +126,8 @@
       "maxlength": "Use at most {{requiredLength}} characters.",
       "emailTaken": "This email is already used by another employee.",
       "departmentTaken": "A department with this name already exists.",
-      "checking": "Checking availability..."
+      "checking": "Checking availability...",
+      "invalid": "Invalid value."
     },
     "search": {
       "label": "Global search",
@@ -134,7 +139,8 @@
       "departments": "Departments",
       "hint-navigate": "navigate",
       "hint-open": "open",
-      "hint-close": "close"
+      "hint-close": "close",
+      "error": "Search is unavailable right now. Please try again."
     },
     "notifications": {
       "title": "Notifications",
@@ -170,11 +176,14 @@
         "forms": "Typed reactive forms with async validation",
         "i18n": "Portuguese and English interface with ngx-translate",
         "a11y": "Keyboard navigation, managed focus and ARIA attributes",
-        "tests": "End-to-end tests with Cypress"
+        "tests": "End-to-end tests with Cypress",
+        "backend": "Simulated backend with HttpInterceptor: REST routes, latency, HTTP status codes and failures"
       },
-      "data-notice": "There is no server: data is fictional and requests are simulated with a delay. Changes live in memory and are reset when the page reloads.",
+      "data-notice": "There is no server: an HttpInterceptor answers /api calls with fictional in-memory data and simulated latency. Changes are reset when the page reloads.",
       "repository": "View on GitHub",
-      "close": "Close"
+      "close": "Close",
+      "simulate-failures": "Simulate an unstable network",
+      "simulate-failures-hint": "30% of requests will fail, so you can see the error states and the automatic retry."
     }
   }
 }

@@ -11,6 +11,19 @@
 
   <p class="notice">{{ 'app.about.data-notice' | translate }}</p>
 
+  <label class="toggle">
+    <input
+      type="checkbox"
+      [checked]="backendConfig.simulateFailures"
+      (change)="toggleFailures($event)"
+      aria-describedby="simulate-failures-hint"
+    />
+    <span>
+      <strong>{{ 'app.about.simulate-failures' | translate }}</strong>
+      <span id="simulate-failures-hint">{{ 'app.about.simulate-failures-hint' | translate }}</span>
+    </span>
+  </label>
+
   <div class="dd-form__actions">
     <a class="dd-button" [href]="repositoryUrl" target="_blank" rel="noopener noreferrer">
       {{ 'app.about.repository' | translate }}

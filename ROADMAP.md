@@ -40,8 +40,10 @@ A busca, o sino e o ícone de informações do header eram apenas visuais. Todos
 
 ## Fase 1 — Base técnica que valoriza o restante
 
-### 1.1 Backend simulado via `HttpInterceptor` ⭐
-Hoje cada página simula a latência de um jeito (`delay` no `MockPaymentService`, `delayWhen(timer)` nas páginas de funcionários/departamentos). A proposta é centralizar tudo em um **interceptor de backend fake**:
+### 1.1 Backend simulado via `HttpInterceptor` ⭐ — ✅ concluído
+Entregue: interceptor funcional com rotas REST em `/api/*`, `FakeDatabase` em memória, paginação/ordenação no servidor, códigos 200/201/204/400/404/409/422/503, serialização JSON (datas como ISO), `retryTransient()`, `LoadState` + `dd-error-state` em todas as telas, `DataChangesService` para recarregar telas após escritas e interruptor "Simular instabilidade de rede" (30% de falhas) no modal Sobre. Testes em `cypress/e2e/fake-backend.cy.ts`.
+
+Proposta original:
 
 - Os serviços passam a usar `HttpClient` normalmente (`GET /api/employees?page=1&sort=name`, `POST /api/payments` etc.).
 - Um interceptor responde a `/api/*` a partir do estado em memória, com atraso aleatório, paginação/ordenação "no servidor" e códigos HTTP reais (200, 201, 404, 409, 422).
@@ -150,10 +152,9 @@ Registro das alterações feitas na sessão (quem, o quê, quando), exibido em u
 
 | Ordem | Item | Motivo |
 | --- | --- | --- |
-| ✅ | 0.1, 0.2, 0.3, 2.4 e 2.5 | Concluídos |
-| 2 | 1.1 Backend fake via interceptor | Base para todos os itens seguintes e ótimo assunto de entrevista |
-| 3 | 1.4 Testes e CI | Sinal de qualidade visível logo no repositório |
-| 4 | 2.1 Fluxo de aprovação | Funcionalidade de negócio mais impressionante |
-| 5 | 2.6 Autenticação e perfis | Cobre guards e diretivas, temas recorrentes em vagas Angular |
-| 6 | 2.2 Filtros na URL e 2.3 Detalhe | Mostram domínio do Router |
-| 7 | Fase 3 | Polimento final antes de divulgar |
+| ✅ | 0.1, 0.2, 0.3, 1.1, 2.4 e 2.5 | Concluídos |
+| 1 | 1.4 Testes e CI | Sinal de qualidade visível logo no repositório |
+| 2 | 2.1 Fluxo de aprovação | Funcionalidade de negócio mais impressionante |
+| 3 | 2.6 Autenticação e perfis | Cobre guards e diretivas, temas recorrentes em vagas Angular |
+| 4 | 2.2 Filtros na URL e 2.3 Detalhe | Mostram domínio do Router |
+| 5 | Fase 3 | Polimento final antes de divulgar |

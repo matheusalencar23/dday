@@ -6,8 +6,14 @@ import { MonthlyPaymentAmountChartComponent } from './components/monthly-payment
 import { AvailableLiquidityChartComponent } from './components/available-liquidity-chart/available-liquidity-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { NGX_ECHARTS_CONFIG } from 'ngx-echarts';
-import { TranslateModule } from '@ngx-translate/core';
-import { StudyDataService } from 'src/app/services/study-data.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subject, combineLatest, map, merge, startWith, switchMap } from 'rxjs';
+import { DataChangesService } from 'src/app/api/data-changes.service';
+import { ReportsApiService } from 'src/app/api/reports-api.service';
+import { ErrorStateComponent } from 'src/app/components/error-state/error-state.component';
+import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/loading-spinner.component';
+import { LoadState, toLoadState } from 'src/app/utils/load-state';
+import { DashboardView, toDashboardView } from './dashboard-view';
 
 @Component({
   templateUrl: './dashboard-page.component.html',
@@ -20,6 +26,8 @@ import { StudyDataService } from 'src/app/services/study-data.service';
     MonthlyPaymentAmountChartComponent,
     AvailableLiquidityChartComponent,
     BarChartComponent,
+    ErrorStateComponent,
+    LoadingSpinnerComponent,
     TranslateModule,
   ],
   providers: [
@@ -30,7 +38,33 @@ import { StudyDataService } from 'src/app/services/study-data.service';
   ],
 })
 export class DashboardPageComponent {
-  readonly dashboard$ = this.studyData.dashboard$;
+  private readonly retries = new Subject<void>();
 
-  constructor(private readonly studyData: StudyDataService) {}
+  private readonly data$ = merge(this.changes.changes$, this.retries).pipe(
+    startWith(null),
+    switchMap(() => this.api.dashboard().pipe(toLoadState()))
+  );
+
+  private readonly language$ = this.translate.onLangChange.pipe(
+    map((event) => event.lang),
+    startWith(this.translate.currentLang ?? 'en')
+  );
+
+  readonly state$ = combineLatest([this.data$, this.language$]).pipe(
+    map(([state, language]): LoadState<DashboardView> =>
+      state.status === 'success'
+        ? { status: 'success', data: toDashboardView(state.data, language) }
+        : state
+    )
+  );
+
+  constructor(
+    private readonly api: ReportsApiService,
+    private readonly changes: DataChangesService,
+    private readonly translate: TranslateService
+  ) {}
+
+  retry(): void {
+    this.retries.next();
+  }
 }

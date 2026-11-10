@@ -3,6 +3,8 @@
   <p class="dd-form__text">{{ data.message | translate : data.messageParams }}</p>
   <p class="dd-form__text" *ngIf="data.note">{{ data.note | translate : data.noteParams }}</p>
 
+  <p class="dd-alert" role="alert" *ngIf="errorKey">{{ errorKey | translate }}</p>
+
   <div class="dd-form__actions">
     <button type="button" class="dd-button" (click)="cancel()" [disabled]="busy">
       {{ 'app.common.cancel' | translate }}

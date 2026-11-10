@@ -33,13 +33,7 @@ export function createTableView<T extends object>(
       const property = filter.sortBy as keyof T;
       const firstValue = first[property];
       const secondValue = second[property];
-      const result =
-        typeof firstValue === 'number' && typeof secondValue === 'number'
-          ? firstValue - secondValue
-          : String(firstValue ?? '').localeCompare(String(secondValue ?? ''), undefined, {
-              numeric: true,
-              sensitivity: 'base',
-            });
+      const result = compareValues(firstValue, secondValue);
       return result * direction;
     });
   }
@@ -51,4 +45,17 @@ export function createTableView<T extends object>(
   rows = rows.slice(start, start + filter.itemsPerPage);
 
   return { data: rows, total, page };
+}
+
+function compareValues(first: unknown, second: unknown): number {
+  if (first instanceof Date && second instanceof Date) {
+    return first.getTime() - second.getTime();
+  }
+  if (typeof first === 'number' && typeof second === 'number') {
+    return first - second;
+  }
+  return String(first ?? '').localeCompare(String(second ?? ''), undefined, {
+    numeric: true,
+    sensitivity: 'base',
+  });
 }

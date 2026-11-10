@@ -13,20 +13,22 @@
     [ariaLabel]="'app.payments.items-per-page' | translate"
   />
 </div>
-<dd-loading-spinner *ngIf="loading" />
-<ng-container *ngIf="payments$ | async as payments">
-  <dd-table
-    *ngIf="payments"
-    [tableConfig]="tableConfig"
-    [tableContent]="payments.data"
-    (orderBy)="order($event)"
-    [dataSortProperty]="filter.sortBy"
-    [desc]="filter.desc"
-  />
-  <dd-pagination
-    [page]="filter.page"
-    [itemsPerPage]="filter.itemsPerPage"
-    [total]="payments.total"
-    (pageEvent)="pagination($event)"
-  />
+<ng-container *ngIf="state$ | async as state">
+  <dd-loading-spinner *ngIf="state.status === 'loading'" />
+  <dd-error-state *ngIf="state.status === 'error'" (retry)="getPayments()" />
+  <ng-container *ngIf="state.status === 'success'">
+    <dd-table
+      [tableConfig]="tableConfig"
+      [tableContent]="state.data.data"
+      (orderBy)="order($event)"
+      [dataSortProperty]="filter.sortBy"
+      [desc]="filter.desc"
+    />
+    <dd-pagination
+      [page]="filter.page"
+      [itemsPerPage]="filter.itemsPerPage"
+      [total]="state.data.total"
+      (pageEvent)="pagination($event)"
+    />
+  </ng-container>
 </ng-container>
