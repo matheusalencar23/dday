@@ -86,4 +86,18 @@ export const DEPARTMENT_ROUTES: Route[] = [
       return noContent();
     },
   },
+  {
+    // Desfaz uma remoção recente (o servidor guarda um snapshot do registro).
+    method: 'POST',
+    pattern: /^\/api\/departments\/(\d+)\/restore$/,
+    handler: (context) => {
+      const id = idParam(context);
+      const deleted = context.db.findDeletedDepartment(id);
+      if (!deleted) fail(404, 'notFound', 'Não há remoção para desfazer.');
+      if (context.db.isDepartmentNameTaken(deleted.name)) {
+        fail(409, 'departmentTaken', 'Já existe um departamento com esse nome.', 'name');
+      }
+      return ok(context.db.restoreDepartment(id));
+    },
+  },
 ];

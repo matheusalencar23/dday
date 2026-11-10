@@ -172,6 +172,50 @@ describe('fakeBackendInterceptor', () => {
     expect(db.findDepartment(LEGAL_ID)?.managerId).toBeNull();
   }));
 
+  it('desfaz uma remoção pelo endpoint de restauração', fakeAsync(() => {
+    run(http.delete(`/api/employees/${TIAGO_ID}`, { observe: 'response' }));
+
+    const { response } = run(
+      http.post(`/api/employees/${TIAGO_ID}/restore`, null, { observe: 'response' }),
+    );
+
+    expect(response?.status).toBe(200);
+    expect(db.findEmployee(TIAGO_ID)).toBeDefined();
+    expect(db.findDepartment(LEGAL_ID)?.managerId).toBe(TIAGO_ID);
+  }));
+
+  it('responde 404 ao restaurar sem remoção pendente', fakeAsync(() => {
+    const { error } = run(
+      http.post(`/api/employees/${TIAGO_ID}/restore`, null, { observe: 'response' }),
+    );
+    expect(error?.status).toBe(404);
+  }));
+
+  it('responde 409 ao restaurar se o e-mail foi ocupado depois da remoção', fakeAsync(() => {
+    const email = db.findEmployee(TIAGO_ID)!.email;
+    run(http.delete(`/api/employees/${TIAGO_ID}`, { observe: 'response' }));
+    run(http.post('/api/employees', { ...validEmployee, email }, { observe: 'response' }));
+
+    const { error } = run(
+      http.post(`/api/employees/${TIAGO_ID}/restore`, null, { observe: 'response' }),
+    );
+
+    expect(error?.status).toBe(409);
+    expect(error?.error).toEqual(jasmine.objectContaining({ code: 'emailTaken' }));
+  }));
+
+  it('desfaz a remoção de um departamento devolvendo os membros', fakeAsync(() => {
+    const members = db.getEmployees().filter((employee) => employee.departmentId === LEGAL_ID);
+    run(http.delete(`/api/departments/${LEGAL_ID}`, { observe: 'response' }));
+
+    const { response } = run(
+      http.post(`/api/departments/${LEGAL_ID}/restore`, null, { observe: 'response' }),
+    );
+
+    expect(response?.status).toBe(200);
+    members.forEach((member) => expect(db.findEmployee(member.id)?.departmentId).toBe(LEGAL_ID));
+  }));
+
   it('informa a disponibilidade de e-mail ignorando o próprio registro', fakeAsync(() => {
     const taken = run(
       http.get('/api/employees/email-availability', {

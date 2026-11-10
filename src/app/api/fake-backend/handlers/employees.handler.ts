@@ -95,4 +95,18 @@ export const EMPLOYEE_ROUTES: Route[] = [
       return noContent();
     },
   },
+  {
+    // Desfaz uma remoção recente (o servidor guarda um snapshot do registro).
+    method: 'POST',
+    pattern: /^\/api\/employees\/(\d+)\/restore$/,
+    handler: (context) => {
+      const id = idParam(context);
+      const deleted = context.db.findDeletedEmployee(id);
+      if (!deleted) fail(404, 'notFound', 'Não há remoção para desfazer.');
+      if (context.db.isEmailTaken(deleted.email)) {
+        fail(409, 'emailTaken', 'O e-mail já está em uso por outro funcionário.', 'email');
+      }
+      return ok(context.db.restoreEmployee(id));
+    },
+  },
 ];

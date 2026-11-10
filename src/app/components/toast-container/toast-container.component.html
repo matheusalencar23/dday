@@ -1,0 +1,32 @@
+<!-- A região precisa existir antes das mensagens para os leitores de tela anunciarem-nas. -->
+<section class="toasts" aria-live="polite" [attr.aria-label]="'app.toast.region' | translate">
+  <div
+    *ngFor="let toast of toastService.toasts$ | async; trackBy: trackToast"
+    class="toast"
+    [ngClass]="toast.type"
+    [attr.role]="toast.type === 'error' ? 'alert' : null"
+    (mouseenter)="toastService.pause(toast.id)"
+    (mouseleave)="toastService.resume(toast.id)"
+    (focusin)="toastService.pause(toast.id)"
+    (focusout)="toastService.resume(toast.id)"
+  >
+    <ng-icon class="icon" [name]="icon(toast.type)" size="20" aria-hidden="true"></ng-icon>
+    <p>{{ toast.messageKey | translate: toast.params }}</p>
+    <button
+      *ngIf="toast.action"
+      type="button"
+      class="action"
+      (click)="toastService.runAction(toast)"
+    >
+      {{ toast.action.labelKey | translate }}
+    </button>
+    <button
+      type="button"
+      class="close"
+      [attr.aria-label]="'app.toast.close' | translate"
+      (click)="toastService.dismiss(toast.id)"
+    >
+      <ng-icon name="heroXMark" size="16" aria-hidden="true"></ng-icon>
+    </button>
+  </div>
+</section>

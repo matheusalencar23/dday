@@ -19,6 +19,19 @@ export const OPENING_LIQUIDITY = 250000;
 
 const normalize = (value: string) => value.trim().toLocaleLowerCase();
 
+/** Snapshot de uma remoção, usado para desfazê-la (incluindo as cascatas). */
+interface DeletedEmployee {
+  employee: Employee;
+  index: number;
+  managedDepartmentIds: number[];
+}
+
+interface DeletedDepartment {
+  department: Department;
+  index: number;
+  memberIds: number[];
+}
+
 /**
  * "Banco de dados" do backend simulado. Vive apenas em memória e só é
  * acessado pelos handlers do interceptor — nunca diretamente pela UI.
@@ -28,6 +41,8 @@ export class FakeDatabase {
   private payments: Payment[] = PAYMENTS.map((payment) => ({ ...payment }));
   private employees: Employee[] = EMPLOYEES.map((employee) => ({ ...employee }));
   private departments: Department[] = DEPARTMENTS.map((department) => ({ ...department }));
+  private readonly deletedEmployees = new Map<number, DeletedEmployee>();
+  private readonly deletedDepartments = new Map<number, DeletedDepartment>();
 
   // ---------- Consultas ----------
 
@@ -134,7 +149,7 @@ export class FakeDatabase {
   // ---------- Escrita ----------
 
   insertEmployee(input: EmployeeInput): Employee {
-    const employee = { ...input, id: nextId(this.employees) };
+    const employee = { ...input, id: nextId(this.employees, this.deletedEmployees) };
     this.employees = [...this.employees, employee];
     return employee;
   }
@@ -147,6 +162,16 @@ export class FakeDatabase {
 
   /** Remove o funcionário; departamentos que ele gerenciava ficam sem responsável. */
   deleteEmployee(id: number): void {
+    const index = this.employees.findIndex((employee) => employee.id === id);
+    if (index < 0) return;
+    this.deletedEmployees.set(id, {
+      employee: this.employees[index],
+      index,
+      managedDepartmentIds: this.departments
+        .filter((department) => department.managerId === id)
+        .map((department) => department.id),
+    });
+
     this.employees = this.employees.filter((employee) => employee.id !== id);
     this.departments = this.departments.map((department) =>
       department.managerId === id ? { ...department, managerId: null } : department,
@@ -154,7 +179,7 @@ export class FakeDatabase {
   }
 
   insertDepartment(input: DepartmentInput): Department {
-    const department = { ...input, id: nextId(this.departments) };
+    const department = { ...input, id: nextId(this.departments, this.deletedDepartments) };
     this.departments = [...this.departments, department];
     return department;
   }
@@ -167,11 +192,81 @@ export class FakeDatabase {
 
   /** Remove o departamento; seus funcionários ficam sem departamento. */
   deleteDepartment(id: number): void {
+    const index = this.departments.findIndex((department) => department.id === id);
+    if (index < 0) return;
+    this.deletedDepartments.set(id, {
+      department: this.departments[index],
+      index,
+      memberIds: this.employees
+        .filter((employee) => employee.departmentId === id)
+        .map((employee) => employee.id),
+    });
+
     this.departments = this.departments.filter((department) => department.id !== id);
     this.employees = this.employees.map((employee) =>
       employee.departmentId === id ? { ...employee, departmentId: null } : employee,
     );
   }
+
+  // ---------- Desfazer remoções ----------
+
+  findDeletedEmployee(id: number): Employee | undefined {
+    return this.deletedEmployees.get(id)?.employee;
+  }
+
+  findDeletedDepartment(id: number): Department | undefined {
+    return this.deletedDepartments.get(id)?.department;
+  }
+
+  /**
+   * Restaura um funcionário removido na posição original. Volta a ser
+   * responsável pelos departamentos que ainda existem e seguem sem responsável;
+   * se o departamento dele foi removido nesse meio-tempo, fica sem departamento.
+   */
+  restoreEmployee(id: number): Employee | undefined {
+    const deleted = this.deletedEmployees.get(id);
+    if (!deleted) return undefined;
+    this.deletedEmployees.delete(id);
+
+    const departmentId = this.findDepartment(deleted.employee.departmentId ?? -1)
+      ? deleted.employee.departmentId
+      : null;
+    const employee = { ...deleted.employee, departmentId };
+    this.employees = insertAt(this.employees, deleted.index, employee);
+    this.departments = this.departments.map((department) =>
+      deleted.managedDepartmentIds.includes(department.id) && department.managerId === null
+        ? { ...department, managerId: id }
+        : department,
+    );
+    return employee;
+  }
+
+  /**
+   * Restaura um departamento removido na posição original. Os antigos membros
+   * que ainda existem e seguem sem departamento voltam para ele; se o
+   * responsável foi removido nesse meio-tempo, o departamento fica sem responsável.
+   */
+  restoreDepartment(id: number): Department | undefined {
+    const deleted = this.deletedDepartments.get(id);
+    if (!deleted) return undefined;
+    this.deletedDepartments.delete(id);
+
+    const managerId = this.findEmployee(deleted.department.managerId ?? -1)
+      ? deleted.department.managerId
+      : null;
+    const department = { ...deleted.department, managerId };
+    this.departments = insertAt(this.departments, deleted.index, department);
+    this.employees = this.employees.map((employee) =>
+      deleted.memberIds.includes(employee.id) && employee.departmentId === null
+        ? { ...employee, departmentId: id }
+        : employee,
+    );
+    return department;
+  }
+}
+
+function insertAt<T>(items: T[], index: number, item: T): T[] {
+  return [...items.slice(0, index), item, ...items.slice(index)];
 }
 
 function sumPending(payments: Payment[]): number {
@@ -180,6 +275,8 @@ function sumPending(payments: Payment[]): number {
     .reduce((total, payment) => total + payment.amount, 0);
 }
 
-function nextId(items: Array<{ id: number }>): number {
-  return items.reduce((maximum, item) => Math.max(maximum, item.id), 0) + 1;
+/** Próximo id livre, sem reaproveitar ids de registros que ainda podem ser restaurados. */
+function nextId(items: Array<{ id: number }>, deleted: Map<number, unknown>): number {
+  const ids = [...items.map((item) => item.id), ...deleted.keys()];
+  return ids.reduce((maximum, id) => Math.max(maximum, id), 0) + 1;
 }

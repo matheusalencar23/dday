@@ -34,7 +34,10 @@
       "retry": "Tentar novamente",
       "load-error": "Não foi possível carregar os dados.",
       "request-error": "Não foi possível concluir a operação. Tente novamente.",
-      "not-found": "O registro não existe mais. Ele pode ter sido removido."
+      "not-found": "O registro não existe mais. Ele pode ter sido removido.",
+      "undo": "Desfazer",
+      "restored": "{{name}} foi restaurado.",
+      "restore-expired": "Não foi possível desfazer: a remoção de {{name}} não está mais disponível."
     },
     "menu": {
       "dashboard": "Painel de controle",
@@ -91,7 +94,11 @@
       "unassigned": "Sem departamento",
       "remove-title": "Remover funcionário",
       "remove-message": "Tem certeza de que deseja remover {{name}}? Os pagamentos já registrados continuam no histórico.",
-      "remove-manager-note": "Este funcionário é responsável por: {{departments}}. Esses departamentos ficarão sem responsável."
+      "remove-manager-note": "Este funcionário é responsável por: {{departments}}. Esses departamentos ficarão sem responsável.",
+      "created": "Funcionário {{name}} cadastrado.",
+      "updated": "Alterações em {{name}} salvas.",
+      "removed": "Funcionário {{name}} removido.",
+      "restore-conflict": "Não foi possível desfazer: o e-mail de {{name}} agora é usado por outro funcionário."
     },
     "departments": {
       "title": "Departamentos",
@@ -108,7 +115,11 @@
       "delete-note": "Ao remover um departamento, seus funcionários ficam sem departamento.",
       "remove-title": "Remover departamento",
       "remove-message": "Tem certeza de que deseja remover o departamento {{name}}?",
-      "no-manager": "Sem responsável"
+      "no-manager": "Sem responsável",
+      "created": "Departamento {{name}} cadastrado.",
+      "updated": "Alterações em {{name}} salvas.",
+      "removed": "Departamento {{name}} removido.",
+      "restore-conflict": "Não foi possível desfazer: já existe outro departamento chamado {{name}}."
     },
     "liquidity": {
       "title": "Liquidez",
@@ -184,6 +195,10 @@
       "close": "Fechar",
       "simulate-failures": "Simular instabilidade de rede",
       "simulate-failures-hint": "30% das requisições passam a falhar, para ver os estados de erro e a nova tentativa automática."
+    },
+    "toast": {
+      "region": "Notificações temporárias",
+      "close": "Fechar mensagem"
     }
   }
 }

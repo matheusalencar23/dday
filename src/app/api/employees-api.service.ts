@@ -41,6 +41,13 @@ export class EmployeesApiService {
     return request.pipe(tap(() => this.changes.notify('employees')));
   }
 
+  /** Desfaz uma remoção recente. */
+  restore(id: number): Observable<Employee> {
+    return this.http
+      .post<Employee>(`${URL}/${id}/restore`, null)
+      .pipe(tap(() => this.changes.notify('employees')));
+  }
+
   remove(id: number): Observable<void> {
     return this.http.delete<void>(`${URL}/${id}`).pipe(tap(() => this.changes.notify('employees')));
   }

@@ -62,11 +62,12 @@ Proposta original:
 
 Decisão: nada de dados da aplicação fica salvo no navegador (a única exceção é o idioma escolhido). A cada carregamento, o backend simulado volta ao estado inicial.
 
-### 1.3 Feedback ao usuário
+### 1.3 Feedback ao usuário — ✅ concluído
 
-- Serviço de **toasts** (sucesso, erro, info) acessível (`aria-live`).
-- Ação de **desfazer** após remoções ("Funcionário removido · Desfazer").
-- Estados vazios e de erro consistentes em todas as listagens.
+- `ToastService` + `dd-toast-container`: região `aria-live`, `role="alert"` para erros, no máximo 3 toasts, tempo de exibição que pausa com mouse ou foco (para a ação continuar alcançável).
+- Toasts de sucesso ao cadastrar, editar e remover funcionários e departamentos.
+- **Desfazer** remoções via `POST /api/{recurso}/:id/restore`: o servidor guarda um snapshot e reverte também as cascatas (responsável e membros); responde 404 sem remoção pendente e 409 se o e-mail/nome foi ocupado.
+- Estados vazios e de erro já existiam desde os itens 0.1 e 1.1.
 
 **Demonstra:** UX madura, serviços globais, acessibilidade.
 
@@ -169,11 +170,10 @@ Registro das alterações feitas na sessão (quem, o quê, quando), exibido em u
 
 ## Prioridade sugerida
 
-| Ordem | Item                                    | Motivo                                                         |
-| ----- | --------------------------------------- | -------------------------------------------------------------- |
-| ✅    | 0.1, 0.2, 0.3, 1.1, 1.4, 1.5, 2.4 e 2.5 | Concluídos                                                     |
-| 1     | 1.3 Feedback ao usuário                 | Toasts e desfazer remoção completam a UX das telas de cadastro |
-| 2     | 2.1 Fluxo de aprovação                  | Funcionalidade de negócio mais impressionante                  |
-| 3     | 2.6 Autenticação e perfis               | Cobre guards e diretivas, temas recorrentes em vagas Angular   |
-| 4     | 2.2 Filtros na URL e 2.3 Detalhe        | Mostram domínio do Router                                      |
-| 5     | Fase 3                                  | Polimento final antes de divulgar                              |
+| Ordem | Item                                         | Motivo                                                       |
+| ----- | -------------------------------------------- | ------------------------------------------------------------ |
+| ✅    | 0.1, 0.2, 0.3, 1.1, 1.3, 1.4, 1.5, 2.4 e 2.5 | Concluídos                                                   |
+| 1     | 2.1 Fluxo de aprovação                       | Funcionalidade de negócio mais impressionante                |
+| 2     | 2.6 Autenticação e perfis                    | Cobre guards e diretivas, temas recorrentes em vagas Angular |
+| 3     | 2.2 Filtros na URL e 2.3 Detalhe             | Mostram domínio do Router                                    |
+| 4     | Fase 3                                       | Polimento final antes de divulgar                            |

@@ -45,6 +45,13 @@ export class DepartmentsApiService {
     return request.pipe(tap(() => this.changes.notify('departments')));
   }
 
+  /** Desfaz uma remoção recente. */
+  restore(id: number): Observable<Department> {
+    return this.http
+      .post<Department>(`${URL}/${id}/restore`, null)
+      .pipe(tap(() => this.changes.notify('departments')));
+  }
+
   remove(id: number): Observable<void> {
     return this.http
       .delete<void>(`${URL}/${id}`)

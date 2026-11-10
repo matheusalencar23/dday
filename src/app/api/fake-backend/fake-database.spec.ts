@@ -93,4 +93,65 @@ describe('FakeDatabase', () => {
     expect(row.employeeName).toBe('—');
     expect(row.departmentName).toBe('—');
   });
+
+  describe('desfazer remoções', () => {
+    it('restaura o funcionário na posição original e devolve a responsabilidade', () => {
+      const index = db.getEmployees().findIndex((employee) => employee.id === TIAGO_ID);
+      db.deleteEmployee(TIAGO_ID);
+
+      const restored = db.restoreEmployee(TIAGO_ID);
+
+      expect(restored?.id).toBe(TIAGO_ID);
+      expect(db.getEmployees()[index].id).toBe(TIAGO_ID);
+      expect(db.findDepartment(LEGAL_ID)?.managerId).toBe(TIAGO_ID);
+      expect(db.findDeletedEmployee(TIAGO_ID)).toBeUndefined();
+    });
+
+    it('não sobrescreve um responsável definido depois da remoção', () => {
+      db.deleteEmployee(TIAGO_ID);
+      db.updateDepartment(LEGAL_ID, { ...db.findDepartment(LEGAL_ID)!, managerId: ANA_ID });
+
+      db.restoreEmployee(TIAGO_ID);
+
+      expect(db.findDepartment(LEGAL_ID)?.managerId).toBe(ANA_ID);
+    });
+
+    it('restaura o funcionário sem departamento se o dele foi removido', () => {
+      db.deleteEmployee(ANA_ID);
+      db.deleteDepartment(FINANCE_ID);
+
+      expect(db.restoreEmployee(ANA_ID)?.departmentId).toBeNull();
+    });
+
+    it('restaura o departamento e devolve os antigos membros', () => {
+      const members = db
+        .getEmployees()
+        .filter((employee) => employee.departmentId === FINANCE_ID)
+        .map((employee) => employee.id);
+      db.deleteDepartment(FINANCE_ID);
+
+      db.restoreDepartment(FINANCE_ID);
+
+      members.forEach((id) => expect(db.findEmployee(id)?.departmentId).toBe(FINANCE_ID));
+    });
+
+    it('não reaproveita o id de um registro que ainda pode ser restaurado', () => {
+      const maxId = Math.max(...db.getEmployees().map((employee) => employee.id));
+      db.deleteEmployee(maxId);
+
+      const created = db.insertEmployee({
+        name: 'Nova Pessoa',
+        email: 'nova@example.test',
+        role: 'QA',
+        departmentId: null,
+      });
+
+      expect(created.id).toBe(maxId + 1);
+    });
+
+    it('devolve undefined quando não há remoção para desfazer', () => {
+      expect(db.restoreEmployee(ANA_ID)).toBeUndefined();
+      expect(db.restoreDepartment(99999)).toBeUndefined();
+    });
+  });
 });

@@ -3,13 +3,14 @@ import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/
 import { RouterModule } from '@angular/router';
 import { ModalService } from './services/modal.service';
 import { LanguageService } from './services/language.service';
+import { ToastContainerComponent } from './components/toast-container/toast-container.component';
 
 @Component({
   selector: 'dd-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ToastContainerComponent],
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('modalContainer', { read: ViewContainerRef, static: true })

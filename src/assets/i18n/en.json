@@ -34,7 +34,10 @@
       "retry": "Try again",
       "load-error": "Could not load the data.",
       "request-error": "Could not complete the operation. Please try again.",
-      "not-found": "This record no longer exists. It may have been removed."
+      "not-found": "This record no longer exists. It may have been removed.",
+      "undo": "Undo",
+      "restored": "{{name}} was restored.",
+      "restore-expired": "Could not undo: the removal of {{name}} is no longer available."
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -91,7 +94,11 @@
       "unassigned": "Unassigned",
       "remove-title": "Remove employee",
       "remove-message": "Are you sure you want to remove {{name}}? Payments already registered stay in the history.",
-      "remove-manager-note": "This employee manages: {{departments}}. These departments will have no manager."
+      "remove-manager-note": "This employee manages: {{departments}}. These departments will have no manager.",
+      "created": "Employee {{name}} added.",
+      "updated": "Changes to {{name}} saved.",
+      "removed": "Employee {{name}} removed.",
+      "restore-conflict": "Could not undo: the email of {{name}} is now used by another employee."
     },
     "departments": {
       "title": "Departments",
@@ -108,7 +115,11 @@
       "delete-note": "Removing a department leaves its employees unassigned.",
       "remove-title": "Remove department",
       "remove-message": "Are you sure you want to remove the {{name}} department?",
-      "no-manager": "No manager"
+      "no-manager": "No manager",
+      "created": "Department {{name}} added.",
+      "updated": "Changes to {{name}} saved.",
+      "removed": "Department {{name}} removed.",
+      "restore-conflict": "Could not undo: another department is already named {{name}}."
     },
     "liquidity": {
       "title": "Liquidity",
@@ -184,6 +195,10 @@
       "close": "Close",
       "simulate-failures": "Simulate an unstable network",
       "simulate-failures-hint": "30% of requests will fail, so you can see the error states and the automatic retry."
+    },
+    "toast": {
+      "region": "Temporary notifications",
+      "close": "Dismiss message"
     }
   }
 }
